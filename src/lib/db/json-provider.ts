@@ -9,10 +9,30 @@ import fs from "fs";
 import path from "path";
 import type { Database, AdCampaign } from "../schema";
 import { seedDatabase, seedProductCategories, seedDemoProducts, seedDemoOrders, defaultCafe24Settings, defaultAiStorySettings } from "../seed";
+import { buildTestProfile } from "../seed";
+import { TEST_ACCOUNTS, testAccountsEnabled } from "../test-accounts";
+import { normalizeEmail } from "../email-verification";
 import { syncAllCampaignVideos } from "../distribution";
 import { profileAvatarForSeed, randomProfileAvatar } from "../profile-avatars";
 
 const PROFILE_CHARACTER_MIGRATION_VERSION = 2;
+
+/**
+ * 개발/테스트용 고정 계정(최고관리자·크리에이터·광고주)이 없으면 만들어 준다.
+ * 프로덕션에서는 아무것도 하지 않는다. @returns 변경 여부
+ */
+function ensureTestAccounts(db: Database): boolean {
+  if (!testAccountsEnabled()) return false;
+  if (!Array.isArray(db.profiles)) db.profiles = [];
+  let dirty = false;
+  for (const spec of TEST_ACCOUNTS) {
+    const email = normalizeEmail(spec.email);
+    if (db.profiles.some((p) => normalizeEmail(p.email) === email)) continue;
+    db.profiles.push(buildTestProfile(spec));
+    dirty = true;
+  }
+  return dirty;
+}
 
 /**
  * 누락된 컬렉션/설정을 채운다 (구버전 db.json 마이그레이션). @returns 변경 여부
@@ -197,6 +217,7 @@ export function getDb(): Database {
     if (!db.notifications) db.notifications = [];
     if (!db.private_files) db.private_files = [];
     if (!db.audit_logs) db.audit_logs = [];
+    const __testAccountsDirty = ensureTestAccounts(db);
     const __commerceDirty = ensureCommerceCollections(db);
     if (!db.settings.member_video_sale_price_tiers || db.settings.member_video_sale_price_tiers.length === 0) {
       db.settings.member_video_sale_price_tiers = [
@@ -258,6 +279,10 @@ export function getDb(): Database {
     void __campDirty;
     void __commerceDirty;
     void __videosDirty;
+    // 테스트 계정은 세션 쿠키가 참조하므로 즉시 영속화한다.
+    if (__testAccountsDirty) {
+      try { saveDb(db); } catch { /* 다음 쓰기 시 다시 시도 */ }
+    }
     return db;
   } catch (error) {
     if (fs.existsSync(DB_BACKUP_PATH)) {
@@ -279,6 +304,7 @@ export function tx<T>(mutator: (db: Database) => T): T {
     const raw = fs.readFileSync(DB_PATH, "utf-8");
     const db = JSON.parse(raw) as Database;
     ensureCommerceCollections(db); // 구버전 db.json 안전 가드
+    ensureTestAccounts(db); // 테스트 계정 가드
     if (!db.campaign_videos) db.campaign_videos = []; // 배포 영상 풀 가드
     if (!db.campaign_favorites) db.campaign_favorites = [];
     if (!db.notifications) db.notifications = [];

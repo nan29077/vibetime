@@ -11,6 +11,7 @@ import type { ActionState } from "@/components/form";
 import { roleHome } from "../routes";
 import { randomProfileAvatar } from "../profile-avatars";
 import { normalizeEmail } from "../email-verification";
+import { findTestAccount, testAccountsEnabled, type TestAccountKey } from "../test-accounts";
 
 const now = () => new Date().toISOString();
 
@@ -248,17 +249,28 @@ export async function logoutAction(): Promise<void> {
 }
 
 // --- 역할별 테스트 로그인 (FormData 없는 개별 액션) ----------------------
-async function loginAs(email: string): Promise<void> {
-  if (process.env.NODE_ENV === "production") return;
+// 계정 정의는 src/lib/test-accounts.ts, 실제 시드는 db 프로바이더가 보장한다.
+
+async function loginAs(key: TestAccountKey): Promise<void> {
+  if (!testAccountsEnabled()) return;
+  const spec = findTestAccount(key);
+  const email = normalizeEmail(spec.email);
   const db = getDb();
-  const user = db.profiles.find((p) => p.email === email);
-  if (!user) return;
+  const user = db.profiles.find((p) => normalizeEmail(p.email) === email);
+  if (!user || user.status === "suspended" || user.status === "withdrawn") return;
   setSession(user.id);
+  if (user.status === "pending") redirect("/payment/activate");
   redirect(roleHome(user.role));
 }
 
 export async function testLoginAdmin(): Promise<void> {
-  // 프로덕션 환경에서는 테스트 로그인 비활성화
-  if (process.env.NODE_ENV === "production") return;
-  await loginAs("admin@vibetime.com");
+  await loginAs("admin");
+}
+
+export async function testLoginCreator(): Promise<void> {
+  await loginAs("creator");
+}
+
+export async function testLoginAdvertiser(): Promise<void> {
+  await loginAs("advertiser");
 }

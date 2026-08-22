@@ -26,6 +26,7 @@ import type {
   WalletTransaction,
 } from "./schema";
 import { genId, genReferralCode, hashPassword } from "./crypto";
+import { TEST_ACCOUNTS, testAccountsEnabled, type TestAccountSpec } from "./test-accounts";
 
 // ===========================================================================
 // 초기 시드 데이터
@@ -353,19 +354,23 @@ function daysAgo(n: number): string {
 // 시드 데이터베이스
 // ===========================================================================
 
-/** Fresh VIBETIME database: one bootstrap admin and required configuration only. */
-export function seedDatabase(): Database {
-  const now = new Date().toISOString();
-  const admin: Profile = {
-    id: genId(),
-    email: "admin@vibetime.com",
-    password_hash: hashPassword("Admin1234!"),
-    name: "바이브타임 관리자",
-    phone: null,
-    role: "admin",
-    advertiser_type: null,
+// ---------------------------------------------------------------------------
+// 개발/테스트 고정 계정 (최고관리자 / 크리에이터 / 광고주)
+// ---------------------------------------------------------------------------
+
+/** 테스트 계정 정의 1건을 Profile 로 변환한다. */
+export function buildTestProfile(spec: TestAccountSpec, now = new Date().toISOString()): Profile {
+  return {
+    id: spec.seedId,
+    email: spec.email,
+    password_hash: hashPassword(spec.password),
+    email_verified_at: now,
+    name: spec.name,
+    phone: spec.phone,
+    role: spec.role,
+    advertiser_type: spec.advertiser_type,
     parent_advertiser_id: null,
-    referral_code: genReferralCode(),
+    referral_code: spec.referral_code,
     referred_by_user_id: null,
     status: "active",
     avatar_url: null,
@@ -373,10 +378,25 @@ export function seedDatabase(): Database {
     created_at: now,
     updated_at: now,
   };
+}
+
+/**
+ * 시드에 포함할 고정 계정 목록.
+ * 최고관리자는 항상 생성하고, 크리에이터/광고주 테스트 계정은 비프로덕션에서만 생성한다.
+ */
+export function seedTestProfiles(now = new Date().toISOString()): Profile[] {
+  return TEST_ACCOUNTS
+    .filter((spec) => spec.key === "admin" || testAccountsEnabled())
+    .map((spec) => buildTestProfile(spec, now));
+}
+
+/** Fresh VIBETIME database: one bootstrap admin and required configuration only. */
+export function seedDatabase(): Database {
+  const now = new Date().toISOString();
 
   return {
     profile_character_migration_version: 0,
-    profiles: [admin],
+    profiles: seedTestProfiles(now),
     settings: defaultSettings(),
     referral_rewards: [],
     referral_relations: [],

@@ -6,15 +6,27 @@ import { useFormState } from "react-dom";
 import {
   loginAction,
   testLoginAdmin,
+  testLoginCreator,
+  testLoginAdvertiser,
 } from "@/lib/actions/auth-actions";
 import { Card, Field, Input } from "@/components/ui";
 import { SubmitButton, FormMessage, FieldError, initialActionState } from "@/components/form";
-import { IconShield } from "@/components/icons";
+import { IconShield, IconVideo, IconMegaphone } from "@/components/icons";
+import { TEST_ACCOUNTS, testAccountsEnabled, type TestAccountKey } from "@/lib/test-accounts";
 
-const testAccounts = process.env.NODE_ENV === "production" ? [] : [
+// 계정 정의(이메일/비밀번호/역할)는 src/lib/test-accounts.ts 한 곳에서 관리한다.
+const testAccountStyles: Record<
+  TestAccountKey,
   {
-    label: "최고관리자",
-    email: "admin@vibetime.com",
+    action: () => Promise<void>;
+    Icon: typeof IconShield;
+    bg: string;
+    iconBg: string;
+    textColor: string;
+    subColor: string;
+  }
+> = {
+  admin: {
     action: testLoginAdmin,
     Icon: IconShield,
     bg: "bg-purple-50 border-purple-200 hover:bg-purple-100",
@@ -22,7 +34,27 @@ const testAccounts = process.env.NODE_ENV === "production" ? [] : [
     textColor: "text-purple-900",
     subColor: "text-purple-500",
   },
-];
+  creator: {
+    action: testLoginCreator,
+    Icon: IconVideo,
+    bg: "bg-blue-50 border-blue-200 hover:bg-blue-100",
+    iconBg: "bg-blue-100 text-blue-600",
+    textColor: "text-blue-900",
+    subColor: "text-blue-500",
+  },
+  advertiser: {
+    action: testLoginAdvertiser,
+    Icon: IconMegaphone,
+    bg: "bg-amber-50 border-amber-200 hover:bg-amber-100",
+    iconBg: "bg-amber-100 text-amber-600",
+    textColor: "text-amber-900",
+    subColor: "text-amber-600",
+  },
+};
+
+const testAccounts = testAccountsEnabled()
+  ? TEST_ACCOUNTS.map((acc) => ({ ...acc, ...testAccountStyles[acc.key] }))
+  : [];
 
 // ── 소셜 로그인 버튼 ─────────────────────────────────────────────────────────
 function SocialButtons() {
@@ -112,7 +144,9 @@ export default function LoginPage() {
                 </span>
                 <span>
                   <span className={`block font-bold ${acc.textColor}`}>{acc.label}</span>
-                  <span className={`block truncate ${acc.subColor}`}>{acc.email}</span>
+                  <span className={`block truncate ${acc.subColor}`}>
+                    {acc.email} · {acc.password}
+                  </span>
                 </span>
               </button>
             </form>
