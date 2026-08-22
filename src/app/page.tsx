@@ -1131,6 +1131,14 @@ export default function HomePage() {
                 </svg>
                 광고주 소개서
               </a>
+              <a
+                href="/vibetime_서비스소개서.pdf"
+                download
+                className="inline-flex items-center gap-1.5 text-xs px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors border border-emerald-500/20"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                서비스 소개서 다운로드 (PDF)
+              </a>
             </div>
           </div>
         </div>
