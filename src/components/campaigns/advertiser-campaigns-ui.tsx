@@ -86,6 +86,9 @@ const PARTICIPATION_STATUS_LABELS: Record<string, string> = {
   deploy_submitted: "배포 승인요청",
   deploy_approved: "배포 승인됨",
   deploy_rejected: "배포 반려",
+  revision_requested: "수정 요청",
+  disputed: "분쟁 처리 중",
+  cancelled: "참여 취소",
   completed: "완료",
 };
 
@@ -437,6 +440,17 @@ function CampaignCard({
   const { campaign: c } = row;
   const [expanded, setExpanded] = useState(false);
   const [participations, setParticipations] = useState(row.participations);
+  const [cancelPending, startCancel] = useTransition();
+
+  function cancelCampaign() {
+    if (!window.confirm("캠페인을 취소하고 사용 포인트를 환불하시겠습니까?")) return;
+    startCancel(async () => {
+      const response = await fetch(`/api/advertiser/campaigns/${c.id}/cancel`, { method: "POST" });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) window.alert(result.error ?? "캠페인 취소에 실패했습니다.");
+      else window.location.reload();
+    });
+  }
 
   const videoProducers = participations.filter(
     (r) => r.participation.participation_type === "video_production"
@@ -501,6 +515,7 @@ function CampaignCard({
           <div className="text-right shrink-0">
             <div className="text-base font-bold text-gray-900">{formatKRW(c.total_cost)}</div>
             <div className="text-[10px] text-gray-400 mt-0.5">총 예산</div>
+            {!["completed", "cancelled", "refunded"].includes(c.status) && <button type="button" disabled={cancelPending} onClick={cancelCampaign} className="mt-2 text-xs font-semibold text-red-500 disabled:opacity-50">캠페인 취소</button>}
           </div>
         </div>
 

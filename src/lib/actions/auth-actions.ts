@@ -249,6 +249,7 @@ export async function logoutAction(): Promise<void> {
 
 // --- 역할별 테스트 로그인 (FormData 없는 개별 액션) ----------------------
 async function loginAs(email: string): Promise<void> {
+  if (process.env.NODE_ENV === "production") return;
   const db = getDb();
   const user = db.profiles.find((p) => p.email === email);
   if (!user) return;
@@ -259,17 +260,5 @@ async function loginAs(email: string): Promise<void> {
 export async function testLoginAdmin(): Promise<void> {
   // 프로덕션 환경에서는 테스트 로그인 비활성화
   if (process.env.NODE_ENV === "production") return;
-  await loginAs("admin@vibefunny.com");
-}
-
-export async function testLoginCreator(): Promise<void> {
-  await loginAs("creator_test@vibefunny.com");
-}
-
-export async function testLoginAdvertiser(): Promise<void> {
-  await loginAs("advertiser_test@vibefunny.com");
-}
-
-export async function testLoginAgency(): Promise<void> {
-  await loginAs("agency_test@vibefunny.com");
+  await loginAs("admin@vibetime.com");
 }

@@ -6,59 +6,21 @@ import { useFormState } from "react-dom";
 import {
   loginAction,
   testLoginAdmin,
-  testLoginCreator,
-  testLoginAdvertiser,
-  testLoginAgency,
 } from "@/lib/actions/auth-actions";
 import { Card, Field, Input } from "@/components/ui";
 import { SubmitButton, FormMessage, FieldError, initialActionState } from "@/components/form";
-import {
-  IconShield,
-  IconFilm,
-  IconMegaphone,
-  IconBuilding,
-} from "@/components/icons";
+import { IconShield } from "@/components/icons";
 
-const testAccounts = [
+const testAccounts = process.env.NODE_ENV === "production" ? [] : [
   {
     label: "최고관리자",
-    email: "admin@vibefunny.com",
+    email: "admin@vibetime.com",
     action: testLoginAdmin,
     Icon: IconShield,
     bg: "bg-purple-50 border-purple-200 hover:bg-purple-100",
     iconBg: "bg-purple-100 text-purple-600",
     textColor: "text-purple-900",
     subColor: "text-purple-500",
-  },
-  {
-    label: "크리에이터",
-    email: "creator_test@vibefunny.com",
-    action: testLoginCreator,
-    Icon: IconFilm,
-    bg: "bg-pink-50 border-pink-200 hover:bg-pink-100",
-    iconBg: "bg-pink-100 text-pink-600",
-    textColor: "text-pink-900",
-    subColor: "text-pink-500",
-  },
-  {
-    label: "광고주 (실행사)",
-    email: "advertiser_test@vibefunny.com",
-    action: testLoginAdvertiser,
-    Icon: IconMegaphone,
-    bg: "bg-yellow-50 border-yellow-200 hover:bg-yellow-100",
-    iconBg: "bg-yellow-100 text-yellow-600",
-    textColor: "text-yellow-900",
-    subColor: "text-yellow-600",
-  },
-  {
-    label: "광고주 (대행사)",
-    email: "agency_test@vibefunny.com",
-    action: testLoginAgency,
-    Icon: IconBuilding,
-    bg: "bg-green-50 border-green-200 hover:bg-green-100",
-    iconBg: "bg-green-100 text-green-600",
-    textColor: "text-green-900",
-    subColor: "text-green-500",
   },
 ];
 
@@ -127,18 +89,18 @@ export default function LoginPage() {
   const [state, formAction] = useFormState(loginAction, initialActionState);
 
   return (
-    <main className="vf-auth-page mx-auto flex min-h-screen max-w-lg flex-col justify-center px-5 py-10">
-      <Link href="/" className="vf-auth-brand mb-6 justify-center text-center text-2xl font-black tracking-tight" aria-label="바이브퍼니 메인으로">
-        <Image src="/images/vibefunny-video-bee-logo.png" alt="" width={52} height={52} priority className="vf-auth-brand-image" />
-        <span>VIBE</span><b>FUNNY</b>
+    <main className="vt-auth-page mx-auto flex min-h-screen max-w-lg flex-col justify-center px-5 py-10">
+      <Link href="/" className="vt-auth-brand mb-6 justify-center text-center text-2xl font-black tracking-tight" aria-label="바이브타임 메인으로">
+        <Image src="/images/vibetime-logo.png" alt="" width={52} height={52} priority className="vt-auth-brand-image" />
+        <span>VIBE</span><b>TIME</b>
       </Link>
 
       {/* 테스트 계정 빠른 로그인 */}
-      <div className="mb-4">
+      {testAccounts.length > 0 && <div className="mb-4">
         <p className="mb-2 text-center text-[10px] font-bold uppercase tracking-widest text-gray-400">
           테스트 계정 빠른 로그인
         </p>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-2">
           {testAccounts.map((acc) => (
             <form key={acc.email} action={acc.action}>
               <button
@@ -156,7 +118,7 @@ export default function LoginPage() {
             </form>
           ))}
         </div>
-      </div>
+      </div>}
 
       <Card>
         <SocialButtons />

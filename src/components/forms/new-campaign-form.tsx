@@ -887,7 +887,7 @@ export function NewCampaignForm({
                     UTM 링크 포함 요청
                   </label>
                   {useUtm && (
-                    <Input value={utmLink} onChange={(e) => setUtmLink(e.target.value)} placeholder="https://example.com?utm_source=vibefunny" />
+                    <Input value={utmLink} onChange={(e) => setUtmLink(e.target.value)} placeholder="https://example.com?utm_source=vibetime" />
                   )}
                   <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-700">
                     <input type="checkbox" checked={usePromoCode} onChange={(e) => setUsePromoCode(e.target.checked)} className="h-4 w-4 rounded border-gray-300 accent-brand-purple" />

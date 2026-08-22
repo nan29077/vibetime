@@ -3,7 +3,7 @@ import { getDb } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { roleHome } from "@/lib/routes";
 import { logoutAction } from "@/lib/actions/auth-actions";
-import { HoneyHeroCarousel } from "@/components/marketing/honey-hero-carousel";
+import { VibeTimeHeroCarousel } from "@/components/marketing/vibetime-hero-carousel";
 import { MobileMainMenu, MobilePublicNav } from "@/components/marketing/mobile-main-menu";
 import { SupportWidget } from "@/components/support/support-widget";
 import { IconBarChart, IconCalendar, IconGlobe, IconHome, IconInfo, IconLogIn, IconLogOut, IconMegaphone, IconPieChart } from "@/components/icons";
@@ -52,16 +52,16 @@ const FAQS = [
   { q: "추천인 코드는 어떻게 사용하나요?", a: "가입 시 추천인 코드 입력란에 코드를 입력하면 됩니다. 추천인은 가입 완료 즉시 수당이 지급됩니다. 내가 초대한 크리에이터의 활동이 활발할수록 추천 네트워크 효과가 커집니다." },
   { q: "AI 영상 제작에 어떤 도구를 사용하나요?", a: "Gemini, Veo, Sora, Runway 등 최신 AI 영상 생성 도구를 활용합니다. 가입 후 제공되는 가이드에서 무료 또는 저렴하게 이용할 수 있는 AI 도구 목록과 사용법을 확인할 수 있습니다." },
   { q: "스마트폰만으로도 가능한가요?", a: "가능합니다. AI 영상 제작 도구 대부분이 모바일을 지원하며, 배포와 수익 확인도 모바일에서 가능합니다. 고가 장비 없이도 충분히 활동할 수 있습니다." },
-  { q: "부업 이외에 전업으로도 가능한가요?", a: "충분히 가능합니다. 현재 활동 중인 크리에이터 중 약 15%는 VIBEFUNNY를 주 수입원으로 활동하고 있습니다. 세 파이프라인을 모두 적극 운영하면 전업 수준의 수익이 가능합니다." },
+  { q: "부업 이외에 전업으로도 가능한가요?", a: "충분히 가능합니다. 현재 활동 중인 크리에이터 중 약 15%는 VIBETIME을 주 수입원으로 활동하고 있습니다. 세 파이프라인을 모두 적극 운영하면 전업 수준의 수익이 가능합니다." },
 ];
 
 const ROADMAP_STEPS = [
-  { day: "D+1",   title: "가입 & 온보딩",    desc: "5분 가입 완료 후 AI 영상 제작 가이드를 확인합니다. 추천 코드를 지인과 공유하면 이날부터 추천 수당 발생 가능.", badge: "START",     color: "#f59e0b" },
+  { day: "D+1",   title: "가입 & 온보딩",    desc: "5분 가입 완료 후 AI 영상 제작 가이드를 확인합니다. 추천 코드를 지인과 공유하면 이날부터 추천 수당 발생 가능.", badge: "START",     color: "#7c3aed" },
   { day: "D+7",   title: "첫 영상 납품",      desc: "AI 도구로 첫 숏폼 영상을 제작해 납품합니다. 납품 완료 즉시 수익이 지갑에 적립됩니다.",                             badge: "첫 수익",   color: "#10b981" },
   { day: "D+14",  title: "배포 루틴 구축",    desc: "YouTube Shorts · Instagram Reels · TikTok · Facebook 4개 플랫폼에 동시 배포 루틴을 잡습니다. 매 배포마다 단가가 쌓입니다.",            badge: "배포 시작",  color: "#3b82f6" },
   { day: "D+30",  title: "첫 정산",           desc: "한 달간의 AI 납품 + 배포 + 추천 수당을 합산해 첫 정산을 받습니다. 대부분의 크리에이터가 30~80만원 내외.",          badge: "첫 정산",   color: "#8b5cf6" },
   { day: "D+90",  title: "수익 가속화",       desc: "추천 네트워크가 확장되고 AI 납품 퀄리티가 높아지면서 수익이 빠르게 성장합니다. 평균 월 100~200만원대.",             badge: "성장 구간",  color: "#ef4444" },
-  { day: "D+180", title: "안정적 월 수익",    desc: "영상 납품·배포·추천 세 파이프라인이 자동화됩니다. 내가 쉬는 날에도 수익이 들어오는 구조.",                          badge: "자동화 수익", color: "#f59e0b" },
+  { day: "D+180", title: "안정적 월 수익",    desc: "영상 납품·배포·추천 세 파이프라인이 자동화됩니다. 내가 쉬는 날에도 수익이 들어오는 구조.",                          badge: "자동화 수익", color: "#7c3aed" },
 ];
 
 const INCOME_TIERS = [
@@ -77,7 +77,7 @@ const INCOME_TIERS = [
   },
   {
     tier: "활발", label: "꾸준히 활동", monthly: "100 ~ 200만원",
-    color: "#f59e0b", bg: "rgba(245,158,11,0.08)", border: "rgba(245,158,11,0.3)",
+    color: "#7c3aed", bg: "rgba(245,158,11,0.08)", border: "rgba(245,158,11,0.3)",
     highlight: true,
     items: [
       { act: "AI 영상 납품", val: "월 10~15편",  earn: "50~90만원" },
@@ -254,7 +254,7 @@ const EXPERT_STEPS = [
 ];
 
 function MobileFixedBackground({ src }: { src: string }) {
-  return <div className="vf-mobile-fixed-section-bg" style={{ backgroundImage: `url('${src}')` }} aria-hidden />;
+  return <div className="vt-mobile-fixed-section-bg" style={{ backgroundImage: `url('${src}')` }} aria-hidden />;
 }
 
 function FullBg({
@@ -265,7 +265,7 @@ function FullBg({
   return (
     <section
       id={id}
-      className={`vf-fixed-photo-section relative flex min-h-screen items-center overflow-hidden ${className}`}
+      className={`vt-fixed-photo-section relative flex min-h-screen items-center overflow-hidden ${className}`}
       style={{ backgroundImage: `url('${src}')`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
     >
       <MobileFixedBackground src={src} />
@@ -307,33 +307,33 @@ export default function HomePage() {
   const stats = revenueStats.length > 0 ? revenueStats : defaultStats;
 
   return (
-    <div className="vf-marketing vf-home">
-      <div className="vf-site-topbar">
+    <div className="vt-marketing vt-home">
+      <div className="vt-site-topbar">
         <MobileMainMenu myPageHref={dashHref ?? "/login"} />
-        <Link href="/" className="vf-site-logo"><span>VIBE</span><b>FUNNY</b></Link>
+        <Link href="/" className="vt-site-logo"><span>VIBE</span><b>TIME</b></Link>
         {currentUser ? (
-          <form action={logoutAction}><button type="submit" className="vf-topbar-action"><IconLogOut size={16} />로그아웃</button></form>
-        ) : <Link href="/login" className="vf-topbar-action"><IconLogIn size={16} />로그인</Link>}
+          <form action={logoutAction}><button type="submit" className="vt-topbar-action"><IconLogOut size={16} />로그아웃</button></form>
+        ) : <Link href="/login" className="vt-topbar-action"><IconLogIn size={16} />로그인</Link>}
       </div>
       <header
         className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 md:px-12"
         style={{ background: "rgba(6,6,6,0.88)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <Link href="/" className="vf-site-logo vf-side-brand text-xl font-black tracking-tight">
-          <span className="text-white">VIBE</span><span style={{ color: "#f59e0b" }}>FUNNY</span>
+        <Link href="/" className="vt-site-logo vt-side-brand text-xl font-black tracking-tight">
+          <span className="text-white">VIBE</span><span style={{ color: "#7c3aed" }}>TIME</span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-medium text-gray-400 md:flex">
-          <Link href="/" className="vf-side-link"><IconHome size={18} /><span>홈</span></Link>
-          <Link href="#income" className="vf-side-link"><IconBarChart size={18} /><span>수익구조</span></Link>
-          <Link href="#roadmap" className="vf-side-link"><IconCalendar size={18} /><span>로드맵</span></Link>
-          <Link href="#simulate" className="vf-side-link"><IconPieChart size={18} /><span>시뮬레이션</span></Link>
-          <Link href="#platforms" className="vf-side-link"><IconGlobe size={18} /><span>플랫폼</span></Link>
-          <Link href="#faq" className="vf-side-link"><IconInfo size={18} /><span>FAQ</span></Link>
-          <Link href="/for-advertisers" className="vf-side-link"><IconMegaphone size={18} /><span>광고주</span></Link>
+          <Link href="/" className="vt-side-link"><IconHome size={18} /><span>홈</span></Link>
+          <Link href="#income" className="vt-side-link"><IconBarChart size={18} /><span>수익구조</span></Link>
+          <Link href="#roadmap" className="vt-side-link"><IconCalendar size={18} /><span>로드맵</span></Link>
+          <Link href="#simulate" className="vt-side-link"><IconPieChart size={18} /><span>시뮬레이션</span></Link>
+          <Link href="#platforms" className="vt-side-link"><IconGlobe size={18} /><span>플랫폼</span></Link>
+          <Link href="#faq" className="vt-side-link"><IconInfo size={18} /><span>FAQ</span></Link>
+          <Link href="/for-advertisers" className="vt-side-link"><IconMegaphone size={18} /><span>광고주</span></Link>
         </nav>
         {currentUser && dashHref && (
           <div className="flex items-center gap-3">
-            <Link href={dashHref} className="rounded-full px-4 py-2 text-xs font-bold text-black" style={{ background: "#ffc928" }}>
+            <Link href={dashHref} className="rounded-full px-4 py-2 text-xs font-bold text-black" style={{ background: "#7c3aed" }}>
               마이페이지
             </Link>
           </div>
@@ -344,12 +344,12 @@ export default function HomePage() {
       <SupportWidget isAuthenticated={Boolean(currentUser)} />
 
       {announcement && (
-        <div className="fixed left-0 right-0 z-40 py-2 text-center text-sm font-semibold text-black" style={{ top: 64, background: "#f59e0b" }}>
+        <div className="fixed left-0 right-0 z-40 py-2 text-center text-sm font-semibold text-black" style={{ top: 64, background: "#7c3aed" }}>
           {announcement}
         </div>
       )}
 
-      <HoneyHeroCarousel ctaHref={creatorCtaHref} />
+      <VibeTimeHeroCarousel ctaHref={creatorCtaHref} />
       {/* <FullBg
         src={BG.hero}
         overlay="linear-gradient(160deg, rgba(0,0,0,0.75) 0%, rgba(10,0,30,0.7) 100%)"
@@ -358,11 +358,11 @@ export default function HomePage() {
         <div className="px-6 pb-28 pt-20 md:px-16">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
             style={{ borderColor: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)" }}>
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: "#f59e0b" }} />
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: "#7c3aed" }} />
             Side Income · Shortform · AI Video
           </div>
           <h1 className="text-[clamp(56px,10vw,132px)] font-black leading-[1.15] tracking-tight text-white">
-            숏폼으로<br /><span style={{ color: "#f59e0b" }}>수익을</span><br />만들다
+            숏폼으로<br /><span style={{ color: "#7c3aed" }}>수익을</span><br />만들다
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
             AI 영상 제작 · 숏폼 배포 · 추천 수당.<br />
@@ -378,19 +378,19 @@ export default function HomePage() {
               <div key={item.label} className="flex items-center gap-2 rounded-full px-4 py-2"
                 style={{ background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.3)" }}>
                 <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.55)" }}>{item.label}</span>
-                <span className="text-sm font-black" style={{ color: "#f59e0b" }}>{item.val}</span>
+                <span className="text-sm font-black" style={{ color: "#7c3aed" }}>{item.val}</span>
               </div>
             ))}
           </div>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black transition-all hover:scale-105 active:scale-95" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black transition-all hover:scale-105 active:scale-95" style={{ background: "#7c3aed" }}>
               지금 바로 시작하기
             </Link>
             <Link href="#roadmap" className="text-sm font-medium transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>
               로드맵
             </Link>
             <a
-              href="/vibefunny-guide-creator.pdf"
+              href="/vibetime-guide-creator.pdf"
               download
               className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/10"
               style={{ borderColor: "rgba(255,255,255,0.3)" }}
@@ -403,7 +403,7 @@ export default function HomePage() {
               크리에이터 소개서 PDF
             </a>
             <a
-              href="/vibefunny-guide-advertiser.pdf"
+              href="/vibetime-guide-advertiser.pdf"
               download
               className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/10"
               style={{ borderColor: "rgba(255,255,255,0.3)" }}
@@ -424,7 +424,7 @@ export default function HomePage() {
         </div>
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden py-4"
           style={{ background: "rgba(0,0,0,0.4)", backdropFilter: "blur(4px)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-          <div className="vf-marquee">
+          <div className="vt-marquee">
             {Array.from({ length: 6 }).flatMap((_, i) =>
               MARQUEE_WORDS.map((w) => (
                 <span key={`${i}-${w}`} className="mr-10 whitespace-nowrap text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.3)" }}>
@@ -438,7 +438,7 @@ export default function HomePage() {
 
       <section
         id="roadmap"
-        className="vf-fixed-photo-section relative overflow-hidden"
+        className="vt-fixed-photo-section relative overflow-hidden"
         style={{ backgroundImage: `url('${BG.roadmap}')`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
       >
         <MobileFixedBackground src={BG.roadmap} />
@@ -447,7 +447,7 @@ export default function HomePage() {
           <div className="mb-16">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.35)" }}>Roadmap</p>
             <h2 className="text-4xl font-black text-white md:text-6xl leading-[1.25]">
-              가입 후 수익이<br /><span style={{ color: "#f59e0b" }}>쌓이는 과정</span>
+              가입 후 수익이<br /><span style={{ color: "#7c3aed" }}>쌓이는 과정</span>
             </h2>
             <p className="mt-4 max-w-xl text-base" style={{ color: "rgba(255,255,255,0.45)" }}>
               처음 가입한 날부터 안정적인 월 수익까지 — 대부분의 크리에이터가 걷는 길입니다.
@@ -474,7 +474,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="mt-16 text-center">
-            <Link href="/signup" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition-all hover:scale-105" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition-all hover:scale-105" style={{ background: "#7c3aed" }}>
               지금 D+1을 시작하기 →
             </Link>
           </div>
@@ -487,19 +487,19 @@ export default function HomePage() {
             <SectionLabel text="AI Creator Growth" />
             <h2 className="text-4xl font-black text-white md:text-[72px] leading-[1.15]">
               AI 영상 제작<br />
-              <span style={{ color: "#f59e0b" }}>전문가에 도전하세요</span>
+              <span style={{ color: "#7c3aed" }}>전문가에 도전하세요</span>
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-              경험이 없어도 괜찮습니다. VIBEFUNNY와 함께라면 누구든 AI 영상 전문 크리에이터로 성장할 수 있습니다.
+              경험이 없어도 괜찮습니다. VIBETIME과 함께라면 누구든 AI 영상 전문 크리에이터로 성장할 수 있습니다.
             </p>
           </div>
           <div className="mb-16 grid gap-4 md:grid-cols-4">
             {EXPERT_STEPS.map(({ Icon, step, title, desc }) => (
               <div key={step} className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                <div className="mb-3" style={{ color: "#f59e0b" }}>
+                <div className="mb-3" style={{ color: "#7c3aed" }}>
                   <Icon size={28} />
                 </div>
-                <p className="mb-1 text-xs font-black uppercase tracking-widest" style={{ color: "#f59e0b" }}>{step}</p>
+                <p className="mb-1 text-xs font-black uppercase tracking-widest" style={{ color: "#7c3aed" }}>{step}</p>
                 <h3 className="mb-2 font-black text-white text-base">{title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>{desc}</p>
               </div>
@@ -511,7 +511,7 @@ export default function HomePage() {
               {[
                 { StageIcon: IcoSprout,     stage: "입문 단계", period: "1~4주", color: "#3b82f6", items: ["AI 도구 기초 습득 (ChatGPT, Runway/Pika 영상 생성)", "첫 숏폼 영상 제작 완료", "플랫폼 계정 개설 및 첫 업로드"] },
                 { StageIcon: IcoTrendingUp, stage: "성장 단계", period: "2~3개월", color: "#10b981", items: ["AI 편집 툴 활용 (CapCut AI, Descript, HeyGen)", "월 20~50개 영상 생산 루틴 완성", "첫 수익 발생 (배포 수당 + 판매 수익)"] },
-                { StageIcon: IcoAward,      stage: "숙련 단계", period: "3~6개월", color: "#f59e0b", items: ["자신만의 AI 영상 스타일 확립", "추천 시스템 활용 + 팀 빌딩 시작", "월 50~150만원 수익 구조 안정화"] },
+                { StageIcon: IcoAward,      stage: "숙련 단계", period: "3~6개월", color: "#7c3aed", items: ["자신만의 AI 영상 스타일 확립", "추천 시스템 활용 + 팀 빌딩 시작", "월 50~150만원 수익 구조 안정화"] },
                 { StageIcon: IcoCrown,      stage: "전문가 단계", period: "6개월+", color: "#ef4444", items: ["AI 영상 노하우로 강의/컨설팅 부가 수익", "광고주 캠페인 직접 수주", "월 200만원+ 멀티 수익 파이프라인"] },
               ].map((rs) => (
                 <div key={rs.stage} className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
@@ -537,7 +537,7 @@ export default function HomePage() {
                 { cat: "영상 생성", tools: ["Runway Gen-3", "Pika 2.0", "Kling AI"], color: "#ef4444" },
                 { cat: "편집", tools: ["CapCut AI", "Adobe Firefly"], color: "#3b82f6" },
                 { cat: "음성/아바타", tools: ["ElevenLabs", "HeyGen"], color: "#10b981" },
-                { cat: "썸네일", tools: ["Midjourney", "DALL-E"], color: "#f59e0b" },
+                { cat: "썸네일", tools: ["Midjourney", "DALL-E"], color: "#7c3aed" },
               ].map((tc) => (
                 <div key={tc.cat} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
                   <p className="text-xs font-black mb-3" style={{ color: tc.color }}>{tc.cat}</p>
@@ -560,10 +560,10 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="rounded-2xl p-8" style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" }}>
-              <p className="mb-4 text-xs font-black uppercase tracking-widest" style={{ color: "#f59e0b" }}>After — 6개월 후</p>
+              <p className="mb-4 text-xs font-black uppercase tracking-widest" style={{ color: "#7c3aed" }}>After — 6개월 후</p>
               <ul className="space-y-2.5 text-sm text-white">
                 {["AI로 숏폼 영상 자유롭게 제작", "월 10~20편 납품으로 안정 수익", "4개 플랫폼 동시 배포 루틴 완성", "추천 네트워크로 자동화 수익 확보", "AI 영상 전문 크리에이터로 성장"].map((t) => (
-                  <li key={t} className="flex items-center gap-2"><span style={{ color: "#f59e0b" }}>✓</span> {t}</li>
+                  <li key={t} className="flex items-center gap-2"><span style={{ color: "#7c3aed" }}>✓</span> {t}</li>
                 ))}
               </ul>
             </div>
@@ -571,10 +571,10 @@ export default function HomePage() {
           <div className="mx-auto max-w-3xl rounded-2xl p-8 text-center" style={{ background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)" }}>
             <p className="text-xl font-black text-white leading-snug md:text-2xl">
               "처음엔 그냥 부업이었는데,<br />
-              <span style={{ color: "#f59e0b" }}>지금은 AI 영상 전문가로 불립니다."</span>
+              <span style={{ color: "#7c3aed" }}>지금은 AI 영상 전문가로 불립니다."</span>
             </p>
             <p className="mt-3 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>— 박도현, 크리에이터 1년 차 · 현재 월 290만원 수익</p>
-            <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-black text-black transition hover:scale-105 hover:opacity-90" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-black text-black transition hover:scale-105 hover:opacity-90" style={{ background: "#7c3aed" }}>
               나도 AI 영상 전문가로 성장하기 →
             </Link>
           </div>
@@ -599,7 +599,7 @@ export default function HomePage() {
                   { n: "4", t: "수익 즉시 적립",  d: "납품 완료 확인 즉시 지갑에 단가 지급" },
                 ].map((s) => (
                   <div key={s.n} className="flex items-start gap-3 rounded-xl p-3" style={{ background: "rgba(255,255,255,0.06)" }}>
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black text-black" style={{ background: "#f59e0b" }}>{s.n}</span>
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black text-black" style={{ background: "#7c3aed" }}>{s.n}</span>
                     <div>
                       <p className="font-bold text-white text-sm">{s.t}</p>
                       <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>{s.d}</p>
@@ -614,7 +614,7 @@ export default function HomePage() {
                 <Link href="/revenue/ai-video" className="rounded-full border px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.3)" }}>
                   자세히 보기 →
                 </Link>
-                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#f59e0b" }}>
+                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#7c3aed" }}>
                   시작하기
                 </Link>
               </div>
@@ -648,7 +648,7 @@ export default function HomePage() {
                   { icon: "✓", text: "4개 플랫폼 동시 배포로 단가 4배 효과" },
                 ].map((item) => (
                   <div key={item.text} className="flex items-center gap-3 text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
-                    <span className="font-black" style={{ color: "#f59e0b" }}>{item.icon}</span>
+                    <span className="font-black" style={{ color: "#7c3aed" }}>{item.icon}</span>
                     {item.text}
                   </div>
                 ))}
@@ -660,7 +660,7 @@ export default function HomePage() {
                 <Link href="/revenue/distribution" className="rounded-full border px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.3)" }}>
                   자세히 보기 →
                 </Link>
-                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#f59e0b" }}>
+                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#7c3aed" }}>
                   시작하기
                 </Link>
               </div>
@@ -676,7 +676,7 @@ export default function HomePage() {
               <SectionLabel text="03 — Referral Reward" />
               <h2 className="text-5xl font-black leading-[1.25] text-white md:text-7xl">추천 수당</h2>
               <p className="mt-6 text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-                친구나 지인을 VIBEFUNNY에 초대하면 가입 즉시 <strong className="text-white">고정 수당</strong>이 지급됩니다.
+                친구나 지인을 VIBETIME에 초대하면 가입 즉시 <strong className="text-white">고정 수당</strong>이 지급됩니다.
                 추천 인원에 제한이 없으며, 추천 네트워크가 커질수록 자동으로 수익이 쌓입니다.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
@@ -686,7 +686,7 @@ export default function HomePage() {
                 <Link href="/revenue/referral" className="rounded-full border px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.3)" }}>
                   자세히 보기 →
                 </Link>
-                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#f59e0b" }}>
+                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#7c3aed" }}>
                   시작하기
                 </Link>
               </div>
@@ -722,7 +722,7 @@ export default function HomePage() {
                   { icon: "✓", text: "회원 간 맞구독으로 초기 구독자 확보 — 내 채널을 바로 '수익 채널'로 전환" },
                 ].map((item) => (
                   <div key={item.text} className="flex items-center gap-3 text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
-                    <span className="font-black" style={{ color: "#f59e0b" }}>{item.icon}</span>
+                    <span className="font-black" style={{ color: "#7c3aed" }}>{item.icon}</span>
                     {item.text}
                   </div>
                 ))}
@@ -734,7 +734,7 @@ export default function HomePage() {
                 <Link href="/revenue/shorts-commerce" className="rounded-full border px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.3)" }}>
                   자세히 보기 →
                 </Link>
-                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#f59e0b" }}>
+                <Link href="/signup" className="rounded-full px-6 py-3 text-sm font-black text-black hover:opacity-80 transition-opacity" style={{ background: "#7c3aed" }}>
                   시작하기
                 </Link>
               </div>
@@ -746,7 +746,7 @@ export default function HomePage() {
 
 
       <section
-        className="vf-fixed-photo-section relative overflow-hidden"
+        className="vt-fixed-photo-section relative overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1920&q=85&fit=crop&auto=format')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
       >
         <MobileFixedBackground src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1920&q=85&fit=crop&auto=format" />
@@ -756,7 +756,7 @@ export default function HomePage() {
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.35)" }}>Distribution Strategy</p>
             <h2 className="text-4xl font-black text-white md:text-6xl leading-[1.25]">
               AI 영상 배포 마케팅<br />
-              <span style={{ color: "#f59e0b" }}>1개 영상으로 4개 플랫폼 동시 공략</span>
+              <span style={{ color: "#7c3aed" }}>1개 영상으로 4개 플랫폼 동시 공략</span>
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
               하나의 AI 영상을 YouTube Shorts, Instagram Reels, TikTok, Facebook Reels에 동시 배포하면
@@ -770,7 +770,7 @@ export default function HomePage() {
               { platform: "TikTok", color: "#00F2EA", Brand: BrandTikTok, headline: "바이럴로 수익 극대화", tips: ["신규 채널도 즉시 배포 수익화", "바이럴 시 추가 보상으로 수익 폭발", "배포 건당 즉시 정산", "챌린지 참여로 보너스 수익 확보"] },
               { platform: "Facebook Reels", color: "#1877F2", Brand: BrandFacebook, headline: "도달 최대 = 수익 최대", tips: ["30억 이용자 도달로 수익 기회 최대", "전 연령 타겟으로 안정적 배포 수익", "같은 영상 추가 배포로 단가 누적", "메타 광고 연동 시 수익 추가 확대"] },
             ].map((dp) => (
-              <div key={dp.platform} className="vf-hover rounded-2xl p-7" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}>
+              <div key={dp.platform} className="vt-hover rounded-2xl p-7" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}>
                 <div className="mb-3"><dp.Brand size={44} /></div>
                 <h3 className="text-lg font-black text-white mb-0.5">{dp.platform}</h3>
                 <p className="text-xs font-bold mb-4" style={{ color: dp.color }}>{dp.headline}</p>
@@ -794,7 +794,7 @@ export default function HomePage() {
                   { Icon: IcoLnChart, title: "데이터 기반 학습", desc: "분석 데이터로 알고리즘 선호 콘텐츠 패턴 파악" },
                 ].map((ef) => (
                   <div key={ef.title} className="flex gap-3 items-start">
-                    <span className="shrink-0" style={{ color: "#f59e0b" }}><ef.Icon size={24} /></span>
+                    <span className="shrink-0" style={{ color: "#7c3aed" }}><ef.Icon size={24} /></span>
                     <div>
                       <p className="font-bold text-white text-sm">{ef.title}</p>
                       <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>{ef.desc}</p>
@@ -804,16 +804,16 @@ export default function HomePage() {
               </div>
             </div>
             <div className="rounded-2xl p-8" style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" }}>
-              <h3 className="text-xl font-black text-white mb-2">VIBEFUNNY 자동 배포 시스템</h3>
+              <h3 className="text-xl font-black text-white mb-2">VIBETIME 자동 배포 시스템</h3>
               <p className="text-sm mb-5" style={{ color: "rgba(255,255,255,0.45)" }}>크리에이터는 제작에만 집중, 나머지는 플랫폼이 처리</p>
               <div className="space-y-3">
                 {[
-                  { num: "1", text: "영상 1회 등록", desc: "VIBEFUNNY에 영상 한 번만 업로드" },
+                  { num: "1", text: "영상 1회 등록", desc: "VIBETIME에 영상 한 번만 업로드" },
                   { num: "2", text: "플랫폼별 최적화", desc: "각 플랫폼 규격에 맞게 자동 변환" },
                   { num: "3", text: "자동 일정 배포", desc: "최적 시간대에 4개 플랫폼 동시 발행" },
                 ].map((sv) => (
                   <div key={sv.num} className="flex gap-3 items-start rounded-xl p-3" style={{ background: "rgba(0,0,0,0.2)" }}>
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black text-black" style={{ background: "#f59e0b" }}>{sv.num}</span>
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black text-black" style={{ background: "#7c3aed" }}>{sv.num}</span>
                     <div>
                       <p className="font-bold text-white text-sm">{sv.text}</p>
                       <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{sv.desc}</p>
@@ -833,16 +833,16 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="rounded-2xl p-7" style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" }}>
-              <p className="mb-4 text-xs font-black uppercase tracking-widest" style={{ color: "#f59e0b" }}>AI 자동화 배포 방식</p>
+              <p className="mb-4 text-xs font-black uppercase tracking-widest" style={{ color: "#7c3aed" }}>AI 자동화 배포 방식</p>
               <ul className="space-y-2 text-sm text-white">
                 {["AI로 영상 제작 30분~1시간", "1회 등록 후 4플랫폼 자동 배포", "AI 자동 자막 + 다국어 지원", "최적 시간대 자동 스케줄링", "4개 플랫폼 수익 동시 발생"].map((at) => (
-                  <li key={at} className="flex items-center gap-2"><span style={{ color: "#f59e0b" }}>✓</span>{at}</li>
+                  <li key={at} className="flex items-center gap-2"><span style={{ color: "#7c3aed" }}>✓</span>{at}</li>
                 ))}
               </ul>
             </div>
           </div>
           <div className="text-center">
-            <Link href="/signup" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition-all hover:scale-105" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition-all hover:scale-105" style={{ background: "#7c3aed" }}>
               지금 4개 플랫폼 동시 배포 시작하기 →
             </Link>
           </div>
@@ -851,7 +851,7 @@ export default function HomePage() {
 
       <section
         id="simulate"
-        className="vf-fixed-photo-section relative overflow-hidden"
+        className="vt-fixed-photo-section relative overflow-hidden"
         style={{ backgroundImage: `url('${BG.income}')`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
       >
         <MobileFixedBackground src={BG.income} />
@@ -905,7 +905,7 @@ export default function HomePage() {
           <div className="mb-14">
             <SectionLabel text="Numbers" />
             <h2 className="text-4xl font-black text-white md:text-6xl leading-[1.25]">
-              숫자로 보는<br /><span style={{ color: "#f59e0b" }}>VIBEFUNNY</span>
+              숫자로 보는<br /><span style={{ color: "#7c3aed" }}>VIBETIME</span>
             </h2>
           </div>
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
@@ -931,10 +931,10 @@ export default function HomePage() {
               { Icon: IcoLnFacebook, label: "Facebook Reels MAU", value: "30억명", sub: "세계 최대 SNS · 전 연령 도달" },
               { Icon: IcoLnGlobe, label: "4대 플랫폼 합산 MAU", value: "80억+", sub: "단일 영상으로 전 세계 도달" },
             ].map((mi) => (
-              <div key={mi.label} className="rounded-2xl p-5 text-center vf-hover" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                <div className="mb-3 flex justify-center" style={{ color: "#f59e0b" }}><mi.Icon size={30} /></div>
+              <div key={mi.label} className="rounded-2xl p-5 text-center vt-hover" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <div className="mb-3 flex justify-center" style={{ color: "#7c3aed" }}><mi.Icon size={30} /></div>
                 <div className="text-2xl font-black text-white mb-1">{mi.value}</div>
-                <div className="text-xs font-bold mb-1" style={{ color: "#f59e0b" }}>{mi.label}</div>
+                <div className="text-xs font-bold mb-1" style={{ color: "#7c3aed" }}>{mi.label}</div>
                 <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{mi.sub}</div>
               </div>
             ))}
@@ -949,13 +949,13 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap gap-3">
               {["디지털 광고의 80% 영상 전환", "AI 도구로 진입장벽 소멸", "숏폼 = 가장 빠른 수익화 포맷", "지금이 선점 타이밍"].map((wt) => (
-                <span key={wt} className="rounded-full px-3 py-1 text-xs font-bold" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b", border: "1px solid rgba(245,158,11,0.3)" }}>{wt}</span>
+                <span key={wt} className="rounded-full px-3 py-1 text-xs font-bold" style={{ background: "rgba(245,158,11,0.15)", color: "#7c3aed", border: "1px solid rgba(245,158,11,0.3)" }}>{wt}</span>
               ))}
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden py-5" style={{ background: "#f59e0b" }}>
-          <div className="vf-marquee-slow">
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden py-5" style={{ background: "#7c3aed" }}>
+          <div className="vt-marquee-slow">
             {Array.from({ length: 8 }).flatMap((_, i) =>
               ["숏폼 배포 수익", "AI 영상 납품", "추천 수당", "SHORTFORM INCOME", "CREATOR PLATFORM", "부업 수익", "월 수백만원"].map((t) => (
                 <span key={`${i}-${t}`} className="mr-10 whitespace-nowrap text-sm font-black uppercase tracking-widest text-black">{t} ·</span>
@@ -973,13 +973,13 @@ export default function HomePage() {
           </div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {PLATFORMS.map((p) => (
-              <div key={p.name} className="vf-hover rounded-2xl p-8"
+              <div key={p.name} className="vt-hover rounded-2xl p-8"
                 style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}>
                 <div className="mb-4"><p.Brand size={52} /></div>
                 <h3 className="text-xl font-black text-white">{p.name}</h3>
                 <p className="mt-1 text-3xl font-black text-white">{p.users}</p>
                 <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>{p.desc}</p>
-                <p className="mt-3 rounded-lg px-3 py-2 text-xs font-semibold" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}>{p.earn}</p>
+                <p className="mt-3 rounded-lg px-3 py-2 text-xs font-semibold" style={{ background: "rgba(245,158,11,0.15)", color: "#7c3aed" }}>{p.earn}</p>
               </div>
             ))}
           </div>
@@ -994,12 +994,12 @@ export default function HomePage() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="vf-hover rounded-2xl p-8"
+              <div key={i} className="vt-hover rounded-2xl p-8"
                 style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5"
                   style={{ background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.3)" }}>
                   <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>현재 수익</span>
-                  <span className="text-sm font-black" style={{ color: "#f59e0b" }}>{t.income}</span>
+                  <span className="text-sm font-black" style={{ color: "#7c3aed" }}>{t.income}</span>
                 </div>
                 <p className="mb-4 text-5xl font-serif leading-none" style={{ color: "rgba(245,158,11,0.5)" }}>&#8220;</p>
                 <p className="mb-8 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>{t.quote}</p>
@@ -1021,7 +1021,7 @@ export default function HomePage() {
             실행사 · 대행사 전용 페이지에서 숏폼 광고 캠페인을 시작하세요.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link href={advertiserCtaHref} className="rounded-full px-8 py-4 text-base font-black text-black transition-all hover:opacity-90 hover:scale-105" style={{ background: "#f59e0b" }}>
+            <Link href={advertiserCtaHref} className="rounded-full px-8 py-4 text-base font-black text-black transition-all hover:opacity-90 hover:scale-105" style={{ background: "#7c3aed" }}>
               광고주 전용 페이지 →
             </Link>
           </div>
@@ -1036,10 +1036,10 @@ export default function HomePage() {
           </div>
           <div className="space-y-3">
             {FAQS.map((faq, i) => (
-              <details key={i} className="vf-faq overflow-hidden rounded-xl border border-gray-200 bg-white/80" style={{ backdropFilter: "blur(8px)" }}>
+              <details key={i} className="vt-faq overflow-hidden rounded-xl border border-gray-200 bg-white/80" style={{ backdropFilter: "blur(8px)" }}>
                 <summary className="flex cursor-pointer select-none items-center justify-between px-6 py-5 font-bold text-gray-900 transition-colors hover:bg-gray-50">
                   <span>{faq.q}</span>
-                  <span className="vf-plus ml-4 shrink-0 text-2xl font-light text-gray-400">+</span>
+                  <span className="vt-plus ml-4 shrink-0 text-2xl font-light text-gray-400">+</span>
                 </summary>
                 <div className="border-t border-gray-100 px-6 py-5 text-sm leading-relaxed text-gray-600">{faq.a}</div>
               </details>
@@ -1047,7 +1047,7 @@ export default function HomePage() {
           </div>
           <div className="mt-12 rounded-2xl p-6 text-center" style={{ background: "#fefce8", border: "1px solid #fde68a" }}>
             <p className="font-black text-gray-900 text-lg">아직 궁금한 게 있으신가요?</p>
-            <Link href={creatorCtaHref} className="mt-4 inline-block rounded-full px-6 py-3 text-sm font-black text-black transition hover:opacity-80" style={{ background: "#f59e0b" }}>
+            <Link href={creatorCtaHref} className="mt-4 inline-block rounded-full px-6 py-3 text-sm font-black text-black transition hover:opacity-80" style={{ background: "#7c3aed" }}>
               지금 가입하고 문의하기 →
             </Link>
           </div>
@@ -1067,13 +1067,13 @@ export default function HomePage() {
         <div className="relative z-10 mx-auto max-w-2xl px-6">
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.35)" }}>지금 시작하세요</p>
           <h2 className="text-4xl font-black text-white md:text-6xl leading-[1.25]">
-            오늘이<br /><span style={{ color: "#f59e0b" }}>수익 D+1</span>이<br />됩니다
+            오늘이<br /><span style={{ color: "#7c3aed" }}>수익 D+1</span>이<br />됩니다
           </h2>
           <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
             가입비 0원 · 영상 경험 불필요 · 오늘 가입하면 이번 달 안에 첫 수익.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link href={creatorCtaHref} className="rounded-full px-10 py-4 text-lg font-black text-black transition-all hover:scale-105 active:scale-95" style={{ background: "#f59e0b" }}>
+            <Link href={creatorCtaHref} className="rounded-full px-10 py-4 text-lg font-black text-black transition-all hover:scale-105 active:scale-95" style={{ background: "#7c3aed" }}>
               바로 크리에이터 시작하기
             </Link>
           </div>
@@ -1082,18 +1082,18 @@ export default function HomePage() {
 
       <footer className="border-t px-6 py-12 md:px-12" style={{ background: "#060606", borderColor: "rgba(255,255,255,0.05)" }}>
         <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-start md:justify-between">
-          <div>
+          <div className="md:max-w-[210px]">
             <Link href="/">
-              <span className="vf-site-logo text-2xl font-black tracking-tight">
-                <span className="text-white">VIBE</span><span style={{ color: "#f59e0b" }}>FUNNY</span>
+              <span className="vt-site-logo text-2xl font-black tracking-tight">
+                <span className="text-white">VIBE</span><span style={{ color: "#7c3aed" }}>TIME</span>
               </span>
             </Link>
             <p className="mt-3 max-w-xs text-sm text-gray-500">숏폼 크리에이터·광고주 플랫폼 · 가입비 0원 · 4대 플랫폼 동시 배포</p>
           </div>
-          <div className="flex gap-12 text-sm text-gray-500">
+          <div className="flex shrink-0 gap-6 text-[11px] leading-5 text-gray-500">
             <div className="space-y-3">
               <p className="text-xs font-bold uppercase tracking-widest text-gray-600">크리에이터</p>
-              <div className="space-y-2">
+              <div className="space-y-1.5 whitespace-nowrap">
                 <div><Link href="/signup"               className="hover:text-white transition-colors">크리에이터 가입</Link></div>
                 <div><Link href="/revenue/ai-video"     className="hover:text-white transition-colors">AI 영상 수익</Link></div>
                 <div><Link href="/revenue/distribution" className="hover:text-white transition-colors">배포 수익</Link></div>
@@ -1103,7 +1103,7 @@ export default function HomePage() {
             </div>
             <div className="space-y-3">
               <p className="text-xs font-bold uppercase tracking-widest text-gray-600">광고주</p>
-              <div className="space-y-2">
+              <div className="space-y-1.5 whitespace-nowrap">
                 <div><Link href="/for-advertisers"         className="hover:text-white transition-colors">광고주 소개</Link></div>
                 <div><Link href="/signup?role=advertiser"  className="hover:text-white transition-colors">광고주 가입</Link></div>
                 <div><Link href="/login"                   className="hover:text-white transition-colors">로그인</Link></div>
@@ -1113,9 +1113,9 @@ export default function HomePage() {
         </div>
         <div className="mx-auto mt-10 max-w-6xl border-t pt-8" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-xs text-gray-600">&#169; 2025 VIBEFUNNY. All rights reserved.</p>
+            <p className="text-xs text-gray-600">&#169; 2025 VIBETIME. All rights reserved.</p>
             <div className="flex flex-wrap items-center gap-4">
-              <a href="/vibefunny-guide-creator.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
+              <a href="/vibetime-guide-creator.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />
@@ -1123,7 +1123,7 @@ export default function HomePage() {
                 </svg>
                 크리에이터 소개서
               </a>
-              <a href="/vibefunny-guide-advertiser.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
+              <a href="/vibetime-guide-advertiser.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />

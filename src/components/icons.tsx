@@ -1,5 +1,5 @@
 /**
- * VIBEFUNNY – Simple line SVG icons (Feather/Lucide style)
+ * VIBETIME – Simple line SVG icons (Feather/Lucide style)
  * All icons: fill=none, stroke=currentColor, strokeWidth=2, round caps/joins
  */
 
@@ -559,7 +559,7 @@ export function IconMoreVertical(p: IconProps) {
 }
 
 // ── 브랜드 로고 마크 ────────────────────────────────────────────────────────
-export function VibeFunnyLogoMark({ size = 28 }: { size?: number }) {
+export function VibeTimeLogoMark({ size = 28 }: { size?: number }) {
   return (
     <svg
       width={size}
@@ -567,23 +567,19 @@ export function VibeFunnyLogoMark({ size = 28 }: { size?: number }) {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="VIBEFUNNY 로고"
+      aria-label="VIBETIME 로고"
     >
       <defs>
-        <linearGradient id="vf-bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#171717" />
-          <stop offset="100%" stopColor="#f4b000" />
+        <linearGradient id="vt-bg" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#c026d3" />
+          <stop offset="55%" stopColor="#7c3aed" />
+          <stop offset="100%" stopColor="#06b6d4" />
         </linearGradient>
       </defs>
-      <rect width="32" height="32" rx="8" fill="url(#vf-bg)" />
-      {/* V */}
-      <polyline points="5,8 10.5,24 16,8" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      {/* F vertical */}
-      <line x1="19" y1="8" x2="19" y2="24" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-      {/* F top bar */}
-      <line x1="19" y1="8" x2="27" y2="8" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-      {/* F middle bar */}
-      <line x1="19" y1="16" x2="25" y2="16" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+      <rect width="32" height="32" rx="8" fill="url(#vt-bg)" />
+      <path d="M7 8l9 17 9-17" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7 22c6 3 13 2 19-3" stroke="#67e8f9" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="25" cy="7" r="2.3" fill="#fb7185" />
     </svg>
   );
 }

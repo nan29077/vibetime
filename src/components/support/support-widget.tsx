@@ -16,7 +16,7 @@ type Message = {
 const greeting: Message = {
   id: "welcome",
   sender: "bot",
-  content: "안녕하세요! 바이브퍼니 문의 도우미예요. 아래 자주 묻는 질문을 선택하거나 궁금한 내용을 직접 입력해 주세요.",
+  content: "안녕하세요! 바이브타임 문의 도우미예요. 아래 자주 묻는 질문을 선택하거나 궁금한 내용을 직접 입력해 주세요.",
   created_at: new Date(0).toISOString(),
 };
 
@@ -66,15 +66,15 @@ function FaqNavigator({
   };
 
   return (
-    <div className="vf-support-faq">
+    <div className="vt-support-faq">
       {/* 브레드크럼 헤더 */}
-      <div className="vf-support-faq-header">
+      <div className="vt-support-faq-header">
         {step !== "categories" && (
-          <button type="button" onClick={goBack} className="vf-support-faq-back" aria-label="뒤로">
+          <button type="button" onClick={goBack} className="vt-support-faq-back" aria-label="뒤로">
             ‹
           </button>
         )}
-        <span className="vf-support-faq-title">
+        <span className="vt-support-faq-title">
           {step === "categories" && "자주 묻는 질문"}
           {step === "subcategories" && selectedCat?.category}
           {step === "questions" && selectedSub?.name}
@@ -82,17 +82,17 @@ function FaqNavigator({
       </div>
 
       {/* 항목 목록 */}
-      <div className="vf-support-faq-list">
+      <div className="vt-support-faq-list">
         {step === "categories" &&
           FAQ_CATEGORIES.map((cat, idx) => (
             <button
               key={cat.category}
               type="button"
               onClick={() => handleCategory(idx)}
-              className="vf-support-faq-item is-category"
+              className="vt-support-faq-item is-category"
             >
               {cat.category}
-              <span className="vf-support-faq-arrow">›</span>
+              <span className="vt-support-faq-arrow">›</span>
             </button>
           ))}
 
@@ -102,10 +102,10 @@ function FaqNavigator({
               key={sub.name}
               type="button"
               onClick={() => handleSubcategory(idx)}
-              className="vf-support-faq-item is-sub"
+              className="vt-support-faq-item is-sub"
             >
               {sub.name}
-              <span className="vf-support-faq-arrow">›</span>
+              <span className="vt-support-faq-arrow">›</span>
             </button>
           ))}
 
@@ -116,7 +116,7 @@ function FaqNavigator({
               type="button"
               disabled={disabled}
               onClick={() => handleQuestion(faq.question)}
-              className="vf-support-faq-item is-question"
+              className="vt-support-faq-item is-question"
             >
               {faq.question}
             </button>
@@ -242,13 +242,13 @@ export function SupportWidget({ isAuthenticated }: { isAuthenticated: boolean })
   };
 
   return (
-    <div className={`vf-support ${open ? "is-open" : ""}`}>
+    <div className={`vt-support ${open ? "is-open" : ""}`}>
       {open && (
-        <section className="vf-support-panel" aria-label="회원 문의 채팅">
+        <section className="vt-support-panel" aria-label="회원 문의 채팅">
           {/* 헤더 */}
-          <div className="vf-support-head">
+          <div className="vt-support-head">
             <div>
-              <strong>바이브퍼니 문의</strong>
+              <strong>바이브타임 문의</strong>
               <span><i /> 상담 챗봇 · 관리자 연결</span>
             </div>
             <button type="button" onClick={() => setOpen(false)} aria-label="문의창 닫기">
@@ -257,7 +257,7 @@ export function SupportWidget({ isAuthenticated }: { isAuthenticated: boolean })
           </div>
 
           {/* 운영 시간 배너 */}
-          <div className={`vf-support-hours ${supportOpen ? "is-open" : "is-closed"}`}>
+          <div className={`vt-support-hours ${supportOpen ? "is-open" : "is-closed"}`}>
             {availability
               ? supportOpen
                 ? `문의 가능 · ${availability.label}`
@@ -266,19 +266,19 @@ export function SupportWidget({ isAuthenticated }: { isAuthenticated: boolean })
           </div>
 
           {/* 메시지 영역 */}
-          <div ref={scrollRef} className="vf-support-messages">
+          <div ref={scrollRef} className="vt-support-messages">
             {messages.map((message) => (
-              <div key={message.id} className={`vf-support-message is-${message.sender}`}>
+              <div key={message.id} className={`vt-support-message is-${message.sender}`}>
                 {message.sender !== "user" && (
-                  <span className="vf-support-speaker">
-                    {message.sender === "admin" ? "관리자" : "BEE BOT"}
+                  <span className="vt-support-speaker">
+                    {message.sender === "admin" ? "관리자" : "VIBE BOT"}
                   </span>
                 )}
                 <p>{message.content}</p>
               </div>
             ))}
             {!isAuthenticated && (
-              <p className="vf-support-login-note">
+              <p className="vt-support-login-note">
                 관리자 답변을 받으려면 <Link href="/login">로그인</Link>해 주세요.
               </p>
             )}
@@ -290,7 +290,7 @@ export function SupportWidget({ isAuthenticated }: { isAuthenticated: boolean })
           ) : (
             <button
               type="button"
-              className="vf-support-faq-toggle"
+              className="vt-support-faq-toggle"
               onClick={() => setShowFaq(true)}
             >
               자주 묻는 질문 보기
@@ -298,7 +298,7 @@ export function SupportWidget({ isAuthenticated }: { isAuthenticated: boolean })
           )}
 
           {/* 입력 폼 */}
-          <form onSubmit={submit} className="vf-support-form">
+          <form onSubmit={submit} className="vt-support-form">
             <input
               value={input}
               onChange={(event) => setInput(event.target.value)}
@@ -321,7 +321,7 @@ export function SupportWidget({ isAuthenticated }: { isAuthenticated: boolean })
       )}
       <button
         type="button"
-        className="vf-support-launcher"
+        className="vt-support-launcher"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-label="문의하기"

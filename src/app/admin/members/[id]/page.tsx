@@ -8,6 +8,7 @@ import { ROLE_LABELS, ADVERTISER_TYPE_LABELS, PLATFORM_LABELS, SOCIAL_PLATFORM_L
 import { formatKRW, formatPoint } from "@/lib/money";
 import { statusLabel, statusTone, WALLET_TX_TYPE_LABELS, POINT_TX_TYPE_LABELS, CAMPAIGN_TYPE_LABELS } from "@/lib/labels";
 import { setMemberStatusAction } from "@/lib/actions/admin-actions";
+import { decryptSensitive } from "@/lib/crypto";
 import {
   IconUsers, IconFilm, IconMegaphone, IconDollarSign,
   IconCreditCard, IconGlobe, IconShoppingBag, IconBuilding,
@@ -222,7 +223,7 @@ export default function MemberDetailPage({
                 {payouts.map((p) => (
                   <div key={p.id} className="flex items-center gap-3">
                     <div className="flex-1">
-                      <div className="text-sm text-gray-700">{p.bank_name} {p.bank_account_number}</div>
+                      <div className="text-sm text-gray-700">{p.bank_name} {decryptSensitive(p.bank_account_number)}</div>
                       <div className="text-xs text-gray-400">{formatDate(p.requested_at)}</div>
                     </div>
                     <div className="text-right">

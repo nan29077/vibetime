@@ -198,6 +198,7 @@ export async function processPayoutAction(fd: FormData): Promise<void> {
     } else if (decision === "paid" && pr.status === "approved") {
       pr.status = "paid";
       pr.processed_at = now();
+      pr.resident_id_number = null;
       const w = db.wallets.find((x) => x.user_id === pr.user_id);
       if (w) w.paid_balance += pr.amount;
       db.wallet_transactions

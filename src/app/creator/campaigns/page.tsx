@@ -21,6 +21,9 @@ export default function CreatorCampaignsPage() {
   const myParticipations = (db.campaign_participations ?? []).filter(
     (p) => p.creator_id === user.id
   );
+  const favoriteCampaignIds = (db.campaign_favorites ?? [])
+    .filter((item) => item.creator_id === user.id)
+    .map((item) => item.campaign_id);
 
   // 내가 참여한 캠페인들의 댓글을 미리 로드
   const participatedIds = new Set(myParticipations.map((p) => p.campaign_id));
@@ -133,6 +136,7 @@ export default function CreatorCampaignsPage() {
         expectedRewards={expectedRewards}
         distributionInfo={distributionInfo}
         myAssignedVideos={myAssignedVideos}
+        favoriteCampaignIds={favoriteCampaignIds}
       />
     </div>
   );

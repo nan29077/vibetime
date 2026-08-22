@@ -1,8 +1,8 @@
 # ===========================================================================
-# VIBEFUNNY — Docker 이미지 (Next.js standalone 빌드)
+# VIBETIME — Docker 이미지 (Next.js standalone 빌드)
 # ---------------------------------------------------------------------------
-# 빌드:  docker build -t vibefunny .
-# 실행:  docker run -p 3000:3000 --env-file .env.production vibefunny
+# 빌드:  docker build -t vibetime .
+# 실행:  docker run -p 3027:3027 --env-file .env.production vibetime
 #
 # 필수 환경변수 (.env.production 또는 ECS Task Definition):
 #   SESSION_SECRET, DATA_ENCRYPTION_KEY, EMAIL_VERIFICATION_HASH_SECRET
@@ -10,7 +10,7 @@
 #   NEXT_PUBLIC_APP_URL
 #
 # 주의: STORAGE_TYPE=local 시 /app/data 볼륨 마운트가 필요합니다.
-#   docker run -v vibefunny-data:/app/data ...
+#   docker run -v vibetime-data:/app/data ...
 #   db.json 과 private-uploads/ 는 컨테이너 재시작 사이에 유지돼야 합니다.
 # ===========================================================================
 
@@ -31,14 +31,14 @@ RUN npm ci
 COPY . .
 
 # 표준 .next 경로 사용 → standalone 출력 경로가 예측 가능해짐
-ENV VF_NEXT_DIST_DIR=.next
+ENV VT_NEXT_DIST_DIR=.next
 ENV NODE_ENV=production
 
 # 빌드 타임 환경변수 (NEXT_PUBLIC_* 는 번들에 포함됨)
 # 실제 값은 docker build --build-arg 또는 CI 시크릿으로 주입
-ARG NEXT_PUBLIC_APP_URL=https://vibefunny.com
+ARG NEXT_PUBLIC_APP_URL=https://vibetime.com
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
-ARG NEXT_PUBLIC_SITE_URL=https://vibefunny.com
+ARG NEXT_PUBLIC_SITE_URL=https://vibetime.com
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 
 RUN npm run build
@@ -65,9 +65,9 @@ RUN mkdir -p /app/data/private-uploads && \
 
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 3027
 
-ENV PORT=3000
+ENV PORT=3027
 ENV HOSTNAME="0.0.0.0"
 
 # standalone 서버 진입점

@@ -91,10 +91,10 @@ function SignupForm() {
   }
 
   return (
-    <main className="vf-auth-page mx-auto flex min-h-screen max-w-lg flex-col justify-center px-5 py-10">
-      <Link href="/" className="vf-auth-brand mb-6 justify-center text-center text-2xl font-black tracking-tight" aria-label="바이브퍼니 메인으로">
-        <Image src="/images/vibefunny-video-bee-logo.png" alt="" width={52} height={52} priority className="vf-auth-brand-image" />
-        <span>VIBE</span><b>FUNNY</b>
+    <main className="vt-auth-page mx-auto flex min-h-screen max-w-lg flex-col justify-center px-5 py-10">
+      <Link href="/" className="vt-auth-brand mb-6 justify-center text-center text-2xl font-black tracking-tight" aria-label="바이브타임 메인으로">
+        <Image src="/images/vibetime-logo.png" alt="" width={52} height={52} priority className="vt-auth-brand-image" />
+        <span>VIBE</span><b>TIME</b>
       </Link>
       <Card>
         <h1 className="text-xl font-bold text-gray-900">회원가입</h1>

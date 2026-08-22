@@ -12,20 +12,20 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "광고주 센터",
   description:
-    "VIBEFUNNY 광고주 센터 - 숏폼 배포 광고, AI 영상 제작 의뢰, 캠페인으로 브랜드를 알리세요.",
+    "VIBETIME 광고주 센터 - 숏폼 배포 광고, AI 영상 제작 의뢰, 캠페인으로 브랜드를 알리세요.",
   alternates: { canonical: "/for-advertisers" },
   openGraph: {
-    title: "광고주 센터 · VIBEFUNNY",
+    title: "광고주 센터 · VIBETIME",
     description:
       "숏폼 배포 광고, AI 영상 제작 의뢰, 캠페인으로 브랜드를 알리세요.",
     url: "/for-advertisers",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "VIBEFUNNY 숏폼 영상 부업 플랫폼" }],
+    images: [{ url: "/vibetime-og.png", width: 1729, height: 910, alt: "VIBETIME 숏폼 영상 부업 플랫폼" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "광고주 센터 · VIBEFUNNY",
+    title: "광고주 센터 · VIBETIME",
     description: "숏폼 배포 광고, AI 영상 제작 의뢰, 캠페인으로 브랜드를 알리세요.",
-    images: ["/og.png"],
+    images: ["/vibetime-og.png"],
   },
 };
 
@@ -67,7 +67,7 @@ const BENEFITS = [
   { Icon: IconGem,         title: "대행사 계층 자동 관리",      desc: "실행사가 대행사를 초대하면 수수료 정산·리포트 열람이 자동으로 연결됩니다." },
   { Icon: IconDollarSign,  title: "성과 기반 비용 구조",        desc: "배포 완료 건수 기준으로 포인트가 차감되어 낭비 없는 예산 집행이 가능합니다." },
   { Icon: IconTrendingUp,  title: "숏폼 특화 크리에이터",       desc: "숏폼 전문 크리에이터만 모집해 콘텐츠 퀄리티와 업로드 일정을 보장합니다." },
-  { Icon: IconFilm,        title: "영상 제작 대행 가능",        desc: "촬영 소스가 없어도 됩니다. VIBEFUNNY 크리에이터가 AI로 영상을 제작합니다." },
+  { Icon: IconFilm,        title: "영상 제작 대행 가능",        desc: "촬영 소스가 없어도 됩니다. VIBETIME 크리에이터가 AI로 영상을 제작합니다." },
 ];
 
 const PROCESS = [
@@ -119,7 +119,7 @@ const FAQS = [
   { q: "대행사 수수료는 어떻게 정산되나요?", a: "대행사가 포인트를 충전하거나 캠페인을 집행할 때, 사전에 설정된 비율만큼 실행사에게 자동으로 수수료가 지급됩니다. 수수료율은 관리자가 설정합니다." },
   { q: "여러 클라이언트의 캠페인을 동시에 운영할 수 있나요?", a: "네, 대행사 계정에서는 복수 클라이언트의 캠페인을 통합 대시보드에서 동시 관리할 수 있습니다. 클라이언트별 예산과 결과를 분리해서 확인 가능합니다." },
   { q: "실행사가 되려면 포인트를 얼마나 충전해야 하나요?", a: "포인트를 1,000,000원(100만원) 이상 충전하면 자동으로 실행사 등급이 부여됩니다. 실행사는 대행사를 모집·초대할 수 있으며, 대행사의 캠페인 집행 시 자동 수수료 수익이 발생합니다. 100만원 미만 충전 시에는 대행사로 분류됩니다." },
-  { q: "Facebook Reels도 배포가 가능한가요?", a: "네, VIBEFUNNY는 YouTube Shorts, Instagram Reels, TikTok, Facebook Reels 4대 플랫폼 동시 배포를 지원합니다. 하나의 캠페인으로 30억 이상의 Facebook MAU에 도달할 수 있습니다." },
+  { q: "Facebook Reels도 배포가 가능한가요?", a: "네, VIBETIME는 YouTube Shorts, Instagram Reels, TikTok, Facebook Reels 4대 플랫폼 동시 배포를 지원합니다. 하나의 캠페인으로 30억 이상의 Facebook MAU에 도달할 수 있습니다." },
   { q: "포인트는 만료되나요?", a: "충전된 포인트는 만료 기간 없이 유지됩니다. 실제 배포 건수가 완료될 때마다 포인트가 차감되며, 캠페인 종료 후 잔여 포인트는 다음 캠페인에 그대로 사용 가능합니다." },
 ];
 
@@ -148,22 +148,22 @@ function FullBg({
   );
 }
 
-/** 라이트 배경용 로고 (VIBE=다크, FUNNY=옐로우) */
+/** 라이트 배경용 로고 (VIBE=다크, TIME=옐로우) */
 function LogoLight() {
   return (
-    <span className="vf-site-logo text-xl font-black tracking-tight">
+    <span className="vt-site-logo text-xl font-black tracking-tight">
       <span className="text-gray-900">VIBE</span>
-      <span style={{ color: "#f59e0b" }}>FUNNY</span>
+      <span style={{ color: "#7c3aed" }}>TIME</span>
     </span>
   );
 }
 
-/** 다크 배경용 로고 (VIBE=흰색, FUNNY=옐로우) */
+/** 다크 배경용 로고 (VIBE=흰색, TIME=옐로우) */
 function LogoDark() {
   return (
-    <span className="vf-site-logo text-xl font-black tracking-tight">
+    <span className="vt-site-logo text-xl font-black tracking-tight">
       <span className="text-white">VIBE</span>
-      <span style={{ color: "#f59e0b" }}>FUNNY</span>
+      <span style={{ color: "#7c3aed" }}>TIME</span>
     </span>
   );
 }
@@ -172,7 +172,7 @@ function LogoDark() {
 
 export default function ForAdvertisersPage() {
   return (
-    <div className="vf-marketing vf-advertisers">
+    <div className="vt-marketing vt-advertisers">
       <style>{`
         @keyframes vfa-marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         .vfa-marquee { display:flex; width:max-content; animation: vfa-marquee 40s linear infinite; }
@@ -198,7 +198,7 @@ export default function ForAdvertisersPage() {
         </nav>
         <div className="vfa-header-actions flex items-center gap-3">
           <Link href="/login" className="rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-50"><IconLogIn size={16} />로그인</Link>
-          <Link href="/signup?role=advertiser" className="rounded-full px-5 py-2 text-sm font-bold text-black transition hover:opacity-80" style={{ background: "#f59e0b" }}><IconBuilding size={16} />광고주 가입</Link>
+          <Link href="/signup?role=advertiser" className="rounded-full px-5 py-2 text-sm font-bold text-black transition hover:opacity-80" style={{ background: "#7c3aed" }}><IconBuilding size={16} />광고주 가입</Link>
         </div>
       </header>
 
@@ -210,14 +210,14 @@ export default function ForAdvertisersPage() {
       >
         <div className="mx-auto max-w-5xl px-6 py-28 md:px-16">
           {/* label */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest" style={{ borderColor: "rgba(245,158,11,0.35)", color: "#f59e0b" }}>
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest" style={{ borderColor: "rgba(245,158,11,0.35)", color: "#7c3aed" }}>
             <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
             For Advertisers · 광고주 전용 플랫폼
           </div>
 
           <h1 className="text-[clamp(44px,8vw,100px)] font-black leading-[1.12] tracking-tight text-white">
             숏폼 광고,<br />
-            <span style={{ color: "#f59e0b" }}>더 스마트하게</span>
+            <span style={{ color: "#7c3aed" }}>더 스마트하게</span>
           </h1>
 
           <p className="mt-8 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.62)" }}>
@@ -233,7 +233,7 @@ export default function ForAdvertisersPage() {
               { v: "₩150K~", l: "최소 시작 예산" },
             ].map((s) => (
               <div key={s.l} className="rounded-2xl border p-5 text-center" style={{ background: "rgba(255,255,255,0.06)", backdropFilter: "blur(8px)", borderColor: "rgba(255,255,255,0.1)" }}>
-                <div className="text-2xl font-black" style={{ color: "#f59e0b" }}>{s.v}</div>
+                <div className="text-2xl font-black" style={{ color: "#7c3aed" }}>{s.v}</div>
                 <div className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{s.l}</div>
               </div>
             ))}
@@ -241,7 +241,7 @@ export default function ForAdvertisersPage() {
 
           {/* CTA */}
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/signup?role=advertiser&type=execution_company" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition hover:scale-105 hover:opacity-90" style={{ background: "#f59e0b" }}>
+            <Link href="/signup?role=advertiser&type=execution_company" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition hover:scale-105 hover:opacity-90" style={{ background: "#7c3aed" }}>
               <IconMegaphone size={16} strokeWidth={1.5} />
               실행사로 가입하기
             </Link>
@@ -317,7 +317,7 @@ export default function ForAdvertisersPage() {
             <div className="flex flex-col overflow-hidden rounded-3xl border-2 border-yellow-300 bg-white p-8 shadow-sm">
               {/* header */}
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style={{ background: "#f59e0b" }}>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style={{ background: "#7c3aed" }}>
                   <IconMegaphone size={22} strokeWidth={1.5} className="text-gray-900" />
                 </div>
                 <div>
@@ -345,7 +345,7 @@ export default function ForAdvertisersPage() {
               <Link
                 href="/signup?role=advertiser&type=execution_company"
                 className="mt-8 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-black text-black transition hover:opacity-80"
-                style={{ background: "#f59e0b" }}
+                style={{ background: "#7c3aed" }}
               >
                 <IconMegaphone size={15} strokeWidth={1.5} />
                 실행사로 가입하기
@@ -402,26 +402,26 @@ export default function ForAdvertisersPage() {
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-yellow-600">Point Charging Tier</p>
             <h2 className="text-3xl font-black text-gray-900 md:text-5xl leading-[1.25]">
               포인트 충전 금액에 따른<br />
-              <span style={{ color: "#f59e0b" }}>실행사 · 대행사 구분</span>
+              <span style={{ color: "#7c3aed" }}>실행사 · 대행사 구분</span>
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-base text-gray-500">
-              VIBEFUNNY 광고주는 포인트 충전 금액에 따라 실행사와 대행사로 구분됩니다.<br />충전 규모가 클수록 더 많은 권한과 혜택이 주어집니다.
+              VIBETIME 광고주는 포인트 충전 금액에 따라 실행사와 대행사로 구분됩니다.<br />충전 규모가 클수록 더 많은 권한과 혜택이 주어집니다.
             </p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 mb-10">
             {/* 실행사 */}
             <div className="relative overflow-hidden rounded-3xl border-2 border-yellow-400 bg-white p-8 shadow-md">
-              <div className="absolute right-0 top-0 rounded-bl-2xl px-4 py-2 text-xs font-black text-black" style={{ background: "#f59e0b" }}>
+              <div className="absolute right-0 top-0 rounded-bl-2xl px-4 py-2 text-xs font-black text-black" style={{ background: "#7c3aed" }}>
                 EXECUTOR
               </div>
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#f59e0b" }}>
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: "#7c3aed" }}>
                 <IconMegaphone size={24} strokeWidth={1.5} className="text-black" />
               </div>
               <h3 className="text-2xl font-black text-gray-900">실행사</h3>
               <div className="mt-3 inline-flex items-center gap-2 rounded-full px-4 py-2" style={{ background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.3)" }}>
                 <span className="text-sm font-medium text-gray-600">충전 기준</span>
-                <span className="text-lg font-black" style={{ color: "#f59e0b" }}>₩1,000,000 이상</span>
+                <span className="text-lg font-black" style={{ color: "#7c3aed" }}>₩1,000,000 이상</span>
               </div>
               <p className="mt-4 text-sm leading-relaxed text-gray-600">
                 포인트를 <strong className="text-gray-900">100만원 이상</strong> 충전한 광고주는 실행사 등급을 획득합니다.
@@ -484,9 +484,9 @@ export default function ForAdvertisersPage() {
               {[
                 { range: "₩150,000 ~ ₩499,999", label: "스타터", color: "#6b7280", items: ["캠페인 1건 집행 가능", "기본 리포트 제공", "자동 크리에이터 매칭"] },
                 { range: "₩500,000 ~ ₩999,999", label: "그로스", color: "#f97316", items: ["멀티 캠페인 동시 운영", "상세 분석 리포트", "우선 매칭 신청 가능"] },
-                { range: "₩1,000,000+", label: "실행사 등급", color: "#f59e0b", items: ["대행사 모집 권한 획득", "수수료 자동 수익 발생", "전담 매니저 배정 예정", "최우선 크리에이터 배정"] },
+                { range: "₩1,000,000+", label: "실행사 등급", color: "#7c3aed", items: ["대행사 모집 권한 획득", "수수료 자동 수익 발생", "전담 매니저 배정 예정", "최우선 크리에이터 배정"] },
               ].map((tier) => (
-                <div key={tier.label} className="rounded-xl p-5 bg-white border" style={{ borderColor: tier.color === "#f59e0b" ? "#f59e0b" : "#e5e7eb", boxShadow: tier.color === "#f59e0b" ? "0 0 0 2px rgba(245,158,11,0.2)" : "none" }}>
+                <div key={tier.label} className="rounded-xl p-5 bg-white border" style={{ borderColor: tier.color === "#7c3aed" ? "#7c3aed" : "#e5e7eb", boxShadow: tier.color === "#7c3aed" ? "0 0 0 2px rgba(245,158,11,0.2)" : "none" }}>
                   <div className="mb-2 text-xs font-black uppercase tracking-widest" style={{ color: tier.color }}>{tier.label}</div>
                   <div className="mb-3 text-sm font-bold text-gray-900">{tier.range}</div>
                   <ul className="space-y-1.5">
@@ -507,9 +507,9 @@ export default function ForAdvertisersPage() {
       <FullBg id="benefits" src={BG.benefits} overlay="rgba(0,0,0,0.80)">
         <div className="mx-auto max-w-6xl px-6 py-24 md:px-16">
           <div className="mb-16 text-center">
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>Why VIBEFUNNY</p>
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>Why VIBETIME</p>
             <h2 className="text-4xl font-black text-white md:text-6xl leading-[1.2]">
-              왜 VIBEFUNNY<br />여야 하나요?
+              왜 VIBETIME<br />여야 하나요?
             </h2>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -538,7 +538,7 @@ export default function ForAdvertisersPage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {PROCESS.map((s) => (
               <div key={s.n} className="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#f59e0b" }}>
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#7c3aed" }}>
                   {s.n}
                 </div>
                 <h3 className="font-black text-gray-900">{s.title}</h3>
@@ -560,7 +560,7 @@ export default function ForAdvertisersPage() {
             {/* header row */}
             <div className="grid grid-cols-3 px-6 py-4 text-xs font-black uppercase tracking-widest" style={{ background: "rgba(255,255,255,0.06)" }}>
               <span className="text-gray-500">항목</span>
-              <span className="text-center" style={{ color: "#f59e0b" }}>실행사</span>
+              <span className="text-center" style={{ color: "#7c3aed" }}>실행사</span>
               <span className="text-center text-orange-400">대행사</span>
             </div>
             {COMPARISON.map((row, i) => (
@@ -605,7 +605,7 @@ export default function ForAdvertisersPage() {
                       <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{t.role}</div>
                     </div>
                   </div>
-                  <span className="rounded-full px-3 py-1 text-xs font-bold text-black" style={{ background: "#f59e0b" }}>{t.badge}</span>
+                  <span className="rounded-full px-3 py-1 text-xs font-bold text-black" style={{ background: "#7c3aed" }}>{t.badge}</span>
                 </div>
               </div>
             ))}
@@ -620,7 +620,7 @@ export default function ForAdvertisersPage() {
           <div className="mb-12 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-600">Campaign Performance</p>
             <h2 className="text-3xl font-black text-white md:text-5xl leading-[1.25]">
-              숏폼 캠페인,<br /><span style={{ color: "#f59e0b" }}>이런 성과가 나옵니다</span>
+              숏폼 캠페인,<br /><span style={{ color: "#7c3aed" }}>이런 성과가 나옵니다</span>
             </h2>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-10">
@@ -631,7 +631,7 @@ export default function ForAdvertisersPage() {
               { value: "3배", label: "CTR 개선 효과", sub: "배너 광고 대비 숏폼 클릭률" },
             ].map((kpi) => (
               <div key={kpi.label} className="rounded-2xl p-6 text-center" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                <div className="text-4xl font-black mb-2" style={{ color: "#f59e0b" }}>{kpi.value}</div>
+                <div className="text-4xl font-black mb-2" style={{ color: "#7c3aed" }}>{kpi.value}</div>
                 <div className="text-sm font-bold text-white mb-1">{kpi.label}</div>
                 <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{kpi.sub}</div>
               </div>
@@ -643,7 +643,7 @@ export default function ForAdvertisersPage() {
               <div className="space-y-4">
                 {[
                   { label: "진행 중인 캠페인", value: "142건", color: "#10b981" },
-                  { label: "이번 달 배포 완료", value: "8,420건", color: "#f59e0b" },
+                  { label: "이번 달 배포 완료", value: "8,420건", color: "#7c3aed" },
                   { label: "참여 크리에이터", value: "12,000+명", color: "#3b82f6" },
                   { label: "4대 플랫폼 누적 도달", value: "2.4억회+", color: "#ef4444" },
                 ].map((stat) => (
@@ -665,7 +665,7 @@ export default function ForAdvertisersPage() {
                   { cat: "교육 / 자기계발", desc: "강의 홍보·지식 콘텐츠 마케팅" },
                 ].map((cat) => (
                   <div key={cat.cat} className="flex items-start gap-3 rounded-xl p-3" style={{ background: "rgba(0,0,0,0.2)" }}>
-                    <span className="mt-0.5 shrink-0 font-black text-xs" style={{ color: "#f59e0b" }}>✓</span>
+                    <span className="mt-0.5 shrink-0 font-black text-xs" style={{ color: "#7c3aed" }}>✓</span>
                     <div>
                       <div className="text-sm font-bold text-white">{cat.cat}</div>
                       <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{cat.desc}</div>
@@ -704,13 +704,13 @@ export default function ForAdvertisersPage() {
         <div className="mx-auto max-w-4xl px-6 py-32 text-center md:px-16">
           <p className="mb-6 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>Start Now</p>
           <h2 className="text-[clamp(44px,8vw,100px)] font-black leading-[1.12] text-white">
-            지금 바로<br /><span style={{ color: "#f59e0b" }}>캠페인을</span><br />시작하세요
+            지금 바로<br /><span style={{ color: "#7c3aed" }}>캠페인을</span><br />시작하세요
           </h2>
           <p className="mx-auto mt-8 max-w-md text-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
             최소 ₩150,000 예산 · 심사 후 24시간 내 크리에이터 모집 시작
           </p>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-            <Link href="/signup?role=advertiser&type=execution_company" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition hover:scale-105" style={{ background: "#f59e0b" }}>
+            <Link href="/signup?role=advertiser&type=execution_company" className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-black transition hover:scale-105" style={{ background: "#7c3aed" }}>
               <IconMegaphone size={16} strokeWidth={1.5} />
               실행사로 가입
             </Link>

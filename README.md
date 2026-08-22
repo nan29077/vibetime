@@ -1,4 +1,4 @@
-# VIBEACTION 🎬
+# VIBETIME 🎬
 
 영상 제작 부업 · 숏폼 배포 광고 · 영상 판매 마켓플레이스 · 추천인 수당 · 광고주 포인트 결제 · 관리자 정산을 포함한 한국어 반응형 웹앱 MVP.
 
@@ -24,14 +24,14 @@
 ```bash
 npm install
 npm run dev
-# http://localhost:3000
+# http://localhost:3027
 ```
 
 최초 실행 시 `/data/db.json` 이 자동 생성되며 시드 데이터(관리자/설정/카테고리)가 채워집니다.
 
 ### 기본 관리자 계정
 ```
-이메일:    admin@vibeaction.com
+이메일:    admin@vibetime.com
 비밀번호:  Admin1234!
 ```
 
@@ -62,7 +62,7 @@ PAYMENT_PROVIDER=mock         # mock | toss (현재 mock 구현)
 | 역할 | 코드 | 핵심 기능 |
 |---|---|---|
 | 최고관리자 | `admin` | 전 회원/정책/단가/수수료/승인/정산 관리 |
-| VIBEACTION 회원 | `creator` | 영상 제작·판매, 제작 의뢰 참여, 캠페인 배포, 수익 출금 |
+| VIBETIME 회원 | `creator` | 영상 제작·판매, 제작 의뢰 참여, 캠페인 배포, 수익 출금 |
 | 영상 구매 회원 | `buyer` | 영상 구매·다운로드, 제작 의뢰, 결과물 검수 |
 | 광고주 회원 | `advertiser` | 포인트 충전, 캠페인 집행. **실행사**(상위) / **대행사**(하위)로 구분 |
 

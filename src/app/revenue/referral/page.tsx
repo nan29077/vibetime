@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "추천 수당 수익 | VIBEFUNNY",
-  description: "친구를 VIBEFUNNY에 초대하고 가입 즉시 고정 수당을 받으세요. 추천 인원에 제한이 없습니다.",
+  title: "추천 수당 수익 | VIBETIME",
+  description: "친구를 VIBETIME에 초대하고 가입 즉시 고정 수당을 받으세요. 추천 인원에 제한이 없습니다.",
 };
 
 const BG = {
@@ -12,7 +12,7 @@ const BG = {
 };
 
 const STEPS = [
-  { n: "01", title: "가입 완료", desc: "VIBEFUNNY 크리에이터로 가입하면 즉시 본인만의 추천 코드와 추천 링크가 생성됩니다." },
+  { n: "01", title: "가입 완료", desc: "VIBETIME 크리에이터로 가입하면 즉시 본인만의 추천 코드와 추천 링크가 생성됩니다." },
   { n: "02", title: "링크 공유", desc: "SNS·카카오톡·이메일 등 어디서든 추천 링크를 공유하세요. 링크 클릭 시 추천 코드가 자동 적용됩니다." },
   { n: "03", title: "친구 가입", desc: "공유한 링크로 친구가 회원가입을 완료하면 추천 관계가 자동으로 등록됩니다." },
   { n: "04", title: "수당 즉시 지급", desc: "가입 완료 즉시 고정 수당이 지갑에 적립됩니다. 추천 인원 제한 없이 계속 쌓입니다." },
@@ -21,7 +21,7 @@ const STEPS = [
 const FAQ = [
   { q: "추천 수당은 얼마인가요?", a: "추천 1건당 고정 수당이 지급됩니다. 정확한 금액은 관리자 설정에 따라 달라지며, 대시보드 '추천인 제도' 메뉴에서 확인할 수 있습니다." },
   { q: "추천 인원 제한이 있나요?", a: "없습니다. 무제한으로 추천할 수 있으며, 추천한 인원만큼 수당이 누적됩니다." },
-  { q: "추천 코드는 어떻게 받나요?", a: "VIBEFUNNY 크리에이터로 가입하면 즉시 본인만의 추천 코드가 생성됩니다. 별도 신청 없이 대시보드에서 바로 확인할 수 있습니다." },
+  { q: "추천 코드는 어떻게 받나요?", a: "VIBETIME 크리에이터로 가입하면 즉시 본인만의 추천 코드가 생성됩니다. 별도 신청 없이 대시보드에서 바로 확인할 수 있습니다." },
   { q: "수당은 언제 지급되나요?", a: "추천인이 가입을 완료하는 즉시 지갑에 적립됩니다. 별도 대기 시간이 없습니다." },
   { q: "수당 출금은 어떻게 하나요?", a: "지갑에 적립된 수당은 최소 출금 금액 이상이 쌓이면 언제든 출금 신청이 가능합니다. 심사 후 1~3영업일 내 계좌로 입금됩니다." },
 ];
@@ -53,7 +53,7 @@ function FullBg({
 
 export default function ReferralRevenuePage() {
   return (
-    <div className="vf-marketing vf-revenue-detail">
+    <div className="vt-marketing vt-revenue-detail">
       <style>{`
         @keyframes ref-marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         .ref-marquee { display:flex; width:max-content; animation: ref-marquee 35s linear infinite; }
@@ -68,13 +68,13 @@ export default function ReferralRevenuePage() {
         className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 md:px-12"
         style={{ background: "rgba(6,6,6,0.90)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <Link href="/" className="vf-site-logo text-xl font-black">
+        <Link href="/" className="vt-site-logo text-xl font-black">
           <span className="text-white">VIBE</span>
-          <span style={{ color: "#f59e0b" }}>FUNNY</span>
+          <span style={{ color: "#7c3aed" }}>TIME</span>
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/#income" className="hidden text-sm text-gray-400 transition hover:text-white md:block">← 수익 구조</Link>
-          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#f59e0b" }}>무료 시작하기</Link>
+          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#7c3aed" }}>무료 시작하기</Link>
         </div>
       </header>
 
@@ -83,14 +83,14 @@ export default function ReferralRevenuePage() {
         <div className="px-6 pb-24 pt-20 md:px-16">
           <div
             className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
-            style={{ borderColor: "rgba(245,158,11,0.4)", color: "#f59e0b" }}
+            style={{ borderColor: "rgba(245,158,11,0.4)", color: "#7c3aed" }}
           >
             <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
             Revenue 03 · Referral Reward
           </div>
           <h1 className="text-[clamp(44px,9vw,112px)] font-black leading-[1.12] tracking-tight text-white">
             공유 하나로<br />
-            <span style={{ color: "#f59e0b" }}>잠자면서도</span><br />
+            <span style={{ color: "#7c3aed" }}>잠자면서도</span><br />
             수익이 쌓인다
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
@@ -109,7 +109,7 @@ export default function ReferralRevenuePage() {
               ].map((r) => (
                 <div key={r.n} className="flex items-center justify-between rounded-xl px-4 py-3" style={{ background: "rgba(255,255,255,0.06)" }}>
                   <span className="text-sm font-semibold text-white">{r.n}</span>
-                  <span className="text-lg font-black" style={{ color: "#f59e0b" }}>{r.earn}</span>
+                  <span className="text-lg font-black" style={{ color: "#7c3aed" }}>{r.earn}</span>
                 </div>
               ))}
             </div>
@@ -117,7 +117,7 @@ export default function ReferralRevenuePage() {
           </div>
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 hover:opacity-90 transition-all" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 hover:opacity-90 transition-all" style={{ background: "#7c3aed" }}>
               지금 가입하고 추천 코드 받기
             </Link>
             <Link href="#how" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>
@@ -152,7 +152,7 @@ export default function ReferralRevenuePage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s) => (
               <div key={s.n} className="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#f59e0b" }}>
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#7c3aed" }}>
                   {s.n}
                 </div>
                 <h3 className="font-black text-gray-900">{s.title}</h3>
@@ -182,7 +182,7 @@ export default function ReferralRevenuePage() {
               { title: "누적 수익", desc: "AI 납품·숏폼 배포 수익과 합산되어 지갑에 함께 관리됩니다.", badge: "Stacks up" },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                <span className="inline-block rounded-full px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest" style={{ background: "rgba(245,158,11,0.2)", color: "#f59e0b" }}>
+                <span className="inline-block rounded-full px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest" style={{ background: "rgba(245,158,11,0.2)", color: "#7c3aed" }}>
                   {item.badge}
                 </span>
                 <h3 className="mt-3 font-black text-white">{item.title}</h3>
@@ -219,13 +219,13 @@ export default function ReferralRevenuePage() {
         <div className="mx-auto max-w-3xl px-6 py-28 text-center md:px-16">
           <p className="mb-6 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>Start Now</p>
           <h2 className="text-[clamp(44px,8vw,88px)] font-black leading-[1.12] text-white">
-            추천 코드<br /><span style={{ color: "#f59e0b" }}>지금 바로</span><br />받으세요
+            추천 코드<br /><span style={{ color: "#7c3aed" }}>지금 바로</span><br />받으세요
           </h2>
           <p className="mx-auto mt-6 max-w-md text-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
             가입 즉시 추천 코드 발급 · 가입비 0원 · 즉시 추천 활동 가능
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#7c3aed" }}>
               무료 가입하고 추천 코드 받기 →
             </Link>
             <Link href="/#income" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>
@@ -238,8 +238,8 @@ export default function ReferralRevenuePage() {
       {/* FOOTER */}
       <footer className="border-t px-6 py-8 md:px-12" style={{ background: "#060606", borderColor: "rgba(255,255,255,0.05)" }}>
         <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <div className="vf-site-logo text-sm font-black">
-            <span className="text-white">VIBE</span><span style={{ color: "#f59e0b" }}>FUNNY</span>
+          <div className="vt-site-logo text-sm font-black">
+            <span className="text-white">VIBE</span><span style={{ color: "#7c3aed" }}>TIME</span>
           </div>
           <div className="flex gap-6 text-sm text-gray-600">
             <Link href="/" className="hover:text-white transition-colors">홈</Link>

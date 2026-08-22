@@ -1,50 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDb, saveDb } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
 import { nanoid } from "nanoid";
+import { getCurrentUser } from "@/lib/auth";
+import { getDb, tx } from "@/lib/db";
+import { audit } from "@/lib/services";
 
-export async function GET(
-  _: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
+  const user = getCurrentUser();
+  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
   const db = getDb();
-  const comments = (db.campaign_comments ?? []).filter(
-    (c) => c.campaign_id === params.id
-  );
-  return NextResponse.json(comments);
+  const campaign = db.ad_campaigns.find((item) => item.id === params.id);
+  if (!campaign) return NextResponse.json({ error: "캠페인을 찾을 수 없습니다." }, { status: 404 });
+  if (user.role === "advertiser" && campaign.advertiser_id !== user.id) return NextResponse.json({ error: "접근 권한이 없습니다." }, { status: 403 });
+  return NextResponse.json((db.campaign_comments ?? []).filter((item) => item.campaign_id === params.id));
 }
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  // 인증: 로그인 필수
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   const user = getCurrentUser();
-  if (!user) {
-    return NextResponse.json({ error: "인증이 필요합니다" }, { status: 401 });
-  }
-
-  const db = getDb();
-  const body = await req.json();
-
-  if (!body.content) {
-    return NextResponse.json({ error: "content 필수" }, { status: 400 });
-  }
-
-  // author_id, author_name, author_role을 body 대신 세션에서 가져옴
-  const comment = {
-    id: nanoid(),
-    campaign_id: params.id,
-    author_id: user.id,
-    author_name: user.name,
-    author_role: user.role as "admin" | "creator" | "advertiser",
-    content: body.content,
-    created_at: new Date().toISOString(),
-  };
-
-  if (!db.campaign_comments) db.campaign_comments = [];
-  db.campaign_comments.push(comment);
-  saveDb(db);
-
-  return NextResponse.json(comment);
+  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const input = (await req.json().catch(() => ({}))) as { content?: string };
+  const content = input.content?.trim() ?? "";
+  if (!content || content.length > 3000) return NextResponse.json({ error: "댓글은 1~3000자여야 합니다." }, { status: 400 });
+  const result = tx<{ status: number; body: unknown }>((db) => {
+    const campaign = db.ad_campaigns.find((item) => item.id === params.id);
+    if (!campaign) return { status: 404, body: { error: "캠페인을 찾을 수 없습니다." } };
+    const creatorParticipates = (db.campaign_participations ?? []).some((item) => item.campaign_id === campaign.id && item.creator_id === user.id);
+    if (user.role === "advertiser" && campaign.advertiser_id !== user.id) return { status: 403, body: { error: "접근 권한이 없습니다." } };
+    if (user.role === "creator" && !creatorParticipates && !["published", "recruiting", "in_progress"].includes(campaign.status)) return { status: 403, body: { error: "댓글 작성 권한이 없습니다." } };
+    const comment = { id: nanoid(), campaign_id: campaign.id, author_id: user.id, author_name: user.name, author_role: user.role, content, created_at: new Date().toISOString() };
+    if (!db.campaign_comments) db.campaign_comments = [];
+    db.campaign_comments.push(comment);
+    audit(db, { actorId: user.id, action: "comment_campaign", targetTable: "ad_campaigns", targetId: campaign.id });
+    return { status: 200, body: comment };
+  });
+  return NextResponse.json(result.body, { status: result.status });
 }

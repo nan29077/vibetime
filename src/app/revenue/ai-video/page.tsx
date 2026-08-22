@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "AI 영상 제작 수익 | VIBEFUNNY",
+  title: "AI 영상 제작 수익 | VIBETIME",
   description: "AI 도구로 숏폼 광고 영상을 제작하고 광고주에게 직접 납품해 수익을 만드세요.",
 };
 
@@ -83,7 +83,7 @@ function FullBg({
 
 export default function AiVideoRevenuePage() {
   return (
-    <div className="vf-marketing vf-revenue-detail">
+    <div className="vt-marketing vt-revenue-detail">
       <style>{`
         @keyframes rv-marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         .rv-marquee { display:flex; width:max-content; animation: rv-marquee 35s linear infinite; }
@@ -94,13 +94,13 @@ export default function AiVideoRevenuePage() {
         className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 md:px-12"
         style={{ background: "rgba(6,6,6,0.90)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <Link href="/" className="vf-site-logo text-xl font-black tracking-tight">
+        <Link href="/" className="vt-site-logo text-xl font-black tracking-tight">
           <span className="text-white">VIBE</span>
-          <span style={{ color: "#f59e0b" }}>FUNNY</span>
+          <span style={{ color: "#7c3aed" }}>TIME</span>
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/#income" className="hidden text-sm font-medium text-gray-400 transition hover:text-white md:block">← 수익 구조</Link>
-          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#f59e0b" }}>무료 시작하기</Link>
+          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#7c3aed" }}>무료 시작하기</Link>
         </div>
       </header>
 
@@ -109,14 +109,14 @@ export default function AiVideoRevenuePage() {
         <div className="px-6 pb-24 pt-20 md:px-16">
           <div
             className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
-            style={{ borderColor: "rgba(245,158,11,0.4)", color: "#f59e0b" }}
+            style={{ borderColor: "rgba(245,158,11,0.4)", color: "#7c3aed" }}
           >
             <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
             Revenue 01 · AI Video Creation
           </div>
           <h1 className="text-[clamp(44px,9vw,112px)] font-black leading-[1.12] tracking-tight text-white">
             AI로 만들고<br />
-            <span style={{ color: "#f59e0b" }}>광고주에게</span><br />
+            <span style={{ color: "#7c3aed" }}>광고주에게</span><br />
             납품하다
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
@@ -130,13 +130,13 @@ export default function AiVideoRevenuePage() {
               { v: "1~3일", l: "평균 제작 소요 시간" },
             ].map((s) => (
               <div key={s.l} className="rounded-2xl border p-4 text-center" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.1)" }}>
-                <div className="text-xl font-black" style={{ color: "#f59e0b" }}>{s.v}</div>
+                <div className="text-xl font-black" style={{ color: "#7c3aed" }}>{s.v}</div>
                 <div className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{s.l}</div>
               </div>
             ))}
           </div>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:opacity-90 transition-all hover:scale-105" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:opacity-90 transition-all hover:scale-105" style={{ background: "#7c3aed" }}>
               지금 크리에이터로 가입
             </Link>
             <Link href="#process" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>
@@ -169,7 +169,7 @@ export default function AiVideoRevenuePage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s) => (
               <div key={s.n} className="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#f59e0b" }}>
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#7c3aed" }}>
                   {s.n}
                 </div>
                 <h3 className="font-black text-gray-900">{s.title}</h3>
@@ -195,7 +195,7 @@ export default function AiVideoRevenuePage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TOOLS.map((t) => (
               <div key={t.name} className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                <span className="inline-block rounded-full px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest" style={{ background: "rgba(245,158,11,0.2)", color: "#f59e0b" }}>
+                <span className="inline-block rounded-full px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest" style={{ background: "rgba(245,158,11,0.2)", color: "#7c3aed" }}>
                   {t.tag}
                 </span>
                 <h3 className="mt-3 text-lg font-black text-white">{t.name}</h3>
@@ -230,7 +230,7 @@ export default function AiVideoRevenuePage() {
                 style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.03)" : "transparent", borderTop: "1px solid rgba(255,255,255,0.04)" }}
               >
                 <span className="font-bold text-white">{row.type}</span>
-                <span className="text-center font-medium" style={{ color: "#f59e0b" }}>₩{row.min}</span>
+                <span className="text-center font-medium" style={{ color: "#7c3aed" }}>₩{row.min}</span>
                 <span className="text-center font-medium text-white">{row.max !== "-" ? `₩${row.max}` : "-"}</span>
                 <span className="text-right text-gray-500">{row.note}</span>
               </div>
@@ -245,13 +245,13 @@ export default function AiVideoRevenuePage() {
         <div className="mx-auto max-w-3xl px-6 py-28 text-center md:px-16">
           <p className="mb-6 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>Start Now</p>
           <h2 className="text-[clamp(44px,8vw,88px)] font-black leading-[1.12] text-white">
-            지금 바로<br /><span style={{ color: "#f59e0b" }}>AI 제작</span><br />시작하기
+            지금 바로<br /><span style={{ color: "#7c3aed" }}>AI 제작</span><br />시작하기
           </h2>
           <p className="mx-auto mt-6 max-w-md text-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
             가입비 0원 · AI 제작 가이드 제공 · 즉시 캠페인 참여 가능
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#7c3aed" }}>
               크리에이터로 무료 가입 →
             </Link>
             <Link href="/#income" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>
@@ -264,8 +264,8 @@ export default function AiVideoRevenuePage() {
       {/* FOOTER */}
       <footer className="border-t px-6 py-8 md:px-12" style={{ background: "#060606", borderColor: "rgba(255,255,255,0.05)" }}>
         <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <div className="vf-site-logo text-sm font-black">
-            <span className="text-white">VIBE</span><span style={{ color: "#f59e0b" }}>FUNNY</span>
+          <div className="vt-site-logo text-sm font-black">
+            <span className="text-white">VIBE</span><span style={{ color: "#7c3aed" }}>TIME</span>
           </div>
           <div className="flex gap-6 text-sm text-gray-600">
             <Link href="/" className="hover:text-white transition-colors">홈</Link>

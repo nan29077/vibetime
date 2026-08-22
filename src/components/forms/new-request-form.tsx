@@ -62,7 +62,7 @@ export function NewRequestForm({
           <Field label="희망 납기일">
             <Input type="date" name="due_date" />
           </Field>
-          <Field label="특정 VIBEFUNNY 회원 지정" hint="미지정 시 공개 의뢰됩니다.">
+          <Field label="특정 VIBETIME 회원 지정" hint="미지정 시 공개 의뢰됩니다.">
             <Select name="designated_creator_id" defaultValue="">
               <option value="">공개 의뢰</option>
               {creators.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}

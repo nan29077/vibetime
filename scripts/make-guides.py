@@ -229,7 +229,7 @@ def page_bg(c,variant,color,ctop,total):
 def footer(c,pageno,label,color):
     c.setStrokeColor(LINE); c.setLineWidth(0.6); c.line(MX,14*mm,A4w-MX,14*mm)
     c.setFillColor(GRAY); c.setFont(R,7.5); c.drawString(MX,9.5*mm,label)
-    c.drawString(MX,A4h-13*mm,'VIBEACTION')
+    c.drawString(MX,A4h-13*mm,'VIBETIME')
     c.setFillColor(color); c.roundRect(A4w-MX-12*mm,8*mm,12*mm,5*mm,2.5,fill=1,stroke=0)
     c.setFillColor(colors.white); c.setFont(B,7.5); c.drawCentredString(A4w-MX-6*mm,9.6*mm,f'{pageno:02d}')
 
@@ -255,7 +255,7 @@ def cover(c,subtitle,color,label):
     cx=A4w/2
     c.setFillColor(AMBER); c.rect(cx-9*mm,A4h*0.60,18*mm,1.6*mm,fill=1,stroke=0)
     c.setFillColor(colors.HexColor('#C4B5FD')); c.setFont(R,11); c.drawCentredString(cx,A4h*0.555,'AI SHORTFORM CREATOR · COMMERCE PLATFORM')
-    c.setFillColor(colors.white); c.setFont(B,46); c.drawCentredString(cx,A4h*0.47,'VIBEACTION')
+    c.setFillColor(colors.white); c.setFont(B,46); c.drawCentredString(cx,A4h*0.47,'VIBETIME')
     c.setFont(B,24); c.drawCentredString(cx,A4h*0.405,subtitle)
     c.setFillColor(AMBER); c.setFont(B,15); c.drawCentredString(cx,A4h*0.33,'"숏폼으로 수익을 만들다"')
     c.setFillColor(colors.HexColor('#D9D5E8')); c.setFont(R,11)
@@ -267,14 +267,14 @@ def cover(c,subtitle,color,label):
 # 크리에이터용 가이드
 # =========================================================================
 def build_creator():
-    c=canvas.Canvas("/tmp/vibeaction-guide-creator.pdf",pagesize=A4)
+    c=canvas.Canvas("/tmp/vibetime-guide-creator.pdf",pagesize=A4)
     LB='크리에이터 가이드 · CONFIDENTIAL'
     cover(c,'크리에이터 가이드',PURPLE,'크리에이터가 여섯 갈래로 수익을 만드는 법')
     pg=2
     # 2 한눈에 보기 (6대)
     render(c,[
         TitleBlock('OVERVIEW','한눈에 보는 6대 수익원','layers',PURPLE),
-        para('VIBEACTION 크리에이터는 아래 여섯 가지 수익 활동을 자유롭게 조합합니다. 하나만 해도 되고, 합칠수록 수익이 빠르게 커집니다.',align=TA_CENTER,color=GRAY),
+        para('VIBETIME 크리에이터는 아래 여섯 가지 수익 활동을 자유롭게 조합합니다. 하나만 해도 되고, 합칠수록 수익이 빠르게 커집니다.',align=TA_CENTER,color=GRAY),
         KPIRow([('6','수익 파이프라인'),('0원','가입비'),('4','동시 배포 플랫폼')],PURPLE,h=22*mm),
         tbl([[chl('수익원'),ch('수익 방식'),chl('특징')],
             [cbl('① 캠페인 배포'),cc('배포 건당 고정 단가'),cl('가장 쉬움 · 구독자 0도 가능')],
@@ -421,7 +421,7 @@ def build_creator():
         TitleBlock('START','지금 시작하세요','rocket',PURPLE),
         para('가입 → SNS/운영 채널 등록 → 가장 쉬운 배포부터 시작하면 됩니다. 활동을 늘리고 조합할수록 수익이 커집니다.',align=TA_CENTER),
         KPIRow([('6','수익 파이프라인'),('0원','가입비'),('4','동시 배포 플랫폼')],PURPLE,h=22*mm),
-        Callout('VIBEACTION 크리에이터로 시작하기','앱에서 가입 후 대시보드의 캠페인·쇼츠 커머스 메뉴에서 바로 활동을 시작할 수 있습니다.',PURPLE,'play'),
+        Callout('VIBETIME 크리에이터로 시작하기','앱에서 가입 후 대시보드의 캠페인·쇼츠 커머스 메뉴에서 바로 활동을 시작할 수 있습니다.',PURPLE,'play'),
     ],PURPLE,'panel',pg,LB); pg+=1
     c.save(); return pg-1
 
@@ -429,15 +429,15 @@ def build_creator():
 # 광고주용 가이드
 # =========================================================================
 def build_advertiser():
-    c=canvas.Canvas("/tmp/vibeaction-guide-advertiser.pdf",pagesize=A4)
+    c=canvas.Canvas("/tmp/vibetime-guide-advertiser.pdf",pagesize=A4)
     LB='광고주 가이드 · CONFIDENTIAL'
     cover(c,'광고주 가이드',BLUE,'실행사 · 대행사 · 제작의뢰인을 위한 숏폼 마케팅')
     pg=2
     render(c,[
-        TitleBlock('OVERVIEW','왜 VIBEACTION 인가','target',BLUE),
+        TitleBlock('OVERVIEW','왜 VIBETIME 인가','target',BLUE),
         para('검증된 크리에이터 풀로 숏폼 영상 제작과 4대 플랫폼 동시 배포를 빠르고 합리적인 단가로 집행합니다. 포인트 기반으로 투명하게 정산되고, 성과까지 추적할 수 있습니다.',align=TA_CENTER,color=GRAY),
         KPIRow([('4','동시 배포 플랫폼'),('80억+','4대 플랫폼 사용자'),('포인트','투명 정산')],BLUE,h=22*mm),
-        tbl([[chl('니즈'),ch('VIBEACTION 제공')],
+        tbl([[chl('니즈'),ch('VIBETIME 제공')],
             [cbl('빠른 제작',BLUE),cl('AI 기반 다수 크리에이터 동시 제작 · 표준 단가')],
             [cbl('넓은 도달',BLUE),cl('YouTube·Instagram·TikTok·Facebook 동시 배포')],
             [cbl('안전한 집행',BLUE),cl('브랜드 세이프티 옵션 · 검수 승인 후 지급')],
@@ -501,7 +501,7 @@ def build_advertiser():
     render(c,[
         TitleBlock('ROI','도입 효과 · ROI','rocket',PURPLE),
         para('자체 제작·개별 섭외 대비 시간과 비용을 줄이면서 도달을 키웁니다. 예시로 단순 비교해 봅니다.',align=TA_CENTER,color=GRAY),
-        tbl([[chl('구분'),ch('기존 방식(예시)'),ch('VIBEACTION')],
+        tbl([[chl('구분'),ch('기존 방식(예시)'),ch('VIBETIME')],
             [cbl('영상 1편 제작'),cc('수십만원·수일'),cb('15초 1만원~ · 신속')],
             [cbl('4채널 배포'),cc('개별 섭외·관리'),cb('1세트 6만원 일괄')],
             [cbl('성과 추적'),cc('수기/분산'),cb('UTM·코드·KPI 통합')]],
@@ -523,11 +523,11 @@ def build_advertiser():
         para('간단한 절차로 바로 시작할 수 있습니다.',align=TA_CENTER),
         FlowDiagram(['광고주 가입','포인트 충전','캠페인 등록','집행·검수·정산'],PURPLE),
         Callout('도입 문의','제휴·대량 집행·맞춤 단가는 앱 내 문의 또는 운영팀 이메일로 연락 주세요. 캠페인 설계부터 리포팅까지 함께합니다.',PURPLE,'handshake'),
-        para('© 2025 VIBEACTION · 본 자료의 수치/단가는 예시이며 정책에 따라 변동될 수 있습니다.',size=8,color=GRAY,align=TA_CENTER),
+        para('© 2025 VIBETIME · 본 자료의 수치/단가는 예시이며 정책에 따라 변동될 수 있습니다.',size=8,color=GRAY,align=TA_CENTER),
     ],PURPLE,'corner',pg,LB); pg+=1
     c.save(); return pg-1
 
 n1=build_creator(); n2=build_advertiser()
 print("creator pages:",n1+1,"advertiser pages:",n2+1)
-for f in ["/tmp/vibeaction-guide-creator.pdf","/tmp/vibeaction-guide-advertiser.pdf"]:
+for f in ["/tmp/vibetime-guide-creator.pdf","/tmp/vibetime-guide-advertiser.pdf"]:
     print(f, os.path.getsize(f),"bytes")

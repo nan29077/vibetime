@@ -35,6 +35,7 @@ export function navForRole(role: Role, advertiserType?: AdvertiserType | null): 
         { href: "/creator", label: "대시보드", icon: "IconDashboard" },
         { href: "/creator/videos", label: "영상판매", icon: "IconFilm", group: "콘텐츠" },
         { href: "/creator/campaigns", label: "캠페인", icon: "IconMegaphone", group: "수익" },
+        { href: "/creator/notifications", label: "알림", icon: "IconBell" },
         { href: "/creator/shorts-commerce", label: "쇼츠 커머스", icon: "IconShoppingBag" },
         { href: "/creator/points", label: "포인트 / 출금", icon: "IconGem" },
         { href: "/creator/wallet", label: "수익 현황", icon: "IconWallet" },
@@ -47,6 +48,7 @@ export function navForRole(role: Role, advertiserType?: AdvertiserType | null): 
       const baseItems: NavItem[] = [
         { href: "/advertiser", label: "대시보드", icon: "IconDashboard" },
         { href: "/advertiser/campaigns", label: "캠페인", icon: "IconMegaphone", group: "광고" },
+        { href: "/advertiser/notifications", label: "알림", icon: "IconBell" },
         { href: "/advertiser/points", label: "포인트", icon: "IconGem" },
         { href: "/advertiser/settings", label: "내 계정 정보", icon: "IconUser", group: "설정" },
         { href: "/advertiser/settings/notifications", label: "알림 설정", icon: "IconBell" },

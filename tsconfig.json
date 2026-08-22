@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next-vibefunny/types/**/*.ts"
+    ".next-vibetime/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

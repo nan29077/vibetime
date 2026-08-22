@@ -12,7 +12,9 @@ export function getCurrentUser(): Profile | null {
   const uid = getSessionUserId();
   if (!uid) return null;
   const db = getDb();
-  return db.profiles.find((p) => p.id === uid) ?? null;
+  const user = db.profiles.find((p) => p.id === uid) ?? null;
+  if (!user || user.status === "suspended" || user.status === "withdrawn") return null;
+  return user;
 }
 
 /** 로그인 필수. 미로그인 시 /login 으로 리다이렉트 */
@@ -29,6 +31,7 @@ export function requireRole(...roles: Role[]): Profile {
   // 활성 상태가 아니면(가입비 결제 대기 등) 결제 안내 페이지로
   if (user.status === "pending") redirect("/payment/activate");
   if (user.status === "suspended") redirect("/unauthorized");
+  if (user.status === "withdrawn") redirect("/unauthorized");
   return user;
 }
 

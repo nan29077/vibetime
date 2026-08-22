@@ -1,9 +1,9 @@
-# VIBEFUNNY — AWS 배포 설정 가이드
+# VIBETIME — AWS 배포 설정 가이드
 
 ## 아키텍처 개요
 
 ```
-사용자 → CloudFront → ALB → ECS Fargate (vibefunny 컨테이너)
+사용자 → CloudFront → ALB → ECS Fargate (vibetime 컨테이너)
                               └── EFS 볼륨 (/app/data) ← db.json, private-uploads/
 ```
 
@@ -41,14 +41,14 @@ ECS Task Definition에서 EFS 볼륨을 `/app/data`에 마운트:
 ```json
 {
   "volumes": [{
-    "name": "vibefunny-data",
+    "name": "vibetime-data",
     "efsVolumeConfiguration": {
       "fileSystemId": "fs-xxxxxxxx",
-      "rootDirectory": "/vibefunny"
+      "rootDirectory": "/vibetime"
     }
   }],
   "mountPoints": [{
-    "sourceVolume": "vibefunny-data",
+    "sourceVolume": "vibetime-data",
     "containerPath": "/app/data"
   }]
 }
@@ -58,7 +58,7 @@ ECS Task Definition에서 EFS 볼륨을 `/app/data`에 마운트:
 
 ```env
 STORAGE_TYPE=s3
-AWS_S3_BUCKET=vibefunny-uploads
+AWS_S3_BUCKET=vibetime-uploads
 AWS_S3_REGION=ap-northeast-2
 AWS_ACCESS_KEY_ID=AKIA...
 AWS_SECRET_ACCESS_KEY=...
@@ -79,7 +79,7 @@ DATABASE_TYPE=json
 
 ```env
 DATABASE_TYPE=postgres
-DATABASE_URL=postgresql://user:password@host:5432/vibefunny
+DATABASE_URL=postgresql://user:password@host:5432/vibetime
 ```
 
 > PostgreSQL 전환 시 `src/lib/db/prisma-provider.ts` 구현 및 Prisma 스키마 작성 필요.
@@ -87,11 +87,11 @@ DATABASE_URL=postgresql://user:password@host:5432/vibefunny
 ### 앱
 
 ```env
-NEXT_PUBLIC_APP_URL=https://vibefunny.com
-NEXT_PUBLIC_SITE_URL=https://vibefunny.com
+NEXT_PUBLIC_APP_URL=https://vibetime.com
+NEXT_PUBLIC_SITE_URL=https://vibetime.com
 NODE_ENV=production
 PAYMENT_PROVIDER=toss   # 운영 시 toss로 변경 (현재 mock)
-VF_NEXT_DIST_DIR=.next  # Docker 빌드 시 반드시 설정
+VT_NEXT_DIST_DIR=.next  # Docker 빌드 시 반드시 설정
 ```
 
 ---
@@ -101,16 +101,16 @@ VF_NEXT_DIST_DIR=.next  # Docker 빌드 시 반드시 설정
 ```bash
 # 이미지 빌드
 docker build \
-  --build-arg NEXT_PUBLIC_APP_URL=https://vibefunny.com \
-  --build-arg NEXT_PUBLIC_SITE_URL=https://vibefunny.com \
-  -t vibefunny:latest .
+  --build-arg NEXT_PUBLIC_APP_URL=https://vibetime.com \
+  --build-arg NEXT_PUBLIC_SITE_URL=https://vibetime.com \
+  -t vibetime:latest .
 
 # ECR 푸시
 aws ecr get-login-password --region ap-northeast-2 | \
   docker login --username AWS --password-stdin <account-id>.dkr.ecr.ap-northeast-2.amazonaws.com
 
-docker tag vibefunny:latest <account-id>.dkr.ecr.ap-northeast-2.amazonaws.com/vibefunny:latest
-docker push <account-id>.dkr.ecr.ap-northeast-2.amazonaws.com/vibefunny:latest
+docker tag vibetime:latest <account-id>.dkr.ecr.ap-northeast-2.amazonaws.com/vibetime:latest
+docker push <account-id>.dkr.ecr.ap-northeast-2.amazonaws.com/vibetime:latest
 ```
 
 ---
@@ -122,7 +122,7 @@ docker push <account-id>.dkr.ecr.ap-northeast-2.amazonaws.com/vibefunny:latest
 | 런치 타입 | Fargate |
 | CPU | 512 (0.5 vCPU) |
 | Memory | 1024 MB |
-| 포트 | 3000 |
+| 포트 | 3027 |
 | 헬스체크 | `GET /` → 200 |
 | 최소 태스크 | 1 |
 
@@ -135,9 +135,9 @@ docker push <account-id>.dkr.ecr.ap-northeast-2.amazonaws.com/vibefunny:latest
   "Version": "2012-10-17",
   "Statement": [{
     "Effect": "Allow",
-    "Principal": { "AWS": "arn:aws:iam::<account-id>:role/vibefunny-ecs-task-role" },
+    "Principal": { "AWS": "arn:aws:iam::<account-id>:role/vibetime-ecs-task-role" },
     "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
-    "Resource": "arn:aws:s3:::vibefunny-uploads/*"
+    "Resource": "arn:aws:s3:::vibetime-uploads/*"
   }]
 }
 ```

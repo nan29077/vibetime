@@ -64,7 +64,7 @@ INK=colors.HexColor('#111827'); GRAY=colors.HexColor('#6B7280'); GRAY2=colors.He
 LIGHT=colors.HexColor('#F5F4FA'); ZEBRA=colors.HexColor('#FAFAFC'); LINE=colors.HexColor('#E7E5EE')
 DARK=colors.HexColor('#0B0716'); DARK2=colors.HexColor('#1B1030')
 
-OUT="/tmp/vibeaction-service-guide.pdf"
+OUT="/tmp/vibetime-service-guide.pdf"
 A4w,A4h=A4
 def alpha(c,a): return colors.Color(c.red,c.green,c.blue,alpha=a)
 
@@ -228,7 +228,7 @@ def content_bg(c,doc):
     c.saveState(); w,h=A4
     c.setFillColor(PURPLE); c.rect(0,h-5*mm,w,5*mm,fill=1,stroke=0)
     c.setFillColor(AMBER); c.rect(0,h-5*mm,38*mm,5*mm,fill=1,stroke=0)
-    c.setFont(R,8); c.setFillColor(GRAY2); c.drawString(20*mm,A4h-13*mm,'VIBEACTION · 서비스 소개서')
+    c.setFont(R,8); c.setFillColor(GRAY2); c.drawString(20*mm,A4h-13*mm,'VIBETIME · 서비스 소개서')
     # footer
     c.setStrokeColor(LINE); c.setLineWidth(0.6); c.line(20*mm,14*mm,w-20*mm,14*mm)
     c.setFillColor(GRAY); c.setFont(R,7.5); c.drawString(20*mm,9.5*mm,'CONFIDENTIAL · 본 자료의 수치는 예시이며 정책에 따라 변동될 수 있습니다.')
@@ -240,7 +240,7 @@ def content_bg(c,doc):
 cover_frame=Frame(20*mm,26*mm,A4w-40*mm,A4h-80*mm,id='cv')
 content_frame=Frame(20*mm,17*mm,A4w-40*mm,A4h-30*mm,id='ct')
 doc=SimpleDocTemplate(OUT,pagesize=A4,leftMargin=20*mm,rightMargin=20*mm,topMargin=22*mm,bottomMargin=20*mm,
-                      title="VIBEACTION 서비스 소개서",author="VIBEACTION")
+                      title="VIBETIME 서비스 소개서",author="VIBETIME")
 doc.addPageTemplates([PageTemplate(id='Cover',frames=[cover_frame],onPage=cover_bg),
                       PageTemplate(id='Content',frames=[content_frame],onPage=content_bg)])
 
@@ -249,7 +249,7 @@ st.append(NextPageTemplate('Content'))
 st.append(Spacer(1,44*mm))
 st.append(Paragraph('AI SHORTFORM CREATOR · COMMERCE PLATFORM',ParagraphStyle('x',fontName=R,fontSize=10,textColor=colors.HexColor('#C4B5FD'))))
 st.append(Spacer(1,7*mm))
-st.append(Paragraph('VIBEACTION',ParagraphStyle('x',fontName=B,fontSize=48,leading=52,textColor=colors.white)))
+st.append(Paragraph('VIBETIME',ParagraphStyle('x',fontName=B,fontSize=48,leading=52,textColor=colors.white)))
 st.append(Paragraph('서비스 소개서',ParagraphStyle('x',fontName=B,fontSize=27,leading=36,textColor=colors.white)))
 st.append(Spacer(1,11*mm))
 st.append(Paragraph('"숏폼으로 수익을 만들다"',ParagraphStyle('x',fontName=B,fontSize=17,textColor=AMBER)))
@@ -280,7 +280,7 @@ st.append(tt); st.append(PageBreak())
 
 # 01
 st+=section('01','서비스 개요','doc',PURPLE)
-st.append(P('<b>VIBEACTION</b>는 AI 시대의 숏폼 콘텐츠를 중심으로 <b>크리에이터의 다양한 수익 활동</b>과 <b>광고주의 효율적 마케팅</b>, 그리고 <b>커머스 판매</b>까지 하나로 연결하는 올인원 플랫폼입니다. 경험이 없어도 AI 도구와 표준화된 워크플로우를 따라 영상 제작·배포·판매에 참여하고, 본인 채널을 운영하며 상품을 판매하는 커머스로 확장할 수 있습니다.'))
+st.append(P('<b>VIBETIME</b>는 AI 시대의 숏폼 콘텐츠를 중심으로 <b>크리에이터의 다양한 수익 활동</b>과 <b>광고주의 효율적 마케팅</b>, 그리고 <b>커머스 판매</b>까지 하나로 연결하는 올인원 플랫폼입니다. 경험이 없어도 AI 도구와 표준화된 워크플로우를 따라 영상 제작·배포·판매에 참여하고, 본인 채널을 운영하며 상품을 판매하는 커머스로 확장할 수 있습니다.'))
 st.append(P('핵심은 <b>다중 수익 파이프라인</b>입니다. 캠페인 참여, 숏폼 배포, 영상 제작·판매, 유튜브 쇼츠 커머스, 추천·맞구독을 동시에 운영해 안정적인 부수입 구조를 만듭니다.'))
 st.append(Spacer(1,4))
 st.append(tbl([[Paragraph('구분',S['cellhl']),Paragraph('한 줄 정의',S['cellhl'])],
@@ -304,7 +304,7 @@ st+=blist(['<b>다중 수익 구조</b> — 조건 없는 배포부터 제작·�
  '<b>표준 캠페인·포인트 정산</b> — 광고주는 명확한 단가와 포인트로 투명하게 집행.',
  '<b>콘텐츠=커머스</b> — 카페24 연동으로 쇼츠가 곧 판매 채널이 되고 결제·배송은 자동.'])
 st.append(Spacer(1,5))
-st.append(FlowDiagram(['문제 : 단발·고진입·분절','VIBEACTION : 다중 파이프라인','결과 : 지속 가능한 수익'],PINK,h=20*mm))
+st.append(FlowDiagram(['문제 : 단발·고진입·분절','VIBETIME : 다중 파이프라인','결과 : 지속 가능한 수익'],PINK,h=20*mm))
 st.append(PageBreak())
 
 # 03
@@ -432,8 +432,8 @@ st.append(PageBreak())
 
 # 11
 st+=section('11','생태계 연동','link',PURPLE)
-st.append(P('VIBEACTION는 단독 서비스가 아니라 확장 가능한 생태계로 설계되었습니다.'))
-st.append(tbl([[Paragraph('연동',S['cellhl']),Paragraph('역할',S['cellh']),Paragraph('VIBEACTION 연결점',S['cellhl'])],
+st.append(P('VIBETIME는 단독 서비스가 아니라 확장 가능한 생태계로 설계되었습니다.'))
+st.append(tbl([[Paragraph('연동',S['cellhl']),Paragraph('역할',S['cellh']),Paragraph('VIBETIME 연결점',S['cellhl'])],
  [Paragraph('바이브포터',S['cellbl']),Paragraph('영상 거래(제작·구매) 마켓',S['cellc']),Paragraph('영상 판매 수익 / 구매 영상으로 쇼츠 커머스 운영',S['cell'])],
  [Paragraph('AI스토리',S['cellbl']),Paragraph('맞춤 동화 제작 의뢰',S['cellc']),Paragraph('동화 제작 의뢰 수신·연동 (관리자 AI스토리 연동)',S['cell'])],
  [Paragraph('카페24',S['cellbl']),Paragraph('커머스(상품·결제·배송)',S['cellc']),Paragraph('상품 등록·연동, 쇼츠 판매·발주·배송 처리',S['cell'])],
@@ -484,13 +484,13 @@ st.append(PageBreak())
 # 15
 st+=section('15','회사 정보 · 연락처','mail',PURPLE)
 st.append(tbl([[Paragraph('항목',S['cellhl']),Paragraph('내용',S['cellhl'])],
- [Paragraph('서비스명',S['cellbl']),Paragraph('VIBEACTION (바이브액션)',S['cell'])],
+ [Paragraph('서비스명',S['cellbl']),Paragraph('VIBETIME (바이브타임)',S['cell'])],
  [Paragraph('분야',S['cellbl']),Paragraph('AI 숏폼 크리에이터 부업 · 커머스 플랫폼',S['cell'])],
- [Paragraph('웹사이트',S['cellbl']),Paragraph('vibeaction.com',S['cell'])],
+ [Paragraph('웹사이트',S['cellbl']),Paragraph('vibetime.com',S['cell'])],
  [Paragraph('문의',S['cellbl']),Paragraph('제휴·투자·입점 문의: 앱 내 문의 또는 운영팀 이메일',S['cell'])]],
  [30*mm,135*mm]))
 st.append(Spacer(1,12))
-close=Table([[Paragraph('지금 VIBEACTION에서 나만의 숏폼 수익 파이프라인을 시작하세요.',
+close=Table([[Paragraph('지금 VIBETIME에서 나만의 숏폼 수익 파이프라인을 시작하세요.',
     ParagraphStyle('cl',fontName=B,fontSize=13.5,leading=20,textColor=colors.white,alignment=TA_CENTER))]],colWidths=[165*mm])
 close.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-1),PURPLE),('TOPPADDING',(0,0),(-1,-1),17),('BOTTOMPADDING',(0,0),(-1,-1),17)]))
 st.append(close); st.append(Spacer(1,4))
@@ -498,7 +498,7 @@ ac=Table([[Paragraph('크리에이터 가입 · 광고주 캠페인 · 제휴 �
     ParagraphStyle('cl',fontName=R,fontSize=10.5,leading=16,textColor=DARK,alignment=TA_CENTER))]],colWidths=[165*mm])
 ac.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-1),AMBER),('TOPPADDING',(0,0),(-1,-1),10),('BOTTOMPADDING',(0,0),(-1,-1),10)]))
 st.append(ac); st.append(Spacer(1,8))
-st.append(Paragraph('© 2025 VIBEACTION. 본 소개서의 수치/단가는 예시이며 플랫폼 정책에 따라 변동될 수 있습니다.',S['foot']))
+st.append(Paragraph('© 2025 VIBETIME. 본 소개서의 수치/단가는 예시이며 플랫폼 정책에 따라 변동될 수 있습니다.',S['foot']))
 
 doc.build(st)
 print("PDF built", OUT, os.path.getsize(OUT), "bytes")

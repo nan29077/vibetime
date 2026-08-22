@@ -41,11 +41,11 @@ export async function sendVerificationEmail(params: {
       "Idempotency-Key": params.idempotencyKey,
     },
     body: JSON.stringify({
-      from: `VIBEFUNNY <${params.senderEmail}>`,
+      from: `VIBETIME <${params.senderEmail}>`,
       to: [params.to],
-      subject: "[VIBEFUNNY] 회원가입 이메일 인증번호",
-      text: `VIBEFUNNY 회원가입 인증번호는 ${params.code}입니다. 인증번호는 10분 동안 유효합니다.`,
-      html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:28px;border:1px solid #f2d66d;border-radius:18px"><h1 style="font-size:22px">VIBEFUNNY 이메일 인증</h1><p>아래 인증번호를 회원가입 화면에 입력해 주세요.</p><p style="font-size:32px;font-weight:800;letter-spacing:8px;color:#d79a00">${params.code}</p><p style="color:#777">인증번호는 10분 동안 유효합니다.</p></div>`,
+      subject: "[VIBETIME] 회원가입 이메일 인증번호",
+      text: `VIBETIME 회원가입 인증번호는 ${params.code}입니다. 인증번호는 10분 동안 유효합니다.`,
+      html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:28px;border:1px solid #f2d66d;border-radius:18px"><h1 style="font-size:22px">VIBETIME 이메일 인증</h1><p>아래 인증번호를 회원가입 화면에 입력해 주세요.</p><p style="font-size:32px;font-weight:800;letter-spacing:8px;color:#d79a00">${params.code}</p><p style="color:#777">인증번호는 10분 동안 유효합니다.</p></div>`,
     }),
   });
 

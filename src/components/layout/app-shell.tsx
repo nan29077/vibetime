@@ -69,8 +69,8 @@ export function AppShell({
   const isActive = (href: string) => href !== "" && href === activeHref;
 
   const Logo = (
-    <Link href="/" className="vf-site-logo vf-shell-logo">
-      <span>VIBE</span><b>FUNNY</b>
+    <Link href="/" className="vt-site-logo vt-shell-logo">
+      <span>VIBE</span><b>TIME</b>
     </Link>
   );
 
@@ -116,7 +116,7 @@ export function AppShell({
   };
 
   return (
-    <div className={`vf-app-shell vf-app-shell-${sidebarSide} min-h-screen bg-[#fffdf5]`}>
+    <div className={`vt-app-shell vt-app-shell-${sidebarSide} min-h-screen bg-[#fffdf5]`}>
       {/* 데스크탑 사이드바 */}
       <aside className={cn(
         "fixed bottom-0 top-0 z-30 hidden w-64 flex-col bg-white p-4 lg:flex",
@@ -132,7 +132,7 @@ export function AppShell({
             <div><div className="text-sm font-semibold text-gray-800">{userName}</div><div className="text-xs text-gray-400">{roleLabel}</div></div>
           </div>
           {sidebarSide === "left" && (
-            <Link href="/" className="vf-sidebar-home">
+            <Link href="/" className="vt-sidebar-home">
               <IconHome size={16} />
               메인으로
             </Link>
@@ -164,7 +164,7 @@ export function AppShell({
           <div className="fixed inset-0 z-[100] overflow-hidden overscroll-none lg:hidden">
             <div className="absolute inset-0 bg-black/30" onClick={() => setOpen(false)} />
             <div className={cn(
-              "vf-mobile-sidebar-panel absolute inset-y-0 flex h-[100dvh] w-72 flex-col overflow-hidden overscroll-contain bg-white p-4 shadow-xl animate-fade-in",
+              "vt-mobile-sidebar-panel absolute inset-y-0 flex h-[100dvh] w-72 flex-col overflow-hidden overscroll-contain bg-white p-4 shadow-xl animate-fade-in",
               sidebarSide === "left" ? "left-0" : "right-0"
             )}>
               <div className="flex shrink-0 items-center justify-between">
@@ -176,7 +176,7 @@ export function AppShell({
               <div className="mt-4 min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
                 <SidebarNav />
               </div>
-              <div className="vf-mobile-sidebar-footer mt-3 shrink-0 border-t border-amber-100 bg-white pt-3">
+              <div className="vt-mobile-sidebar-footer mt-3 shrink-0 border-t border-amber-100 bg-white pt-3">
                 <div className="flex items-center gap-3 rounded-xl bg-amber-50 px-3 py-2.5">
                   {avatarUrl ? (
                     <img src={avatarUrl} alt={`${userName} 프로필 캐릭터`} className="h-12 w-12 shrink-0 rounded-full border-2 border-amber-300 bg-white object-cover shadow-sm" />
@@ -188,7 +188,7 @@ export function AppShell({
                     <div className="truncate text-xs text-gray-500">{roleLabel}</div>
                   </div>
                 </div>
-                <Link href="/" onClick={() => setOpen(false)} className="vf-sidebar-home">
+                <Link href="/" onClick={() => setOpen(false)} className="vt-sidebar-home">
                   <IconHome size={16} />
                   메인으로
                 </Link>

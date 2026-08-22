@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "숏폼 배포 수익 | VIBEFUNNY",
+  title: "숏폼 배포 수익 | VIBETIME",
   description: "YouTube Shorts·Instagram Reels·TikTok·Facebook Reels에 광고 숏폼을 배포하고 건당 고정 수익을 받으세요.",
 };
 
@@ -52,7 +52,7 @@ const PLATFORMS = [
 ];
 
 const STEPS = [
-  { n: "01", title: "소셜 채널 연결", desc: "VIBEFUNNY 대시보드에서 YouTube·Instagram·TikTok·Facebook 채널 URL을 등록하고 간단한 인증을 완료합니다." },
+  { n: "01", title: "소셜 채널 연결", desc: "VIBETIME 대시보드에서 YouTube·Instagram·TikTok·Facebook 채널 URL을 등록하고 간단한 인증을 완료합니다." },
   { n: "02", title: "캠페인 참여 신청", desc: "참여하고 싶은 광고 캠페인을 선택해 신청합니다. 카테고리·플랫폼·단가를 확인하고 결정하세요." },
   { n: "03", title: "영상 다운로드 & 업로드", desc: "승인된 광고 영상을 다운로드해 본인 채널에 업로드합니다. 업로드 URL을 제출하면 완료입니다." },
   { n: "04", title: "수익 자동 적립", desc: "검증이 완료되면 건당 고정 단가가 지갑에 즉시 적립됩니다. 출금은 언제든 신청 가능합니다." },
@@ -93,7 +93,7 @@ function FullBg({
 
 export default function DistributionRevenuePage() {
   return (
-    <div className="vf-marketing vf-revenue-detail">
+    <div className="vt-marketing vt-revenue-detail">
       <style>{`
         @keyframes dist-marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         .dist-marquee { display:flex; width:max-content; animation: dist-marquee 35s linear infinite; }
@@ -106,13 +106,13 @@ export default function DistributionRevenuePage() {
         className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 md:px-12"
         style={{ background: "rgba(6,6,6,0.90)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <Link href="/" className="vf-site-logo text-xl font-black">
+        <Link href="/" className="vt-site-logo text-xl font-black">
           <span className="text-white">VIBE</span>
-          <span style={{ color: "#f59e0b" }}>FUNNY</span>
+          <span style={{ color: "#7c3aed" }}>TIME</span>
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/#income" className="hidden text-sm text-gray-400 transition hover:text-white md:block">← 수익 구조</Link>
-          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#f59e0b" }}>무료 시작하기</Link>
+          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#7c3aed" }}>무료 시작하기</Link>
         </div>
       </header>
 
@@ -121,14 +121,14 @@ export default function DistributionRevenuePage() {
         <div className="px-6 pb-24 pt-20 md:px-16">
           <div
             className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
-            style={{ borderColor: "rgba(245,158,11,0.4)", color: "#f59e0b" }}
+            style={{ borderColor: "rgba(245,158,11,0.4)", color: "#7c3aed" }}
           >
             <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
             Revenue 02 · Shortform Distribution
           </div>
           <h1 className="text-[clamp(44px,9vw,112px)] font-black leading-[1.12] tracking-tight text-white">
             올리기만 해도<br />
-            <span style={{ color: "#f59e0b" }}>매달 수익이</span><br />
+            <span style={{ color: "#7c3aed" }}>매달 수익이</span><br />
             들어온다
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
@@ -142,13 +142,13 @@ export default function DistributionRevenuePage() {
               { v: "즉시", l: "검증 완료 후 수익 적립" },
             ].map((s) => (
               <div key={s.l} className="rounded-2xl border p-4 text-center" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.1)" }}>
-                <div className="text-xl font-black" style={{ color: "#f59e0b" }}>{s.v}</div>
+                <div className="text-xl font-black" style={{ color: "#7c3aed" }}>{s.v}</div>
                 <div className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{s.l}</div>
               </div>
             ))}
           </div>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 hover:opacity-90 transition-all" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 hover:opacity-90 transition-all" style={{ background: "#7c3aed" }}>
               지금 배포자로 가입
             </Link>
             <Link href="#platforms" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>
@@ -215,7 +215,7 @@ export default function DistributionRevenuePage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s) => (
               <div key={s.n} className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#f59e0b" }}>
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black text-black" style={{ background: "#7c3aed" }}>
                   {s.n}
                 </div>
                 <h3 className="font-black text-white">{s.title}</h3>
@@ -251,7 +251,7 @@ export default function DistributionRevenuePage() {
               >
                 <span className="font-bold text-white">{row.platform}</span>
                 <span className="text-center text-gray-400">{row.unit}</span>
-                <span className="text-center font-medium" style={{ color: "#f59e0b" }}>₩{row.min}</span>
+                <span className="text-center font-medium" style={{ color: "#7c3aed" }}>₩{row.min}</span>
                 <span className="text-right font-medium text-white">₩{row.max}</span>
               </div>
             ))}
@@ -265,13 +265,13 @@ export default function DistributionRevenuePage() {
         <div className="mx-auto max-w-3xl px-6 py-28 text-center md:px-16">
           <p className="mb-6 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>Start Now</p>
           <h2 className="text-[clamp(44px,8vw,88px)] font-black leading-[1.12] text-white">
-            내 채널이<br /><span style={{ color: "#f59e0b" }}>수익 파이프라인</span><br />이 됩니다
+            내 채널이<br /><span style={{ color: "#7c3aed" }}>수익 파이프라인</span><br />이 됩니다
           </h2>
           <p className="mx-auto mt-6 max-w-md text-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
             구독자 수 무관 · 가입비 0원 · 건당 고정 수익
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#f59e0b" }}>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#7c3aed" }}>
               지금 배포자로 가입 →
             </Link>
             <Link href="/#income" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>
@@ -284,8 +284,8 @@ export default function DistributionRevenuePage() {
       {/* FOOTER */}
       <footer className="border-t px-6 py-8 md:px-12" style={{ background: "#060606", borderColor: "rgba(255,255,255,0.05)" }}>
         <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <div className="vf-site-logo text-sm font-black">
-            <span className="text-white">VIBE</span><span style={{ color: "#f59e0b" }}>FUNNY</span>
+          <div className="vt-site-logo text-sm font-black">
+            <span className="text-white">VIBE</span><span style={{ color: "#7c3aed" }}>TIME</span>
           </div>
           <div className="flex gap-6 text-sm text-gray-600">
             <Link href="/" className="hover:text-white transition-colors">홈</Link>

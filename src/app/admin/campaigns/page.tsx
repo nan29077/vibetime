@@ -12,6 +12,7 @@ import {
   reviewCampaignProofAction,
   completeCampaignAction,
   reviewParticipationAction,
+  resolveParticipationDisputeAction,
 } from "@/lib/actions/campaign-actions";
 import { AdminCampaignComments } from "@/components/campaigns/admin-campaign-comments";
 
@@ -163,6 +164,14 @@ export default function AdminCampaignsPage() {
                                 <input type="hidden" name="decision" value="reject" />
                                 <SubmitButton size="sm" variant="outline">반려</SubmitButton>
                               </form>
+                            </div>
+                          )}
+                          {pt.status === "disputed" && (
+                            <div className="flex gap-1">
+                              {(["restore", "complete", "cancel"] as const).map((decision) => <form action={resolveParticipationDisputeAction} key={decision}>
+                                <input type="hidden" name="participation_id" value={pt.id}/><input type="hidden" name="decision" value={decision}/>
+                                <SubmitButton size="sm" variant={decision === "complete" ? undefined : "outline"}>{decision === "restore" ? "이전 상태 복원" : decision === "complete" ? "완료·정산" : "취소"}</SubmitButton>
+                              </form>)}
                             </div>
                           )}
                         </div>

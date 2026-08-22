@@ -5,6 +5,7 @@ import { formatKRW } from "@/lib/money";
 import { nameOf } from "@/lib/queries";
 import { WALLET_TX_TYPE_LABELS } from "@/lib/labels";
 import { processPayoutAction, releaseWalletTxAction, clearSsnAction } from "@/lib/actions/admin-actions";
+import { decryptSensitive } from "@/lib/crypto";
 
 export default function AdminPayoutsPage() {
   const db = getDb();
@@ -59,12 +60,12 @@ export default function AdminPayoutsPage() {
                 <tr key={p.id}>
                   <Td>{nameOf(db, p.user_id)}</Td>
                   <Td>{formatKRW(p.amount)}</Td>
-                  <Td className="text-xs text-gray-500">{p.bank_name} {p.bank_account_number} ({p.account_holder})</Td>
+                  <Td className="text-xs text-gray-500">{p.bank_name} {decryptSensitive(p.bank_account_number)} ({p.account_holder})</Td>
                   <Td>
                     {p.resident_id_number ? (
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-gray-500 font-mono">
-                          {p.resident_id_number.slice(0, 6)}-*******
+                          {decryptSensitive(p.resident_id_number).slice(0, 6)}-*******
                         </span>
                         <form action={clearSsnAction.bind(null, p.id)}>
                           <SubmitButton size="sm" variant="danger">주민번호 삭제</SubmitButton>

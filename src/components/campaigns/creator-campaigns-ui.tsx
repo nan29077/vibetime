@@ -39,9 +39,10 @@ interface Props {
   distributionInfo?: Record<string, { pool: boolean; unlocked: boolean; remaining: number; total: number }>;
   /** 내 배포 참여에 분배된 영상 (participation_id -> 영상) */
   myAssignedVideos?: Record<string, { id: string; url: string | null; file_data: string | null; file_name: string | null; status: string }>;
+  favoriteCampaignIds?: string[];
 }
 
-type Tab = "available" | "my";
+type Tab = "available" | "favorites" | "my";
 type ParticipationType = "deploy" | "video_production";
 
 /** available 탭에서 사용하는 가상 엔트리 */
@@ -79,6 +80,9 @@ function statusLabel(status: CampaignParticipation["status"]): string {
     deploy_submitted: "배포 승인 요청 중",
     deploy_approved: "배포 승인됨",
     deploy_rejected: "배포 반려",
+    revision_requested: "수정 요청",
+    disputed: "분쟁 처리 중",
+    cancelled: "참여 취소",
     completed: "완료",
   };
   return map[status] ?? status;
@@ -94,6 +98,9 @@ function statusGuidance(status: CampaignParticipation["status"]): string {
     case "deploy_approved": return "승인 완료! 수익이 지급됩니다";
     case "video_rejected":
     case "deploy_rejected": return "반려됨 — 재제출 가능합니다";
+    case "revision_requested": return "수정 요청 내용을 확인하고 다시 제출해주세요";
+    case "disputed": return "관리자가 분쟁 내용을 검토 중입니다";
+    case "cancelled": return "취소된 참여입니다";
     case "completed": return "완료! 수익이 지갑에 적립되었습니다";
     default: return "";
   }
@@ -317,6 +324,7 @@ export function CreatorCampaignsUI({
   expectedRewards = {},
   distributionInfo = {},
   myAssignedVideos = {},
+  favoriteCampaignIds = [],
 }: Props) {
   // 건당 예상 수익 (정책설정 크리에이터 지급액). 미설정 캠페인은 0 표시.
   const rewardFor = (campaignId: string, ptype: ParticipationType): number => {
@@ -331,10 +339,11 @@ export function CreatorCampaignsUI({
   const [submissionComments, setSubmissionComments] = useState(initialSubmissionComments);
   const [videoUrl, setVideoUrl] = useState("");
   const [videoNote, setVideoNote] = useState("");
-  const [videoFile, setVideoFile] = useState<{ data: string; name: string; type: string } | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
   const [deployLink, setDeployLink] = useState("");
   const [deployNote, setDeployNote] = useState("");
   const [assignedVideos, setAssignedVideos] = useState(myAssignedVideos);
+  const [favorites, setFavorites] = useState(() => new Set(favoriteCampaignIds));
   const [isPending, startTransition] = useTransition();
   const [toast, setToast] = useState<string | null>(null);
 
@@ -342,6 +351,41 @@ export function CreatorCampaignsUI({
     setToast(msg);
     setTimeout(() => setToast(null), 3000);
   };
+
+  async function toggleFavorite(campaignId: string) {
+    const response = await fetch(`/api/creator/campaigns/${campaignId}/favorite`, { method: "POST" });
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      showToast(error.error ?? "찜 처리에 실패했습니다.");
+      return;
+    }
+    const result = await response.json() as { favorite: boolean };
+    setFavorites((current) => {
+      const next = new Set(current);
+      if (result.favorite) next.add(campaignId); else next.delete(campaignId);
+      return next;
+    });
+    showToast(result.favorite ? "캠페인을 찜했습니다." : "찜을 해제했습니다.");
+  }
+
+  async function cancelParticipation(participationId: string) {
+    if (!window.confirm("이 참여를 취소하시겠습니까?")) return;
+    const response = await fetch(`/api/creator/participations/${participationId}/cancel`, { method: "POST" });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) return showToast(result.error ?? "참여 취소에 실패했습니다.");
+    setParticipations((current) => current.map((item) => item.id === participationId ? result : item));
+    showToast("참여가 취소되었습니다.");
+  }
+
+  async function openDispute(participationId: string) {
+    const reason = window.prompt("분쟁 사유를 10자 이상 입력하세요.");
+    if (!reason) return;
+    const response = await fetch(`/api/participations/${participationId}/dispute`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ reason }) });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) return showToast(result.error ?? "분쟁 신청에 실패했습니다.");
+    setParticipations((current) => current.map((item) => item.id === participationId ? result : item));
+    showToast("분쟁이 접수되었습니다.");
+  }
 
   // ─── 가상 available 엔트리 계산 ─────────────────────────────────────────
 
@@ -427,17 +471,24 @@ export function CreatorCampaignsUI({
   }
 
   async function handleVideoSubmit(campaignId: string) {
-    if (!videoUrl.trim()) { showToast("영상 URL을 입력해주세요"); return; }
+    if (!videoUrl.trim() && !videoFile) { showToast("영상 파일 또는 URL을 입력해주세요"); return; }
     startTransition(async () => {
+      let finalUrl = videoUrl.trim();
+      if (videoFile) {
+        const formData = new FormData();
+        formData.append("file", videoFile);
+        const upload = await fetch("/api/creator/requests/upload", { method: "POST", body: formData });
+        if (!upload.ok) { const error = await upload.json().catch(() => ({})); showToast(error.error ?? "파일 업로드에 실패했습니다."); return; }
+        finalUrl = (await upload.json()).url;
+      }
       const res = await fetch(`/api/creator/campaigns/${campaignId}/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           creator_id: userId,
           type: "video",
-          video_url: videoUrl,
+          video_url: finalUrl,
           note: videoNote,
-          ...(videoFile ? { video_file_data: videoFile.data, video_file_name: videoFile.name, video_file_type: videoFile.type } : {}),
         }),
       });
       if (res.ok) {
@@ -529,6 +580,14 @@ export function CreatorCampaignsUI({
               </div>
             )}
           </div>
+          <button
+            type="button"
+            aria-label={favorites.has(c.id) ? "찜 해제" : "찜하기"}
+            onClick={(event) => { event.stopPropagation(); void toggleFavorite(c.id); }}
+            className={`shrink-0 rounded-full border px-3 py-1 text-sm font-bold ${favorites.has(c.id) ? "border-amber-300 bg-amber-50 text-amber-600" : "border-gray-200 text-gray-400"}`}
+          >
+            {favorites.has(c.id) ? "★ 찜" : "☆ 찜"}
+          </button>
           <div className="text-right shrink-0">
             <div className="text-xs text-gray-400">건당 예상 수익</div>
             <div className="text-sm font-bold text-amber-600">
@@ -875,6 +934,12 @@ export function CreatorCampaignsUI({
                     <p className="text-sm text-red-700">{participation.rejection_reason}</p>
                   </div>
                 )}
+                {["applied", "accepted", "video_rejected", "deploy_rejected"].includes(participation.status) && (
+                  <button type="button" onClick={() => void cancelParticipation(participation.id)} className="mt-3 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50">참여 취소</button>
+                )}
+                {["video_submitted", "deploy_submitted", "video_rejected", "deploy_rejected", "completed"].includes(participation.status) && (
+                  <button type="button" onClick={() => void openDispute(participation.id)} className="mt-3 ml-2 rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50">분쟁 신청</button>
+                )}
               </div>
             )}
 
@@ -896,11 +961,7 @@ export function CreatorCampaignsUI({
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
-                      const reader = new FileReader();
-                      reader.onload = () => {
-                        setVideoFile({ data: reader.result as string, name: file.name, type: file.type });
-                      };
-                      reader.readAsDataURL(file);
+                      setVideoFile(file);
                     }}
                     className="w-full rounded-xl border border-amber-300 bg-white px-3 py-2 text-xs text-gray-600 focus:outline-none"
                   />
@@ -1123,7 +1184,7 @@ export function CreatorCampaignsUI({
       )}
 
       <div className="flex gap-1 rounded-xl bg-gray-100 p-1 mb-6">
-        {(["available", "my"] as Tab[]).map((t) => (
+        {(["available", "favorites", "my"] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -1134,7 +1195,7 @@ export function CreatorCampaignsUI({
                 : "text-gray-500 hover:text-gray-800",
             ].join(" ")}
           >
-            {t === "available" ? "참여 가능한 캠페인" : "내 참여 캠페인"}
+            {t === "available" ? "참여 가능한 캠페인" : t === "favorites" ? "찜한 캠페인" : "내 참여 캠페인"}
           </button>
         ))}
       </div>
@@ -1143,15 +1204,15 @@ export function CreatorCampaignsUI({
       <Modal />
 
       {/* 탭 콘텐츠 */}
-      {tab === "available" ? (
-        availableEntries.length === 0 ? (
+      {tab !== "my" ? (
+        (tab === "favorites" ? availableEntries.filter((entry) => favorites.has(entry.campaign.id)) : availableEntries).length === 0 ? (
           <div className="rounded-2xl border border-dashed border-gray-200 py-14 text-center">
             <p className="font-semibold text-gray-400">참여 가능한 캠페인이 없습니다</p>
             <p className="mt-1 text-sm text-gray-400">현재 모집 중인 캠페인이 없습니다.</p>
           </div>
         ) : (
           <div className="space-y-4">
-            {availableEntries.map((entry) => (
+            {(tab === "favorites" ? availableEntries.filter((entry) => favorites.has(entry.campaign.id)) : availableEntries).map((entry) => (
               <AvailableCampaignCard
                 key={`${entry.campaign.id}-${entry.participationType}`}
                 entry={entry}

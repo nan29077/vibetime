@@ -21,12 +21,12 @@ const menuItems = [
 export function MobileMainMenu({ myPageHref }: { myPageHref: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="vf-mobile-menu">
-      <button type="button" className="vf-hamburger" onClick={() => setOpen(true)} aria-label="전체 메뉴 열기"><IconMenu size={22} /></button>
-      {open && <div className="vf-mobile-menu-layer">
-        <button type="button" aria-label="메뉴 닫기" className="vf-menu-backdrop" onClick={() => setOpen(false)} />
-        <aside className="vf-mobile-drawer" aria-label="전체 메뉴">
-          <div className="vf-drawer-top"><span className="vf-drawer-logo">VIBE<b>FUNNY</b></span><button type="button" onClick={() => setOpen(false)} aria-label="메뉴 닫기"><IconX size={22} /></button></div>
+    <div className="vt-mobile-menu">
+      <button type="button" className="vt-hamburger" onClick={() => setOpen(true)} aria-label="전체 메뉴 열기"><IconMenu size={22} /></button>
+      {open && <div className="vt-mobile-menu-layer">
+        <button type="button" aria-label="메뉴 닫기" className="vt-menu-backdrop" onClick={() => setOpen(false)} />
+        <aside className="vt-mobile-drawer" aria-label="전체 메뉴">
+          <div className="vt-drawer-top"><span className="vt-drawer-logo">VIBE<b>TIME</b></span><button type="button" onClick={() => setOpen(false)} aria-label="메뉴 닫기"><IconX size={22} /></button></div>
           <p>MENU</p>
           <nav>{menuItems.map(({ href, label, Icon }) => <Link key={href} href={href} onClick={() => setOpen(false)}><Icon size={20} /><span>{label}</span></Link>)}<Link href={myPageHref} onClick={() => setOpen(false)}><IconUser size={20} /><span>마이페이지</span></Link></nav>
         </aside>
@@ -50,7 +50,7 @@ export function MobilePublicNav({ myPageHref }: { myPageHref: string }) {
   useEffect(() => setActive(routeActive), [routeActive]);
 
   return (
-    <nav className="vf-mobile-main-nav" aria-label="바이브퍼니 주요 메뉴">
+    <nav className="vt-mobile-main-nav" aria-label="바이브타임 주요 메뉴">
       {publicBottomItems.map(({ key, href, label, Icon }) => (
         <Link
           key={key}

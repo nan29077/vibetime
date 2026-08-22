@@ -17,3 +17,7 @@ next-env.d.ts
 
 # 빌드 검증용 임시 .next 폴더들
 .next-*
+
+# 로컬 산출물 검수 디렉터리 (배포 자산은 public/에 별도 복사)
+/tmp/
+/output/

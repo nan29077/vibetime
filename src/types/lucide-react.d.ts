@@ -9,7 +9,7 @@ declare module 'lucide-react' {
 
   export type LucideIcon = FC<LucideProps>;
 
-  // Icons used in VIBEFUNNY
+  // Icons used in VIBETIME
   export const Video: LucideIcon;
   export const Upload: LucideIcon;
   export const Link2: LucideIcon;

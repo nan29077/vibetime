@@ -1,15 +1,15 @@
 import type { Config } from "tailwindcss";
 
-// VIBEACTION 디자인 톤: 밝고 경쾌 (Purple / Pink / Yellow)
+// VIBETIME 디자인 톤: 에너지와 흐름 (Violet / Cyan / Coral)
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
         brand: {
-          purple: "#171717",
-          pink: "#f4b000",
-          yellow: "#ffc928",
+          purple: "#7c3aed",
+          pink: "#fb7185",
+          yellow: "#06b6d4",
         },
       },
       fontFamily: {

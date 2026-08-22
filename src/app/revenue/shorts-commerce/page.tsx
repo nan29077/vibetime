@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "유튜브 쇼츠 커머스 수익 | VIBEFUNNY",
+  title: "유튜브 쇼츠 커머스 수익 | VIBETIME",
   description: "내 유튜브 채널을 운영하며 숏폼에 상품을 연동해 판매 수수료를 버는 새로운 수익 구조. 카페24 연동 상품을 쇼츠에 연결하면 판매할 때마다 수익이 적립됩니다.",
 };
 
@@ -51,30 +51,30 @@ function FullBg({
 
 export default function ShortsCommerceRevenuePage() {
   return (
-    <div className="vf-marketing vf-revenue-detail">
+    <div className="vt-marketing vt-revenue-detail">
       <header
         className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 md:px-12"
         style={{ background: "rgba(6,6,6,0.90)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <Link href="/" className="vf-site-logo text-xl font-black">
-          <span className="text-white">VIBE</span><span style={{ color: "#f59e0b" }}>FUNNY</span>
+        <Link href="/" className="vt-site-logo text-xl font-black">
+          <span className="text-white">VIBE</span><span style={{ color: "#7c3aed" }}>TIME</span>
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/#income" className="hidden text-sm text-gray-400 transition hover:text-white md:block">← 수익 구조</Link>
-          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#f59e0b" }}>무료 시작하기</Link>
+          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#7c3aed" }}>무료 시작하기</Link>
         </div>
       </header>
 
       {/* HERO */}
       <FullBg src={BG.hero} overlay="linear-gradient(160deg, rgba(10,0,25,0.88) 0%, rgba(0,0,0,0.78) 100%)" className="pt-16">
         <div className="px-6 pb-24 pt-20 md:px-16">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest" style={{ borderColor: "rgba(245,158,11,0.4)", color: "#f59e0b" }}>
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest" style={{ borderColor: "rgba(245,158,11,0.4)", color: "#7c3aed" }}>
             <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
             Revenue 04 · YouTube Shorts Commerce
           </div>
           <h1 className="text-[clamp(40px,8vw,104px)] font-black leading-[1.12] tracking-tight text-white">
             내 쇼츠가<br />
-            <span style={{ color: "#f59e0b" }}>매장이 된다</span>
+            <span style={{ color: "#7c3aed" }}>매장이 된다</span>
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
             내 유튜브 채널을 운영하며 숏폼에 상품을 연동하세요. 관리자가 등록한 카페24 연동 상품 중
@@ -87,13 +87,13 @@ export default function ShortsCommerceRevenuePage() {
               { v: "수수료", l: "판매가의 8~15% 적립" },
             ].map((s) => (
               <div key={s.l} className="rounded-2xl border p-4 text-center" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.1)" }}>
-                <div className="text-xl font-black" style={{ color: "#f59e0b" }}>{s.v}</div>
+                <div className="text-xl font-black" style={{ color: "#7c3aed" }}>{s.v}</div>
                 <div className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{s.l}</div>
               </div>
             ))}
           </div>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 hover:opacity-90 transition-all" style={{ background: "#f59e0b" }}>지금 시작하기</Link>
+            <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 hover:opacity-90 transition-all" style={{ background: "#7c3aed" }}>지금 시작하기</Link>
             <Link href="#flow" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>수익 구조 보기</Link>
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function ShortsCommerceRevenuePage() {
           <div className="grid gap-5 md:grid-cols-4">
             {STEPS.map((s) => (
               <div key={s.n} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-                <div className="text-3xl font-black" style={{ color: "#f59e0b" }}>{s.n}</div>
+                <div className="text-3xl font-black" style={{ color: "#7c3aed" }}>{s.n}</div>
                 <h3 className="mt-3 text-lg font-black text-gray-900">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-500">{s.desc}</p>
               </div>
@@ -123,7 +123,7 @@ export default function ShortsCommerceRevenuePage() {
         <div className="mx-auto max-w-5xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>Revenue Structure</p>
-            <h2 className="text-4xl font-black text-white md:text-5xl leading-[1.25]">상품 1건 판매 시<br /><span style={{ color: "#f59e0b" }}>이만큼 적립됩니다</span></h2>
+            <h2 className="text-4xl font-black text-white md:text-5xl leading-[1.25]">상품 1건 판매 시<br /><span style={{ color: "#7c3aed" }}>이만큼 적립됩니다</span></h2>
             <p className="mx-auto mt-4 max-w-lg text-base" style={{ color: "rgba(255,255,255,0.45)" }}>
               수익 = <strong className="text-white">판매가 × 수수료율</strong>. 수수료율은 상품마다 관리자가 설정합니다. (아래는 예시)
             </p>
@@ -135,7 +135,7 @@ export default function ShortsCommerceRevenuePage() {
                   <th className="px-5 py-4 font-bold text-white">상품 (카테고리)</th>
                   <th className="px-5 py-4 font-bold text-white">판매가</th>
                   <th className="px-5 py-4 font-bold text-white">수수료율</th>
-                  <th className="px-5 py-4 font-bold" style={{ color: "#f59e0b" }}>건당 적립</th>
+                  <th className="px-5 py-4 font-bold" style={{ color: "#7c3aed" }}>건당 적립</th>
                 </tr>
               </thead>
               <tbody>
@@ -144,7 +144,7 @@ export default function ShortsCommerceRevenuePage() {
                     <td className="px-5 py-4 text-white">{r.cat}</td>
                     <td className="px-5 py-4" style={{ color: "rgba(255,255,255,0.7)" }}>{r.price}원</td>
                     <td className="px-5 py-4" style={{ color: "rgba(255,255,255,0.7)" }}>{r.rate}</td>
-                    <td className="px-5 py-4 font-black" style={{ color: "#f59e0b" }}>{r.payout}원</td>
+                    <td className="px-5 py-4 font-black" style={{ color: "#7c3aed" }}>{r.payout}원</td>
                   </tr>
                 ))}
               </tbody>
@@ -169,7 +169,7 @@ export default function ShortsCommerceRevenuePage() {
               <div key={s.label} className="rounded-2xl p-7" style={{ background: i === 1 ? "rgba(245,158,11,0.12)" : "rgba(255,255,255,0.05)", border: `1px solid ${i === 1 ? "rgba(245,158,11,0.35)" : "rgba(255,255,255,0.1)"}` }}>
                 <h3 className="text-lg font-black text-white">{s.label}</h3>
                 <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>{s.sales}</p>
-                <div className="mt-5 text-3xl font-black" style={{ color: "#f59e0b" }}>{s.income}</div>
+                <div className="mt-5 text-3xl font-black" style={{ color: "#7c3aed" }}>{s.income}</div>
               </div>
             ))}
           </div>
@@ -181,7 +181,7 @@ export default function ShortsCommerceRevenuePage() {
         <div className="mx-auto max-w-5xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>More than commerce</p>
-            <h2 className="text-4xl font-black text-white md:text-5xl leading-[1.25]">상품 판매 <span style={{ color: "#f59e0b" }}>그 이상의 수익</span></h2>
+            <h2 className="text-4xl font-black text-white md:text-5xl leading-[1.25]">상품 판매 <span style={{ color: "#7c3aed" }}>그 이상의 수익</span></h2>
             <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: "rgba(255,255,255,0.45)" }}>
               쇼츠 커머스는 상품 수수료뿐 아니라, 쇼츠 영상 자체와 채널 성장에서도 수익이 만들어집니다.
             </p>
@@ -195,24 +195,24 @@ export default function ShortsCommerceRevenuePage() {
                 수익이 발생합니다. 영상 한 편이 &quot;상품 판매 + 영상 자체 수익&quot; 두 갈래로 수익을 냅니다.
               </p>
               <ul className="mt-4 space-y-1.5 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-                <li className="flex gap-2"><span style={{ color: "#f59e0b" }}>→</span> 상품 판매 수수료 (판매가 × 수수료율)</li>
-                <li className="flex gap-2"><span style={{ color: "#f59e0b" }}>→</span> 쇼츠 조회수 기반 영상 수익</li>
-                <li className="flex gap-2"><span style={{ color: "#f59e0b" }}>→</span> 콘텐츠 누적 = 수익 누적</li>
+                <li className="flex gap-2"><span style={{ color: "#7c3aed" }}>→</span> 상품 판매 수수료 (판매가 × 수수료율)</li>
+                <li className="flex gap-2"><span style={{ color: "#7c3aed" }}>→</span> 쇼츠 조회수 기반 영상 수익</li>
+                <li className="flex gap-2"><span style={{ color: "#7c3aed" }}>→</span> 콘텐츠 누적 = 수익 누적</li>
               </ul>
             </div>
             <div className="rounded-2xl p-7" style={{ background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.3)" }}>
               <div className="text-3xl">🤝</div>
               <h3 className="mt-3 text-xl font-black text-white">맞구독으로 즉시 수익 채널 전환</h3>
               <p className="mt-2 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-                VIBEFUNNY 회원 간 <strong className="text-white">맞구독</strong>으로 초기 구독자를 빠르게 확보하세요.
+                VIBETIME 회원 간 <strong className="text-white">맞구독</strong>으로 초기 구독자를 빠르게 확보하세요.
                 구독자가 쌓이면 내 채널이 곧바로 &quot;수익 채널&quot;로 전환되어, 쇼츠 커머스와 영상 수익화가 즉시 작동합니다.
               </p>
               <ul className="mt-4 space-y-1.5 text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
-                <li className="flex gap-2"><span style={{ color: "#f59e0b" }}>→</span> 회원 맞구독으로 초기 구독자 확보</li>
-                <li className="flex gap-2"><span style={{ color: "#f59e0b" }}>→</span> 수익화 조건 도달 가속</li>
-                <li className="flex gap-2"><span style={{ color: "#f59e0b" }}>→</span> 커머스 + 영상 수익 동시 가동</li>
+                <li className="flex gap-2"><span style={{ color: "#7c3aed" }}>→</span> 회원 맞구독으로 초기 구독자 확보</li>
+                <li className="flex gap-2"><span style={{ color: "#7c3aed" }}>→</span> 수익화 조건 도달 가속</li>
+                <li className="flex gap-2"><span style={{ color: "#7c3aed" }}>→</span> 커머스 + 영상 수익 동시 가동</li>
               </ul>
-              <a href="/creator/community" className="mt-5 inline-block rounded-full px-5 py-2.5 text-sm font-black text-black transition hover:opacity-90" style={{ background: "#f59e0b" }}>SNS 맞구독 보러가기 →</a>
+              <a href="/creator/community" className="mt-5 inline-block rounded-full px-5 py-2.5 text-sm font-black text-black transition hover:opacity-90" style={{ background: "#7c3aed" }}>SNS 맞구독 보러가기 →</a>
             </div>
           </div>
         </div>
@@ -221,13 +221,13 @@ export default function ShortsCommerceRevenuePage() {
       {/* CTA */}
       <section className="px-6 py-28 text-center md:px-16" style={{ background: "#060606" }}>
         <h2 className="mx-auto max-w-3xl text-4xl font-black leading-[1.2] text-white md:text-6xl">
-          내 채널을<br /><span style={{ color: "#f59e0b" }}>작은 쇼핑몰로</span> 만드세요
+          내 채널을<br /><span style={{ color: "#7c3aed" }}>작은 쇼핑몰로</span> 만드세요
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-base" style={{ color: "rgba(255,255,255,0.5)" }}>
           상품 소싱·결제·배송은 카페24 연동으로 처리됩니다. 크리에이터는 좋은 콘텐츠 제작에만 집중하세요.
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#f59e0b" }}>크리에이터로 가입하기</Link>
+          <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#7c3aed" }}>크리에이터로 가입하기</Link>
           <Link href="/creator/shorts-commerce" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>쇼츠 커머스 바로가기</Link>
         </div>
       </section>

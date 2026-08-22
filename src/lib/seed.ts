@@ -111,7 +111,7 @@ export function defaultSettings(): AppSettings {
     site_banners: [
       {
         id: "banner-1",
-        title: "영상 제작 부업, VIBEFUNNY에서 시작하세요",
+        title: "영상 제작 부업, VIBETIME에서 시작하세요",
         subtitle: "숏폼 영상 제작부터 배포, 판매까지 한 곳에서",
         cta_label: "무료로 시작하기",
         cta_href: "/register",
@@ -353,7 +353,74 @@ function daysAgo(n: number): string {
 // 시드 데이터베이스
 // ===========================================================================
 
+/** Fresh VIBETIME database: one bootstrap admin and required configuration only. */
 export function seedDatabase(): Database {
+  const now = new Date().toISOString();
+  const admin: Profile = {
+    id: genId(),
+    email: "admin@vibetime.com",
+    password_hash: hashPassword("Admin1234!"),
+    name: "바이브타임 관리자",
+    phone: null,
+    role: "admin",
+    advertiser_type: null,
+    parent_advertiser_id: null,
+    referral_code: genReferralCode(),
+    referred_by_user_id: null,
+    status: "active",
+    avatar_url: null,
+    subscription_active_until: null,
+    created_at: now,
+    updated_at: now,
+  };
+
+  return {
+    profile_character_migration_version: 0,
+    profiles: [admin],
+    settings: defaultSettings(),
+    referral_rewards: [],
+    referral_relations: [],
+    wallets: [],
+    wallet_transactions: [],
+    point_wallets: [],
+    point_transactions: [],
+    payments: [],
+    categories: seedCategories(),
+    videos: [],
+    video_purchases: [],
+    custom_video_requests: [],
+    custom_video_applications: [],
+    custom_video_deliveries: [],
+    ad_campaigns: [],
+    campaign_applications: [],
+    campaign_deliveries: [],
+    social_accounts: [],
+    payout_requests: [],
+    campaign_submissions: [],
+    submission_comments: [],
+    campaign_participations: [],
+    campaign_favorites: [],
+    campaign_videos: [],
+    campaign_comments: [],
+    campaign_direct_messages: [],
+    participation_comments: [],
+    notifications: [],
+    private_files: [],
+    vibeporter_requests: [],
+    audit_logs: [],
+    product_categories: seedProductCategories(),
+    products: [],
+    creator_youtube_channels: [],
+    creator_shorts_links: [],
+    product_orders: [],
+    support_threads: [],
+    support_messages: [],
+    email_verifications: [],
+  };
+}
+
+/** Optional demo fixture retained for development scenarios; never used by default. */
+export function seedDemoDatabase(): Database {
   const now = new Date().toISOString();
   const categories = seedCategories();
 
@@ -361,7 +428,7 @@ export function seedDatabase(): Database {
 
   const admin: Profile = {
     id: genId(),
-    email: "admin@vibefunny.com",
+    email: "admin@vibetime.com",
     password_hash: hashPassword("Admin1234!"),
     name: "최고관리자",
     phone: "010-0000-0001",
@@ -379,7 +446,7 @@ export function seedDatabase(): Database {
 
   const creatorTest: Profile = {
     id: genId(),
-    email: "creator_test@vibefunny.com",
+    email: "creator_test@vibetime.com",
     password_hash: hashPassword("Test1234!"),
     name: "김지현 (크리에이터)",
     phone: "010-1234-5678",
@@ -397,7 +464,7 @@ export function seedDatabase(): Database {
 
   const advertiserTest: Profile = {
     id: genId(),
-    email: "advertiser_test@vibefunny.com",
+    email: "advertiser_test@vibetime.com",
     password_hash: hashPassword("Test1234!"),
     name: "박수진 광고 (실행사)",
     phone: "010-3456-7890",
@@ -415,7 +482,7 @@ export function seedDatabase(): Database {
 
   const agencyTest: Profile = {
     id: genId(),
-    email: "agency_test@vibefunny.com",
+    email: "agency_test@vibetime.com",
     password_hash: hashPassword("Test1234!"),
     name: "미디어픽스 대행사",
     phone: "010-4567-8901",
@@ -433,7 +500,7 @@ export function seedDatabase(): Database {
 
   const creator2: Profile = {
     id: genId(),
-    email: "creator2@vibefunny.com",
+    email: "creator2@vibetime.com",
     password_hash: hashPassword("Test1234!"),
     name: "박현우",
     phone: "010-5678-9012",
@@ -451,7 +518,7 @@ export function seedDatabase(): Database {
 
   const creator3: Profile = {
     id: genId(),
-    email: "creator3@vibefunny.com",
+    email: "creator3@vibetime.com",
     password_hash: hashPassword("Test1234!"),
     name: "최예린",
     phone: "010-6789-0123",
@@ -469,7 +536,7 @@ export function seedDatabase(): Database {
 
   const suspendedUser: Profile = {
     id: genId(),
-    email: "suspended@vibefunny.com",
+    email: "suspended@vibetime.com",
     password_hash: hashPassword("Test1234!"),
     name: "정지된 사용자",
     phone: null,
@@ -503,7 +570,7 @@ export function seedDatabase(): Database {
     tags: ["유머", "직장인", "AI영상", "숏폼"],
     duration_seconds: 28,
     price: 50000,
-    original_video_url: "https://storage.vibefunny.com/videos/v1.mp4",
+    original_video_url: "https://storage.vibetime.com/videos/v1.mp4",
     preview_video_url: null,
     thumbnail_url: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&q=80",
     status: "available",
@@ -528,7 +595,7 @@ export function seedDatabase(): Database {
     tags: ["뷰티", "광고", "인스타그램", "AI"],
     duration_seconds: 15,
     price: 30000,
-    original_video_url: "https://storage.vibefunny.com/videos/v2.mp4",
+    original_video_url: "https://storage.vibetime.com/videos/v2.mp4",
     preview_video_url: null,
     thumbnail_url: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&q=80",
     status: "available",
@@ -549,7 +616,7 @@ export function seedDatabase(): Database {
     tags: ["챌린지", "댄스", "TikTok", "트렌드"],
     duration_seconds: 22,
     price: 50000,
-    original_video_url: "https://storage.vibefunny.com/videos/v3.mp4",
+    original_video_url: "https://storage.vibetime.com/videos/v3.mp4",
     preview_video_url: null,
     thumbnail_url: "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?w=400&q=80",
     status: "pending_review",
@@ -570,7 +637,7 @@ export function seedDatabase(): Database {
     tags: ["맛집", "서울", "강남", "AI브이로그"],
     duration_seconds: 55,
     price: 100000,
-    original_video_url: "https://storage.vibefunny.com/videos/v4.mp4",
+    original_video_url: "https://storage.vibetime.com/videos/v4.mp4",
     preview_video_url: null,
     thumbnail_url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80",
     status: "available",
@@ -593,7 +660,7 @@ export function seedDatabase(): Database {
     tags: ["반려동물", "포메라니안", "귀여움", "펫"],
     duration_seconds: 18,
     price: 30000,
-    original_video_url: "https://storage.vibefunny.com/videos/v5.mp4",
+    original_video_url: "https://storage.vibetime.com/videos/v5.mp4",
     preview_video_url: null,
     thumbnail_url: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80",
     status: "available",
@@ -614,7 +681,7 @@ export function seedDatabase(): Database {
     tags: ["생활꿀팁", "다이어트", "정보", "AI"],
     duration_seconds: 58,
     price: 100000,
-    original_video_url: "https://storage.vibefunny.com/videos/v6.mp4",
+    original_video_url: "https://storage.vibetime.com/videos/v6.mp4",
     preview_video_url: null,
     thumbnail_url: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&q=80",
     status: "rejected",
@@ -635,7 +702,7 @@ export function seedDatabase(): Database {
     tags: ["패션", "룩북", "봄", "2024"],
     duration_seconds: 30,
     price: 50000,
-    original_video_url: "https://storage.vibefunny.com/videos/v7.mp4",
+    original_video_url: "https://storage.vibetime.com/videos/v7.mp4",
     preview_video_url: null,
     thumbnail_url: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80",
     status: "available",
@@ -686,7 +753,7 @@ export function seedDatabase(): Database {
     platforms: ["tiktok"],
     category_id: tkCat?.id ?? null,
     video_required: false,
-    uploaded_video_url: "https://storage.vibefunny.com/campaigns/c2.mp4",
+    uploaded_video_url: "https://storage.vibetime.com/campaigns/c2.mp4",
     distribution_count: 30,
     target_keywords: "챌린지,음료,MZ,바이럴",
     reference_links: null,
@@ -831,7 +898,7 @@ export function seedDatabase(): Database {
     creator_gender: "all",
     creator_age_group: "20s",
     creator_requirements: "패션/뷰티 콘텐츠 경험자 우대",
-    utm_link: "https://stride.example.com?utm_source=vibefunny",
+    utm_link: "https://stride.example.com?utm_source=vibetime",
     promo_code: "STRIDE10",
     kpi_goals: JSON.stringify(["views", "link_clicks", "conversions"]),
   };
@@ -846,7 +913,7 @@ export function seedDatabase(): Database {
     platforms: ["instagram", "facebook"],
     category_id: igCat?.id ?? null,
     video_required: false,
-    uploaded_video_url: "https://storage.vibefunny.com/campaigns/cafe-reels.mp4",
+    uploaded_video_url: "https://storage.vibetime.com/campaigns/cafe-reels.mp4",
     distribution_count: 25,
     video_production_count: 0,
     target_keywords: "카페,신메뉴,여름음료,디저트",
@@ -877,7 +944,7 @@ export function seedDatabase(): Database {
     platforms: ["tiktok"],
     category_id: tkCat?.id ?? null,
     video_required: false,
-    uploaded_video_url: "https://storage.vibefunny.com/campaigns/protein.mp4",
+    uploaded_video_url: "https://storage.vibetime.com/campaigns/protein.mp4",
     distribution_count: 35,
     video_production_count: 0,
     target_keywords: "헬스,보충제,단백질,운동",

@@ -18,7 +18,7 @@ function resolveSecret(): string {
       throw new Error("SESSION_SECRET 환경변수가 설정되지 않았습니다");
     }
     console.warn("[session] SESSION_SECRET 미설정 — 개발용 시크릿 사용 중 (프로덕션에서는 반드시 설정)");
-    return "vibefunny-dev-secret";
+    return "vibetime-dev-secret";
   }
   return secret;
 }
@@ -51,6 +51,7 @@ export function setSession(userId: string): void {
   cookies().set(COOKIE_NAME, sign(userId), {
     httpOnly: true,
     sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });

@@ -109,7 +109,7 @@ export default function CreatorSocialPage() {
             <Input name="channel_url" placeholder="https://youtube.com/@..." required />
           </Field>
           <Field label="핸들(@)">
-            <Input name="channel_handle" placeholder="@honeytem" />
+            <Input name="channel_handle" placeholder="@vibetime_creator" />
           </Field>
           <Field label="구독자 수">
             <Input type="number" name="subscriber_count" min={0} defaultValue={0} />
