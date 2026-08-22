@@ -389,32 +389,6 @@ export default function HomePage() {
             <Link href="#roadmap" className="text-sm font-medium transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>
               로드맵
             </Link>
-            <a
-              href="/vibetime-guide-creator.pdf"
-              download
-              className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/10"
-              style={{ borderColor: "rgba(255,255,255,0.3)" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              크리에이터 소개서 PDF
-            </a>
-            <a
-              href="/vibetime-guide-advertiser.pdf"
-              download
-              className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/10"
-              style={{ borderColor: "rgba(255,255,255,0.3)" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              광고주 소개서 PDF
-            </a>
           </div>
           <div className="mt-14 flex flex-wrap gap-2">
             {["AI 영상 제작", "YouTube Shorts", "Instagram Reels", "TikTok", "Facebook Reels", "추천 수당", "숏폼 배포", "부업 수익", "가입비 0원"].map((t) => (
@@ -1115,29 +1089,13 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-xs text-gray-600">&#169; 2025 VIBETIME. All rights reserved.</p>
             <div className="flex flex-wrap items-center gap-4">
-              <a href="/vibetime-guide-creator.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
+              <a href="/vibetime_서비스소개서.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
-                크리에이터 소개서
-              </a>
-              <a href="/vibetime-guide-advertiser.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                광고주 소개서
-              </a>
-              <a
-                href="/vibetime_서비스소개서.pdf"
-                download
-                className="inline-flex items-center gap-1.5 text-xs px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors border border-emerald-500/20"
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                서비스 소개서 다운로드 (PDF)
+                서비스 소개서
               </a>
             </div>
           </div>
