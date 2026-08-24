@@ -16,6 +16,20 @@ function IconXCircle({ size = 24, className, strokeWidth = 2 }: { size?: number;
   );
 }
 
+/**
+ * `?next=` 오픈 리다이렉트 방지.
+ * 내부 절대 경로("/foo")만 허용하고, 프로토콜 상대 경로("//evil.com")나
+ * 외부 URL, 백슬래시 우회는 모두 홈으로 되돌린다.
+ */
+function safeInternalPath(value: string | undefined): string {
+  if (!value) return "/";
+  const raw = value.trim();
+  if (!raw.startsWith("/")) return "/";
+  if (raw.startsWith("//") || raw.startsWith("/\\")) return "/";
+  if (/^\/+[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return "/";
+  return raw;
+}
+
 export default function CheckoutPage({
   params,
   searchParams,
@@ -28,7 +42,7 @@ export default function CheckoutPage({
 
   const db = getDb();
   const payment = db.payments.find((p) => p.id === params.id);
-  const next = searchParams.next || "/";
+  const next = safeInternalPath(searchParams.next);
 
   if (!payment || payment.user_id !== user.id) {
     return (

@@ -44,3 +44,33 @@ export function participationCapacity(db: Database, campaign: AdCampaign, type: 
   const limit = typeLimit > 0 ? typeLimit : (campaign.participation_limit ?? 0);
   return { active, limit, full: limit > 0 && active >= limit };
 }
+
+// 참여 신청 단계이거나 탈락/취소된 상태는 "승인된 참여자"로 보지 않는다.
+const UNAPPROVED_PARTICIPATION_STATUSES = new Set([
+  "applied",
+  "application_rejected",
+  "rejected",
+  "cancelled",
+]);
+
+/**
+ * 해당 크리에이터가 이 캠페인의 승인된 작업자인가.
+ * 레거시 campaign_applications(승인) 과 현행 campaign_participations(선발 완료)
+ * 두 경로를 모두 인정한다. 과거에는 applications 만 확인해 항상 실패했다.
+ */
+export function isApprovedCampaignWorker(
+  db: Database,
+  campaignId: string,
+  creatorId: string
+): boolean {
+  const approvedApplication = (db.campaign_applications ?? []).some(
+    (a) => a.campaign_id === campaignId && a.creator_id === creatorId && a.status === "approved"
+  );
+  if (approvedApplication) return true;
+  return (db.campaign_participations ?? []).some(
+    (p) =>
+      p.campaign_id === campaignId &&
+      p.creator_id === creatorId &&
+      !UNAPPROVED_PARTICIPATION_STATUSES.has(p.status)
+  );
+}

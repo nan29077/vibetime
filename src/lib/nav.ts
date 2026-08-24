@@ -50,6 +50,7 @@ export function navForRole(role: Role, advertiserType?: AdvertiserType | null): 
         { href: "/advertiser/campaigns", label: "캠페인", icon: "IconMegaphone", group: "광고" },
         { href: "/advertiser/notifications", label: "알림", icon: "IconBell" },
         { href: "/advertiser/points", label: "포인트", icon: "IconGem" },
+        { href: "/advertiser/wallet", label: "수익 / 출금", icon: "IconWallet" },
         { href: "/advertiser/settings", label: "내 계정 정보", icon: "IconUser", group: "설정" },
         { href: "/advertiser/settings/notifications", label: "알림 설정", icon: "IconBell" },
       ];

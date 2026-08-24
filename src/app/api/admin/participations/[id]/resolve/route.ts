@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { tx } from "@/lib/db";
-import { markVideoDistributed, syncCampaignVideos } from "@/lib/distribution";
+import { markVideoDistributed, releaseVideo, syncCampaignVideos } from "@/lib/distribution";
 import { creatorDeployPayout, creatorVideoPayout } from "@/lib/queries";
 import { addWalletTxOnce, audit, notifyUser } from "@/lib/services";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
-  const admin = getCurrentUser();
-  if (!admin) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const admin = auth.user;
   if (admin.role !== "admin") return NextResponse.json({ error: "관리자 권한이 필요합니다." }, { status: 403 });
   const input = (await req.json().catch(() => ({}))) as { decision?: "restore" | "complete" | "cancel"; memo?: string };
   if (!input.decision || !["restore", "complete", "cancel"].includes(input.decision)) return NextResponse.json({ error: "처리 결정을 확인하세요." }, { status: 400 });
@@ -21,6 +22,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       const paidReward = db.wallet_transactions.some((item) => item.related_table === "campaign_participations" && item.related_id === participation.id && item.status !== "cancelled");
       if (paidReward) return { status: 409, body: { error: "이미 지급된 수익이 있어 취소 전 관리자 정산 조정이 필요합니다." } };
       participation.status = "cancelled";
+      // 분쟁 취소로 작업이 무산되면 배정된 영상을 다시 풀로 반납한다.
+      releaseVideo(db, participation.id);
     }
     if (input.decision === "complete") {
       participation.status = "completed";

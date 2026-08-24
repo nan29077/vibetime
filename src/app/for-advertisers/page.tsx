@@ -595,7 +595,7 @@ export default function ForAdvertisersPage() {
                     <IconStar key={i} size={13} strokeWidth={1.5} className="text-yellow-400" />
                   ))}
                 </div>
-                <p className="mt-4 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>"{t.text}"</p>
+                <p className="mt-4 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>&ldquo;{t.text}&rdquo;</p>
                 <div className="mt-6 flex items-center justify-between border-t pt-5" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
                   <div className="flex items-center gap-3">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { tx } from "@/lib/db";
 import { notifyUser } from "@/lib/services";
 
@@ -18,8 +18,9 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   if (user.role !== "creator") return NextResponse.json({ error: "크리에이터 권한이 필요합니다." }, { status: 403 });
 
   const input = (await req.json().catch(() => ({}))) as { video_url?: string; message?: string };

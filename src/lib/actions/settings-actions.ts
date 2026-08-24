@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { tx } from "../db";
 import { requireUser } from "../auth";
+import { setSession } from "../session";
 import { hashPassword, verifyPassword } from "../crypto";
 import { audit } from "../services";
 import type { ActionState } from "@/components/form";
@@ -83,10 +84,14 @@ export async function changePasswordAction(
       return;
     }
     p.password_hash = hashPassword(next);
-    p.updated_at = now();
+    // 이 시각 이전에 발급된 모든 세션 토큰을 무효화한다(다른 기기 강제 로그아웃)
+    p.password_changed_at = now();
+    p.updated_at = p.password_changed_at;
     audit(db, { actorId: user.id, action: "change_password", targetTable: "profiles", targetId: user.id });
-    outcome = { ok: true, message: "비밀번호가 변경되었습니다." };
+    outcome = { ok: true, message: "비밀번호가 변경되었습니다. 다른 기기의 로그인은 해제됩니다." };
   });
+  // 현재 기기는 로그인 상태를 유지하도록 세션 쿠키를 재발급한다.
+  if (outcome.ok) setSession(user.id);
   revalidatePath("/creator/settings");
   return outcome;
 }

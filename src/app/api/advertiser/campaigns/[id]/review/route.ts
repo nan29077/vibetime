@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { tx } from "@/lib/db";
 import { markVideoDistributed, syncCampaignVideos } from "@/lib/distribution";
 import { creatorDeployPayout, creatorVideoPayout } from "@/lib/queries";
@@ -9,8 +9,9 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   if (user.role !== "advertiser" && user.role !== "admin") {
     return NextResponse.json({ error: "승인 권한이 없습니다." }, { status: 403 });
   }

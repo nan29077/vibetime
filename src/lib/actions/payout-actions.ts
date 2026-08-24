@@ -23,7 +23,8 @@ export async function requestPayoutAction(
   _prev: ActionState,
   fd: FormData
 ): Promise<ActionState> {
-  const user = requireRole("creator");
+  // 실행사/대행사(advertiser)도 수수료 수익을 출금할 수 있어야 한다.
+  const user = requireRole("creator", "advertiser");
   const parsed = payoutSchema.safeParse({
     amount: fd.get("amount"),
     bank_name: fd.get("bank_name"),
@@ -73,6 +74,9 @@ export async function requestPayoutAction(
     return { ok: true, message: "출금 신청이 접수되었습니다." };
   });
 
-  if (result.ok) revalidatePath("/creator/wallet");
+  if (result.ok) {
+    revalidatePath("/creator/wallet");
+    revalidatePath("/advertiser/wallet");
+  }
   return result;
 }

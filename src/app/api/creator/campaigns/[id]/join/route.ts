@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { tx } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { nanoid } from "nanoid";
 import { hasVideoPool, isDistributionUnlocked, allocateVideoForParticipation } from "@/lib/distribution";
 import type { CampaignParticipation } from "@/lib/schema";
@@ -12,10 +12,9 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   // 인증: 로그인 필수, creator 역할 확인
-  const user = getCurrentUser();
-  if (!user) {
-    return NextResponse.json({ error: "인증이 필요합니다" }, { status: 401 });
-  }
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   if (user.role !== "creator") {
     return NextResponse.json({ error: "크리에이터 권한이 필요합니다" }, { status: 403 });
   }

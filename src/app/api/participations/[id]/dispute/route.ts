@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { tx } from "@/lib/db";
 import { audit, notifyUser } from "@/lib/services";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   const input = (await req.json().catch(() => ({}))) as { reason?: string };
   const reason = input.reason?.trim() ?? "";
   if (reason.length < 10 || reason.length > 2000) return NextResponse.json({ error: "분쟁 사유는 10~2000자로 입력하세요." }, { status: 400 });

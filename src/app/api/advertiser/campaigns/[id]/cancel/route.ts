@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { tx } from "@/lib/db";
 import { addPointTxOnce, audit, notifyUser } from "@/lib/services";
 
 export async function POST(_: Request, { params }: { params: { id: string } }) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   if (user.role !== "advertiser" && user.role !== "admin") return NextResponse.json({ error: "취소 권한이 없습니다." }, { status: 403 });
   const result = tx<{ status: number; body: unknown }>((db) => {
     const campaign = db.ad_campaigns.find((item) => item.id === params.id);

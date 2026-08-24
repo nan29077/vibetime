@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { getDb, tx } from "@/lib/db";
 import type { Database, ParticipationComment, Profile } from "@/lib/schema";
 
@@ -14,8 +14,9 @@ function canAccess(db: Database, user: Profile, participationId: string) {
 }
 
 export async function GET(req: NextRequest) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   const participationId = new URL(req.url).searchParams.get("participation_id");
   if (!participationId) return NextResponse.json({ error: "participation_id가 필요합니다." }, { status: 400 });
   const db = getDb();
@@ -24,8 +25,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   const input = (await req.json().catch(() => ({}))) as { participation_id?: string; content?: string };
   const content = input.content?.trim() ?? "";
   if (!input.participation_id || !content || content.length > 3000) {

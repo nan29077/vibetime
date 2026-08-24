@@ -544,8 +544,8 @@ export default function HomePage() {
           </div>
           <div className="mx-auto max-w-3xl rounded-2xl p-8 text-center" style={{ background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)" }}>
             <p className="text-xl font-black text-white leading-snug md:text-2xl">
-              "처음엔 그냥 부업이었는데,<br />
-              <span style={{ color: "#7c3aed" }}>지금은 AI 영상 전문가로 불립니다."</span>
+              &ldquo;처음엔 그냥 부업이었는데,<br />
+              <span style={{ color: "#7c3aed" }}>지금은 AI 영상 전문가로 불립니다.&rdquo;</span>
             </p>
             <p className="mt-3 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>— 박도현, 크리에이터 1년 차 · 현재 월 290만원 수익</p>
             <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-black text-black transition hover:scale-105 hover:opacity-90" style={{ background: "#7c3aed" }}>

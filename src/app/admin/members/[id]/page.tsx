@@ -8,6 +8,7 @@ import { ROLE_LABELS, ADVERTISER_TYPE_LABELS, PLATFORM_LABELS, SOCIAL_PLATFORM_L
 import { formatKRW, formatPoint } from "@/lib/money";
 import { statusLabel, statusTone, WALLET_TX_TYPE_LABELS, POINT_TX_TYPE_LABELS, CAMPAIGN_TYPE_LABELS } from "@/lib/labels";
 import { setMemberStatusAction } from "@/lib/actions/admin-actions";
+import { verifySocialAccountAction, unverifySocialAccountAction } from "@/lib/actions/social-actions";
 import { decryptSensitive } from "@/lib/crypto";
 import {
   IconUsers, IconFilm, IconMegaphone, IconDollarSign,
@@ -33,8 +34,12 @@ export default function MemberDetailPage({
   const member = db.profiles.find((p) => p.id === params.id && p.role !== "admin");
   if (!member) notFound();
 
-  const wallet     = db.wallets.find((w) => w.user_id === member.id);
-  const pointWallet = db.point_wallets.find((pw) => pw.advertiser_id === member.id);
+  // 지갑/포인트 레코드는 첫 정산 시점에 생성된다. 레코드가 없다고 해서
+  // 회원 상세(영상·SNS 인증 등)가 통째로 감춰지지 않도록 0원 기본값을 쓴다.
+  const wallet     = db.wallets.find((w) => w.user_id === member.id)
+    ?? { pending_balance: 0, available_balance: 0, paid_balance: 0 };
+  const pointWallet = db.point_wallets.find((pw) => pw.advertiser_id === member.id)
+    ?? { point_balance: 0 };
   const recentTx   = [...db.wallet_transactions]
     .filter((t) => t.user_id === member.id)
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
@@ -127,7 +132,7 @@ export default function MemberDetailPage({
       </Card>
 
       {/* 크리에이터 전용 */}
-      {member.role === "creator" && wallet && (
+      {member.role === "creator" && (
         <>
           <div className="grid grid-cols-3 gap-4">
             <StatCard label="지급 대기 수익" value={formatKRW(wallet.pending_balance)} accent="yellow" />
@@ -176,13 +181,26 @@ export default function MemberDetailPage({
               </h3>
               <div className="space-y-2">
                 {socials.map((s) => (
-                  <div key={s.id} className="flex items-center gap-3">
+                  <div key={s.id} className="flex flex-wrap items-center gap-3">
                     <span className="rounded-lg bg-gray-100 px-2 py-1 text-xs font-bold text-gray-600">{SOCIAL_PLATFORM_LABELS[s.platform]}</span>
-                    <span className="flex-1 text-sm font-medium text-gray-800">{s.account_name}</span>
+                    <span className="flex-1 min-w-[120px] text-sm font-medium text-gray-800">
+                      {s.channel_url ? (
+                        <a href={s.channel_url} target="_blank" rel="noreferrer" className="hover:text-brand-purple hover:underline">{s.account_name}</a>
+                      ) : s.account_name}
+                    </span>
                     <span className="text-sm text-gray-500">팔로워 {s.follower_count.toLocaleString("ko-KR")}명</span>
                     <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${tone[statusTone(s.verified_status)]}`}>
                       {statusLabel(s.verified_status)}
                     </span>
+                    {s.verified_status !== "verified" ? (
+                      <form action={verifySocialAccountAction.bind(null, s.id)}>
+                        <SubmitButton size="sm" variant="outline">인증 승인</SubmitButton>
+                      </form>
+                    ) : (
+                      <form action={unverifySocialAccountAction.bind(null, s.id)}>
+                        <SubmitButton size="sm" variant="ghost">인증 해제</SubmitButton>
+                      </form>
+                    )}
                   </div>
                 ))}
               </div>
@@ -241,7 +259,7 @@ export default function MemberDetailPage({
       )}
 
       {/* 광고주 전용 */}
-      {member.role === "advertiser" && pointWallet && (
+      {member.role === "advertiser" && (
         <>
           <div className="grid grid-cols-2 gap-4">
             <StatCard label="포인트 잔액" value={formatPoint(pointWallet.point_balance)} accent="purple" />

@@ -8,6 +8,10 @@ import type { SupportMessage, SupportThread } from "@/lib/schema";
 
 const now = () => new Date().toISOString();
 
+// [주의] 이 라우트는 requireActiveUser() 가드를 적용하지 않는다.
+// 가입비 결제 대기(pending) 회원이 결제 문제를 문의할 수 있어야 하므로
+// /api/auth/*, /api/payments/* 와 동일하게 예외로 둔다.
+
 function unauthorized() {
   return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
 }

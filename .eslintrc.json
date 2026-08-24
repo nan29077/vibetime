@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "extends": ["next/core-web-vitals"],
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    ".next-*/",
+    "out/",
+    "output/",
+    "tmp/",
+    "data/",
+    "_restore_*/",
+    "supabase/"
+  ],
+  "rules": {
+    "@next/next/no-img-element": "off"
+  }
+}

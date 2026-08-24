@@ -18,7 +18,7 @@ import { computeCampaignCost, creatorDeployPayout, creatorVideoPayout } from "..
 import { syncCampaignVideos, markVideoDistributed, hasVideoPool, isDistributionUnlocked, allocateVideoForParticipation } from "../distribution";
 import { ALL_SOCIAL_PLATFORMS, type AdCampaign, type CampaignType, type Platform, type SocialPlatform } from "../schema";
 import type { ActionState } from "@/components/form";
-import { campaignEligibility, participationCapacity } from "../campaign-eligibility";
+import { campaignEligibility, isApprovedCampaignWorker, participationCapacity } from "../campaign-eligibility";
 
 const now = () => new Date().toISOString();
 
@@ -379,13 +379,35 @@ export async function reviewCampaignAction(fd: FormData): Promise<void> {
 }
 
 // === CREATOR: 캠페인 참여 신청 ========================================
-export async function applyCampaignAction(fd: FormData): Promise<void> {
+// 크리에이터 캠페인 상세 화면(<CampaignApplyForm />)에서 호출된다.
+export async function applyCampaignAction(
+  _prev: ActionState,
+  fd: FormData
+): Promise<ActionState> {
   const user = requireRole("creator");
-  const campaignId = String(fd.get("campaign_id") || "");
+  const campaignId = String(fd.get("campaign_id") || "").trim();
+  if (!campaignId) return { ok: false, message: "캠페인 정보가 없습니다." };
+
+  let outcome: ActionState = { ok: false };
   tx((db) => {
     const c = db.ad_campaigns.find((x) => x.id === campaignId);
-    if (!c || !["recruiting", "published", "in_progress"].includes(c.status)) return;
-    if (db.campaign_applications.some((a) => a.campaign_id === campaignId && a.creator_id === user.id)) return;
+    if (!c || !["recruiting", "published", "in_progress"].includes(c.status)) {
+      outcome = { ok: false, message: "참여 신청이 가능한 캠페인이 아닙니다." };
+      return;
+    }
+    if (c.end_date && new Date(c.end_date).getTime() < Date.now()) {
+      outcome = { ok: false, message: "참여 모집 기한이 종료되었습니다." };
+      return;
+    }
+    if (db.campaign_applications.some((a) => a.campaign_id === campaignId && a.creator_id === user.id)) {
+      outcome = { ok: false, message: "이미 참여를 신청한 캠페인입니다." };
+      return;
+    }
+    const eligibility = campaignEligibility(db, user, c);
+    if (!eligibility.eligible) {
+      outcome = { ok: false, message: eligibility.reasons.join(" ") };
+      return;
+    }
     db.campaign_applications.push({
       id: genId(),
       campaign_id: campaignId,
@@ -394,8 +416,20 @@ export async function applyCampaignAction(fd: FormData): Promise<void> {
       created_at: now(),
       updated_at: now(),
     });
+    notifyUser(db, {
+      recipientId: c.advertiser_id,
+      title: "새 캠페인 참여 신청",
+      message: c.title,
+      link: `/advertiser/campaigns/${c.id}`,
+    });
+    outcome = { ok: true, message: "참여 신청이 접수되었습니다. 광고주 승인을 기다려 주세요." };
   });
-  revalidatePath("/creator/campaigns");
+  if (outcome.ok) {
+    revalidatePath("/creator/campaigns");
+    revalidatePath(`/creator/campaigns/${campaignId}`);
+    revalidatePath("/advertiser/campaigns");
+  }
+  return outcome;
 }
 
 // === ADMIN/ADVERTISER: 참여자 승인/반려 ===============================
@@ -422,27 +456,51 @@ export async function decideCampaignApplicationAction(fd: FormData): Promise<voi
 }
 
 // === CREATOR: 배포 증빙 제출 ==========================================
-export async function submitCampaignProofAction(fd: FormData): Promise<void> {
+// 실패 사유를 화면에 표시할 수 있도록 ActionState 를 반환한다(조용한 실패 방지).
+export async function submitCampaignProofAction(
+  _prev: ActionState,
+  fd: FormData
+): Promise<ActionState> {
   const user = requireRole("creator");
-  const campaignId = String(fd.get("campaign_id") || "");
+  const campaignId = String(fd.get("campaign_id") || "").trim();
   const platform = String(fd.get("platform") || "youtube") as Platform;
   const postUrl = String(fd.get("post_url") || "").trim();
   const proofImageUrl = String(fd.get("proof_image_url") || "").trim();
   const submittedVideoUrl = String(fd.get("submitted_video_url") || "").trim();
   const description = String(fd.get("description") || "");
-  if (!postUrl && !submittedVideoUrl) return;
+  if (!campaignId) return { ok: false, message: "캠페인 정보가 없습니다." };
+  if (!postUrl && !submittedVideoUrl) {
+    return {
+      ok: false,
+      message: "게시물 URL 또는 제출 영상 URL 중 하나는 반드시 입력해야 합니다.",
+      fieldErrors: { post_url: "게시물 URL을 입력하세요." },
+    };
+  }
+  for (const [field, value] of [["post_url", postUrl], ["submitted_video_url", submittedVideoUrl]] as const) {
+    if (value && !isHttpUrl(value)) {
+      return { ok: false, message: "유효한 http(s) URL을 입력하세요.", fieldErrors: { [field]: "URL 형식을 확인하세요." } };
+    }
+  }
+
+  let outcome: ActionState = { ok: false };
   tx((db) => {
     const c = db.ad_campaigns.find((x) => x.id === campaignId);
-    if (!c) return;
-    const app = db.campaign_applications.find(
-      (a) => a.campaign_id === campaignId && a.creator_id === user.id && a.status === "approved"
-    );
-    if (!app) return; // 승인된 참여자만 제출 가능
+    if (!c) {
+      outcome = { ok: false, message: "캠페인을 찾을 수 없습니다." };
+      return;
+    }
+    if (!isApprovedCampaignWorker(db, campaignId, user.id)) {
+      outcome = { ok: false, message: "승인된 참여자만 납품을 제출할 수 있습니다." };
+      return;
+    }
     // 중복 제출 방지: 동일 크리에이터+캠페인에 이미 제출된 증빙이 있으면 차단
     const alreadyDelivered = db.campaign_deliveries.some(
       (d) => d.campaign_id === campaignId && d.creator_id === user.id
     );
-    if (alreadyDelivered) return;
+    if (alreadyDelivered) {
+      outcome = { ok: false, message: "이미 납품을 제출한 캠페인입니다." };
+      return;
+    }
     db.campaign_deliveries.push({
       id: genId(),
       campaign_id: campaignId,
@@ -461,8 +519,20 @@ export async function submitCampaignProofAction(fd: FormData): Promise<void> {
       c.status = "submitted";
       c.updated_at = now();
     }
+    notifyUser(db, {
+      recipientId: c.advertiser_id,
+      title: "캠페인 납품물이 제출되었습니다",
+      message: c.title,
+      link: `/advertiser/campaigns/${c.id}`,
+    });
+    outcome = { ok: true, message: "납품이 제출되었습니다." };
   });
-  revalidatePath("/creator/campaigns");
+  if (outcome.ok) {
+    revalidatePath("/creator/campaigns");
+    revalidatePath(`/creator/campaigns/${campaignId}`);
+    revalidatePath("/advertiser/campaigns");
+  }
+  return outcome;
 }
 
 // === ADMIN/ADVERTISER: 증빙 승인 -> CREATOR 수익 정산 =================

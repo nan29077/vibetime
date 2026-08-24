@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { tx } from "../db";
 import { requireRole, getCurrentUser } from "../auth";
 import { genId } from "../crypto";
+import { isApprovedCampaignWorker } from "../campaign-eligibility";
 import type { CampaignSubmission, SubmissionComment } from "../schema";
 import type { ActionState } from "@/components/form";
 
@@ -31,10 +32,9 @@ export async function createSubmissionAction(
       result = { ok: false, message: "캠페인을 찾을 수 없습니다." };
       return;
     }
-    const app = db.campaign_applications.find(
-      (a) => a.campaign_id === campaignId && a.creator_id === user.id && a.status === "approved"
-    );
-    if (!app) {
+    // 레거시 신청(campaign_applications) 또는 선발 완료된 참여(campaign_participations)
+    // 어느 쪽이든 승인된 작업자면 제출을 허용한다.
+    if (!isApprovedCampaignWorker(db, campaignId, user.id)) {
       result = { ok: false, message: "승인된 참여자만 제출할 수 있습니다." };
       return;
     }

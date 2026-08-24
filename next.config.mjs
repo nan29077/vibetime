@@ -1,3 +1,25 @@
+// 이미지 최적화 허용 원격 호스트 (와일드카드 금지)
+const S3_HOST =
+  process.env.AWS_S3_BUCKET && process.env.AWS_S3_REGION
+    ? `${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com`
+    : null;
+
+const IMAGE_HOSTS = [
+  "images.unsplash.com",   // 데모/시드 상품 이미지
+  "storage.vibetime.com",  // 서비스 스토리지
+  "cdn.vibetime.com",      // 서비스 CDN
+  S3_HOST,
+  ...(process.env.NEXT_PUBLIC_IMAGE_HOSTS || "")
+    .split(",")
+    .map((host) => host.trim())
+    .filter(Boolean),
+].filter(Boolean);
+
+const imageRemotePatterns = [...new Set(IMAGE_HOSTS)].map((hostname) => ({
+  protocol: "https",
+  hostname,
+}));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -16,9 +38,10 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,
-    remotePatterns: [
-      { protocol: "https", hostname: "**" },
-    ],
+    // 와일드카드("**") 금지 — 임의 외부 호스트를 이미지 최적화 프록시로
+    // 악용당하지 않도록 실제 사용하는 도메인만 허용한다.
+    // 추가 도메인이 필요하면 NEXT_PUBLIC_IMAGE_HOSTS 에 쉼표로 나열한다.
+    remotePatterns: imageRemotePatterns,
   },
 
   experimental: {

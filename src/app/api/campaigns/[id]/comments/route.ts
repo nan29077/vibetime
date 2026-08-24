@@ -1,22 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { getDb, tx } from "@/lib/db";
 import { audit } from "@/lib/services";
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   const db = getDb();
   const campaign = db.ad_campaigns.find((item) => item.id === params.id);
   if (!campaign) return NextResponse.json({ error: "캠페인을 찾을 수 없습니다." }, { status: 404 });
   if (user.role === "advertiser" && campaign.advertiser_id !== user.id) return NextResponse.json({ error: "접근 권한이 없습니다." }, { status: 403 });
+  // POST 와 동일한 기준으로 크리에이터 열람 권한을 검사한다.
+  const creatorParticipates = (db.campaign_participations ?? []).some((item) => item.campaign_id === campaign.id && item.creator_id === user.id);
+  if (user.role === "creator" && !creatorParticipates && !["published", "recruiting", "in_progress"].includes(campaign.status)) {
+    return NextResponse.json({ error: "댓글 열람 권한이 없습니다." }, { status: 403 });
+  }
   return NextResponse.json((db.campaign_comments ?? []).filter((item) => item.campaign_id === params.id));
 }
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   const input = (await req.json().catch(() => ({}))) as { content?: string };
   const content = input.content?.trim() ?? "";
   if (!content || content.length > 3000) return NextResponse.json({ error: "댓글은 1~3000자여야 합니다." }, { status: 400 });

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 
 const DATA_FILE = path.join(
   process.cwd(),
@@ -13,10 +13,9 @@ const DATA_FILE = path.join(
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   // 인증: 로그인 필수
-  const user = getCurrentUser();
-  if (!user) {
-    return NextResponse.json({ error: "인증이 필요합니다" }, { status: 401 });
-  }
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   if (user.role !== "creator" && user.role !== "admin") return NextResponse.json({ error: "접근 권한이 없습니다." }, { status: 403 });
 
   const { id } = params;

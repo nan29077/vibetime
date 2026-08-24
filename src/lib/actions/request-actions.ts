@@ -7,6 +7,7 @@ import { tx } from "../db";
 import { requireRole, getCurrentUser } from "../auth";
 import { genId } from "../crypto";
 import { addWalletTx, audit, createPayment } from "../services";
+import { netAfterFee } from "../money";
 import type { CustomVideoRequest, Platform } from "../schema";
 import type { ActionState } from "@/components/form";
 
@@ -91,10 +92,19 @@ export async function applyRequestAction(fd: FormData): Promise<void> {
   const user = requireRole("creator");
   const requestId = String(fd.get("request_id") || "");
   const message = String(fd.get("proposal_message") || "");
-  const proposed = fd.get("proposed_price") ? Math.floor(Number(fd.get("proposed_price"))) : null;
+  const rawPrice = String(fd.get("proposed_price") ?? "").trim();
+  // 제안가는 선택 입력. 입력한 경우 1원 이상의 정수만 허용한다.
+  let proposed: number | null = null;
+  if (rawPrice) {
+    const parsed = Math.floor(Number(rawPrice));
+    if (!Number.isFinite(parsed) || parsed <= 0) return; // 음수/0/비정상 값 차단
+    proposed = parsed;
+  }
   tx((db) => {
     const req = db.custom_video_requests.find((r) => r.id === requestId);
     if (!req || req.status !== "open") return;
+    // 제안가 상한: 구매자가 이미 결제(에스크로)한 예산을 넘을 수 없다.
+    if (proposed !== null && proposed > req.budget) return;
     if (db.custom_video_applications.some((a) => a.request_id === requestId && a.creator_id === user.id)) return;
     db.custom_video_applications.push({
       id: genId(),
@@ -119,6 +129,10 @@ export async function acceptApplicationAction(fd: FormData): Promise<void> {
     if (!app) return;
     const req = db.custom_video_requests.find((r) => r.id === app.request_id);
     if (!req || req.buyer_id !== user.id || req.status !== "open") return;
+    // 예산을 초과하거나 0 이하인 제안가는 선정 단계에서 예산으로 보정한다.
+    if (app.proposed_price !== null && (app.proposed_price <= 0 || app.proposed_price > req.budget)) {
+      app.proposed_price = req.budget;
+    }
     app.status = "accepted";
     db.custom_video_applications
       .filter((a) => a.request_id === req.id && a.id !== appId)
@@ -180,7 +194,13 @@ export async function reviewDeliveryAction(fd: FormData): Promise<void> {
       const accepted = db.custom_video_applications.find(
         (a) => a.request_id === req.id && a.status === "accepted"
       );
-      const payout = accepted?.proposed_price ?? req.budget;
+      // 정산 기준 금액: 제안가(있으면) — 단, 0 이하이거나 예산 초과면 예산으로 보정
+      const proposed = accepted?.proposed_price ?? null;
+      const gross =
+        proposed !== null && proposed > 0 && proposed <= req.budget ? proposed : req.budget;
+      // 영상 판매와 동일하게 플랫폼 수수료를 차감한 금액을 지급한다.
+      const feeRate = db.settings.video_sale_platform_fee_rate;
+      const payout = netAfterFee(gross, feeRate);
       addWalletTx(db, {
         userId: req.assigned_creator_id!,
         type: "custom_video",
@@ -188,7 +208,7 @@ export async function reviewDeliveryAction(fd: FormData): Promise<void> {
         status: "available",
         relatedTable: "custom_video_requests",
         relatedId: req.id,
-        memo: `제작 의뢰 완료 정산: ${req.title}`,
+        memo: `제작 의뢰 완료 정산 (플랫폼 수수료 ${feeRate}% 차감): ${req.title}`,
       });
       audit(db, { actorId: user.id, action: "approve_delivery", targetTable: "custom_video_requests", targetId: req.id });
     } else if (decision === "revision" && req.status === "submitted") {

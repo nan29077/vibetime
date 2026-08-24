@@ -1,17 +1,17 @@
 import { requireRole } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { notFound } from "next/navigation";
-import { Card, PageHeader, StatusBadge, Badge, Field, Input, Textarea } from "@/components/ui";
+import { Card, PageHeader, StatusBadge, Badge } from "@/components/ui";
 import { SubmitButton } from "@/components/form";
 import { PLATFORM_LABELS } from "@/lib/schema";
 import { CAMPAIGN_TYPE_LABELS } from "@/lib/labels";
 import { formatKRW } from "@/lib/money";
 import { creatorDeployPayout, creatorVideoPayout } from "@/lib/queries";
 import {
-  submitCampaignProofAction,
   joinParticipationAction as _joinParticipationAction,
   submitParticipationWorkAction as _submitParticipationWorkAction,
 } from "@/lib/actions/campaign-actions";
+import { CampaignApplyForm, CampaignProofForm } from "@/components/campaigns/campaign-application-forms";
 
 async function joinParticipationAction(fd: FormData): Promise<void> { await _joinParticipationAction(fd); }
 async function submitParticipationWorkAction(fd: FormData): Promise<void> { await _submitParticipationWorkAction(fd); }
@@ -38,7 +38,17 @@ export default function CreatorCampaignDetailPage({ params }: { params: { id: st
   const myVideoPt = allMyPts.find((x) => x.participation_type === "video_production");
 
   const isApproved = myApplication?.status === "approved";
-  const canSubmit = isApproved && ["in_progress", "submitted"].includes(campaign.status);
+  const canApply =
+    ["recruiting", "published", "in_progress"].includes(campaign.status) &&
+    !(campaign.end_date && new Date(campaign.end_date).getTime() < Date.now());
+  // 레거시 신청 승인 또는 현행 참여(선발 완료) 어느 쪽이든 납품 제출 가능
+  const hasAcceptedParticipation = allMyPts.some(
+    (x) => !["applied", "application_rejected", "rejected", "cancelled"].includes(x.status)
+  );
+  const canSubmit =
+    (isApproved || hasAcceptedParticipation) &&
+    ["in_progress", "submitted"].includes(campaign.status) &&
+    myDeliveries.length === 0;
 
   const followerLabels: Record<string, string> = {
     none: "상관없음", "10k": "1만+", "50k": "5만+", "100k": "10만+", "500k": "50만+", "1m": "100만+",
@@ -147,26 +157,17 @@ export default function CreatorCampaignDetailPage({ params }: { params: { id: st
         </Card>
       )}
 
+      {!myApplication && canApply && (
+        <Card>
+          <div className="font-semibold text-gray-800 mb-3">캠페인 참여 신청</div>
+          <CampaignApplyForm campaignId={campaign.id} />
+        </Card>
+      )}
+
       {canSubmit && (
         <Card>
           <div className="font-semibold text-gray-800 mb-3">납품 제출</div>
-          <form action={submitCampaignProofAction} className="space-y-4">
-            <input type="hidden" name="campaign_id" value={campaign.id} />
-            <Field label="플랫폼">
-              <select name="platform" className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:border-brand-purple focus:outline-none">
-                {campaign.platforms.map((pl) => (
-                  <option key={pl} value={pl}>{PLATFORM_LABELS[pl]}</option>
-                ))}
-              </select>
-            </Field>
-            <Field label="게시물 URL" required>
-              <Input name="post_url" placeholder="https://youtube.com/shorts/..." required />
-            </Field>
-            <Field label="설명 메시지">
-              <Textarea name="description" placeholder="납품 관련 메모, 특이사항 등을 입력하세요." rows={3} />
-            </Field>
-            <SubmitButton>납품 제출</SubmitButton>
-          </form>
+          <CampaignProofForm campaignId={campaign.id} platforms={campaign.platforms} />
         </Card>
       )}
 

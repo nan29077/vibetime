@@ -9,7 +9,10 @@ const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
 
 test("production test-login actions are disabled", () => {
   const source = read("src/lib/actions/auth-actions.ts");
-  assert.match(source, /async function loginAs[\s\S]*NODE_ENV === "production"/);
+  // 테스트 계정 로그인은 testAccountsEnabled() 가드로 차단된다.
+  assert.match(source, /async function loginAs[\s\S]*testAccountsEnabled\(\)/);
+  const accounts = read("src/lib/test-accounts.ts");
+  assert.match(accounts, /export function testAccountsEnabled[\s\S]*NODE_ENV !== "production"/);
 });
 
 test("participation review uses idempotent wallet rewards", () => {

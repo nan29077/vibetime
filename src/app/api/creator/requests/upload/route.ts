@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
+import { requireActiveUser } from "@/lib/auth";
 import { genId } from "@/lib/crypto";
 import { tx } from "@/lib/db";
 import { audit } from "@/lib/services";
@@ -21,8 +21,9 @@ function matchesMagic(buffer: Buffer, ext: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
-  const user = getCurrentUser();
-  if (!user) return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  const auth = requireActiveUser();
+  if (auth.response) return auth.response;
+  const user = auth.user;
   if (user.role !== "creator") return NextResponse.json({ error: "크리에이터만 업로드할 수 있습니다." }, { status: 403 });
   try {
     const file = (await req.formData()).get("file") as File | null;

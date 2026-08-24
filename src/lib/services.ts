@@ -25,8 +25,11 @@ const now = () => new Date().toISOString();
 export function notifyUser(
   db: Database,
   params: { recipientId: string; title: string; message: string; link?: string }
-): Notification {
+): Notification | null {
   if (!db.notifications) db.notifications = [];
+  // 더미 캠페인(advertiser_id: "vibeporter_system") 처럼 실제 회원이 아닌
+  // 수신자에게는 알림을 만들지 않는다(고아 알림 방지).
+  if (!params.recipientId || !db.profiles.some((p) => p.id === params.recipientId)) return null;
   const recentCutoff = Date.now() - 60_000;
   const existing = db.notifications.find((item) => item.recipient_id === params.recipientId && item.title === params.title && item.message === params.message && new Date(item.created_at).getTime() >= recentCutoff);
   if (existing) return existing;

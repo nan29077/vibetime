@@ -49,6 +49,8 @@ export interface Profile {
   id: string;
   email: string;
   password_hash: string; // 로컬 모드 전용. Supabase 전환 시 auth.users로 이관.
+  /** 비밀번호 최종 변경 시각(ISO). 이 시각 이전에 발급된 세션 토큰은 무효 처리된다. */
+  password_changed_at?: string | null;
   email_verified_at?: string | null;
   name: string;          // 실제 이름 (설정에서만 노출)
   nickname?: string | null; // 닉네임 (이름이 표기되는 모든 화면에 표시)
