@@ -753,6 +753,15 @@ export default function ForAdvertisersPage() {
             </div>
           </div>
         </div>
+        <div className="mx-auto mt-10 max-w-6xl border-t pt-6" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-xs text-gray-600">&#169; 2025 VIBETIME. All rights reserved.</p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link href="/terms" className="text-xs font-semibold text-gray-500 transition-colors hover:text-white">이용약관</Link>
+              <Link href="/privacy" className="text-xs font-bold text-gray-300 transition-colors hover:text-white">개인정보처리방침</Link>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );

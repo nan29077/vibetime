@@ -12,6 +12,7 @@ import { roleHome } from "../routes";
 import { randomProfileAvatar } from "../profile-avatars";
 import { normalizeEmail } from "../email-verification";
 import { findTestAccount, testAccountsEnabled, type TestAccountKey } from "../test-accounts";
+import { buildConsentRecord } from "../legal/consent";
 
 const now = () => new Date().toISOString();
 
@@ -26,6 +27,14 @@ const signupSchema = z.object({
   referral_code: z.string().optional(),
   // 대행사 가입 시 추천인 없음 선택 여부
   no_referral_agency: z.boolean().optional(),
+  // 약관·개인정보 필수 동의 / 마케팅 선택 동의
+  agree_terms: z.literal(true, {
+    errorMap: () => ({ message: "이용약관에 동의해야 가입할 수 있습니다." }),
+  }),
+  agree_privacy: z.literal(true, {
+    errorMap: () => ({ message: "개인정보 수집·이용에 동의해야 가입할 수 있습니다." }),
+  }),
+  agree_marketing: z.boolean().optional(),
 }).refine((value) => value.password === value.password_confirm, {
   path: ["password_confirm"],
   message: "비밀번호가 일치하지 않습니다.",
@@ -44,6 +53,9 @@ export async function signupAction(
     advertiser_type: formData.get("advertiser_type") || undefined,
     referral_code: (formData.get("referral_code") as string)?.trim() || undefined,
     no_referral_agency: formData.get("no_referral_agency") === "true",
+    agree_terms: formData.get("agree_terms") === "on" || formData.get("agree_terms") === "true",
+    agree_privacy: formData.get("agree_privacy") === "on" || formData.get("agree_privacy") === "true",
+    agree_marketing: formData.get("agree_marketing") === "on" || formData.get("agree_marketing") === "true",
   });
 
   if (!parsed.success) {
@@ -151,6 +163,7 @@ export async function signupAction(
       // 가입비 없음 -> 즉시 active / 있음 -> 결제 대기 pending
       status: needsSignupFee ? "pending" : "active",
       avatar_url: randomProfileAvatar(),
+      agreements: buildConsentRecord(Boolean(data.agree_marketing), now()),
       subscription_active_until: null,
       created_at: now(),
       updated_at: now(),
@@ -201,7 +214,7 @@ export async function signupAction(
       action: "signup",
       targetTable: "profiles",
       targetId: user.id,
-      after: { role, advertiserType },
+      after: { role, advertiserType, agreements: user.agreements },
     });
 
     setSession(user.id);

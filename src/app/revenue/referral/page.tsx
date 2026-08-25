@@ -246,6 +246,8 @@ export default function ReferralRevenuePage() {
             <Link href="/revenue/ai-video" className="hover:text-white transition-colors">AI 영상 제작</Link>
             <Link href="/revenue/distribution" className="hover:text-white transition-colors">숏폼 배포</Link>
             <Link href="/signup" className="hover:text-white transition-colors">가입</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">이용약관</Link>
+            <Link href="/privacy" className="font-semibold text-gray-400 hover:text-white transition-colors">개인정보처리방침</Link>
           </div>
         </div>
       </footer>

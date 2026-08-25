@@ -8,6 +8,7 @@ import { useFormState } from "react-dom";
 import { signupAction } from "@/lib/actions/auth-actions";
 import { FieldError, FormMessage, SubmitButton, initialActionState } from "@/components/form";
 import { Card, Field, Input, Select } from "@/components/ui";
+import { CONSENT_ITEMS, type ConsentKey } from "@/lib/legal/consent";
 import { IconMegaphone, IconVideo } from "@/components/icons";
 
 type Role = "creator" | "advertiser";
@@ -17,6 +18,81 @@ const ROLE_CARDS = [
   { value: "creator" as const, Icon: IconVideo, title: "숏폼 크리에이터", desc: "영상 제작과 배포로 수익을 시작해요." },
   { value: "advertiser" as const, Icon: IconMegaphone, title: "광고주", desc: "숏폼으로 브랜드를 알리세요." },
 ];
+
+type ConsentState = Record<ConsentKey, boolean>;
+
+const EMPTY_CONSENTS: ConsentState = { terms: false, privacy: false, marketing: false };
+
+/** 약관·개인정보·마케팅 동의 영역 */
+function ConsentSection({
+  value,
+  onChange,
+  state,
+}: {
+  value: ConsentState;
+  onChange: (next: ConsentState) => void;
+  state: { fieldErrors?: Record<string, string> };
+}) {
+  const allChecked = CONSENT_ITEMS.every((item) => value[item.key]);
+  const toggleAll = (checked: boolean) => {
+    const next = { ...EMPTY_CONSENTS };
+    for (const item of CONSENT_ITEMS) next[item.key] = checked;
+    onChange(next);
+  };
+
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-gray-50/70 p-4">
+      <label className="flex cursor-pointer select-none items-center gap-2.5 border-b border-gray-200 pb-3">
+        <input
+          type="checkbox"
+          checked={allChecked}
+          onChange={(e) => toggleAll(e.target.checked)}
+          className="h-4 w-4 rounded border-gray-300 accent-amber-500"
+        />
+        <span className="text-sm font-bold text-gray-800">약관 전체 동의</span>
+        <span className="text-xs text-gray-400">선택 항목 포함</span>
+      </label>
+
+      <div className="mt-3 space-y-3">
+        {CONSENT_ITEMS.map((item) => (
+          <div key={item.key}>
+            <div className="flex items-center justify-between gap-2">
+              <label className="flex cursor-pointer select-none items-center gap-2.5">
+                <input
+                  type="checkbox"
+                  name={item.field}
+                  checked={value[item.key]}
+                  onChange={(e) => onChange({ ...value, [item.key]: e.target.checked })}
+                  className="h-4 w-4 rounded border-gray-300 accent-amber-500"
+                />
+                <span className="text-sm text-gray-700">
+                  <span className={item.required ? "font-semibold text-amber-700" : "text-gray-500"}>
+                    [{item.required ? "필수" : "선택"}]
+                  </span>{" "}
+                  {item.label}
+                </span>
+              </label>
+              {item.href && (
+                <Link
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 text-xs font-semibold text-gray-400 underline underline-offset-2 transition hover:text-gray-700"
+                >
+                  전문 보기
+                </Link>
+              )}
+            </div>
+            {item.hint && <p className="mt-1 pl-[26px] text-xs text-gray-400">{item.hint}</p>}
+            {state.fieldErrors?.[item.field] && (
+              <p className="mt-1 pl-[26px] text-xs text-red-500">{state.fieldErrors[item.field]}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function SignupForm() {
   const searchParams = useSearchParams();
@@ -28,6 +104,9 @@ function SignupForm() {
   const isAgencyReferralLink = referralLinkMode && urlRole === "advertiser";
 
   const [state, formAction] = useFormState(signupAction, initialActionState);
+  // 약관·개인정보·마케팅 동의 상태
+  const [consents, setConsents] = useState<ConsentState>(EMPTY_CONSENTS);
+  const requiredConsentDone = CONSENT_ITEMS.every((item) => !item.required || consents[item.key]);
   // 역할: 대행사 추천인 링크이면 advertiser 고정, ?role=advertiser이면 advertiser로 시작
   const [role, setRole] = useState<Role>(
     isAgencyReferralLink || urlRole === "advertiser" ? "advertiser" : "creator"
@@ -217,8 +296,13 @@ function SignupForm() {
             </Field>
           )}
 
+          <ConsentSection value={consents} onChange={setConsents} state={state} />
+
           <FormMessage state={state} />
           <SubmitButton className="w-full">회원가입 완료</SubmitButton>
+          {!requiredConsentDone && (
+            <p className="text-center text-xs text-gray-400">필수 약관에 동의해야 회원가입할 수 있습니다.</p>
+          )}
           {!emailVerified && <p className="text-center text-xs text-red-500">이메일 인증을 완료해야 회원가입할 수 있습니다.</p>}
         </form>
         <p className="mt-5 text-center text-sm text-gray-500">이미 계정이 있으신가요? <Link href="/login" className="font-semibold text-amber-700 hover:underline">로그인</Link></p>

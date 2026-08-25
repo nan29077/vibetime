@@ -45,6 +45,22 @@ export const ALL_SOCIAL_PLATFORMS: Array<"youtube" | "instagram" | "tiktok" | "f
 ];
 
 // 6.1 profiles ------------------------------------------------------------
+/** 회원이 가입 시 동의한 약관·방침 이력 (개정 시 재동의 판단에 사용) */
+export interface UserAgreements {
+  /** 동의한 이용약관 버전 */
+  terms_version: string;
+  /** 이용약관 동의 일시(ISO) */
+  terms_agreed_at: string;
+  /** 동의한 개인정보처리방침 버전 */
+  privacy_version: string;
+  /** 개인정보 수집·이용 동의 일시(ISO) */
+  privacy_agreed_at: string;
+  /** 마케팅 정보 수신 동의 여부(선택) */
+  marketing_opt_in: boolean;
+  /** 마케팅 수신 동의 일시(ISO). 미동의면 null */
+  marketing_agreed_at: string | null;
+}
+
 export interface Profile {
   id: string;
   email: string;
@@ -64,6 +80,8 @@ export interface Profile {
   avatar_url: string | null;
   creator_gender?: "female" | "male" | "other" | null;
   creator_age_group?: "teens" | "20s" | "30s" | "40plus" | null;
+  /** 약관·개인정보 동의 이력. 구버전 계정은 undefined일 수 있다. */
+  agreements?: UserAgreements | null;
   subscription_active_until: string | null; // 구독 만료일(ISO). null이면 미구독
   created_at: string;
   updated_at: string;

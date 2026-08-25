@@ -1089,6 +1089,9 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-xs text-gray-600">&#169; 2025 VIBETIME. All rights reserved.</p>
             <div className="flex flex-wrap items-center gap-4">
+              <Link href="/terms" className="text-xs font-semibold text-gray-400 transition-colors hover:text-white">이용약관</Link>
+              <Link href="/privacy" className="text-xs font-bold text-gray-200 transition-colors hover:text-white">개인정보처리방침</Link>
+              <span aria-hidden className="hidden h-3 w-px bg-white/15 sm:block" />
               <a href="/vibetime_서비스소개서.pdf" download className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 transition-colors hover:text-white">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
