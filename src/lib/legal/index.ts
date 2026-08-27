@@ -4,7 +4,7 @@
 // ===========================================================================
 
 export type { LegalArticle, LegalBlock, LegalDocument, LegalSlug, LegalTable } from "./types";
-export { COMPANY, PRIVACY_CONTACT, PRIVACY_OFFICER, display, isPlaceholder } from "./company";
+export { COMPANY, COMPANY_INFO_ENTRIES, PRIVACY_OFFICER } from "./company";
 export { termsDocument, TERMS_VERSION, TERMS_EFFECTIVE_DATE } from "./terms";
 export { privacyDocument, PRIVACY_VERSION, PRIVACY_EFFECTIVE_DATE } from "./privacy";
 

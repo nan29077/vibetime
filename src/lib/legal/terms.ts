@@ -1,4 +1,4 @@
-import { COMPANY, display } from "./company";
+import { COMPANY } from "./company";
 import type { LegalDocument } from "./types";
 import { TERMS_EFFECTIVE_DATE, TERMS_VERSION } from "./versions";
 
@@ -7,13 +7,11 @@ import { TERMS_EFFECTIVE_DATE, TERMS_VERSION } from "./versions";
 // ---------------------------------------------------------------------------
 // [주의] 본 약관은 서비스 구조(영상 제작·판매, 숏폼 배포 대행, 광고 캠페인,
 // 추천 수당, 포인트 결제, 정산·출금)를 반영해 작성한 초안입니다.
-// 실제 서비스 개시 전 반드시 변호사 검토를 받고, 사업자 정보(company.ts)를
-// 실제 값으로 교체하십시오.
+// 서비스 개시 전 변호사 검토를 받는 것을 권장합니다.
 // ===========================================================================
 
-const CO = display(COMPANY.legalName);
+const CO = COMPANY.legalName;
 const SERVICE = COMPANY.serviceName;
-const COURT = display(COMPANY.court);
 
 export { TERMS_EFFECTIVE_DATE, TERMS_VERSION };
 
@@ -420,7 +418,7 @@ export const termsDocument: LegalDocument = {
           items: [
             "회사는 회원의 정당한 의견이나 불만을 반영하고 피해를 보상하기 위하여 고객센터를 운영합니다.",
             `서비스 이용과 관련하여 회사와 회원 사이에 분쟁이 발생한 경우 상호 협의하여 원만히 해결하도록 노력하며, 협의가 이루어지지 않을 경우 「전자상거래 등에서의 소비자보호에 관한 법률」에 따른 소비자분쟁조정기구의 조정을 신청할 수 있습니다.`,
-            `본 약관은 대한민국 법령에 따라 규율되고 해석되며, 회사와 회원 사이에 제기된 소송은 「민사소송법」에 따른 관할 법원(회사의 주소지 관할 법원인 ${COURT}을 포함합니다)에 제기합니다.`,
+            "본 약관은 대한민국 법령에 따라 규율되고 해석되며, 회사와 회원 사이에 제기된 소송은 「민사소송법」에 따라 정해지는 관할 법원에 제기합니다.",
           ],
         },
       ],

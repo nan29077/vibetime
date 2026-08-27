@@ -74,7 +74,7 @@ export default function ReferralRevenuePage() {
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/#income" className="hidden text-sm text-gray-400 transition hover:text-white md:block">← 수익 구조</Link>
-          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#7c3aed" }}>무료 시작하기</Link>
+          <Link href="/signup" className="rounded-full px-5 py-2 text-sm font-bold text-black" style={{ background: "#7c3aed" }}>지금 시작하기</Link>
         </div>
       </header>
 
@@ -222,11 +222,11 @@ export default function ReferralRevenuePage() {
             추천 코드<br /><span style={{ color: "#7c3aed" }}>지금 바로</span><br />받으세요
           </h2>
           <p className="mx-auto mt-6 max-w-md text-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
-            가입 즉시 추천 코드 발급 · 가입비 0원 · 즉시 추천 활동 가능
+            가입 즉시 추천 코드 발급 · 즉시 추천 활동 가능
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link href="/signup" className="rounded-full px-8 py-4 text-base font-black text-black hover:scale-105 transition-all" style={{ background: "#7c3aed" }}>
-              무료 가입하고 추천 코드 받기 →
+              가입하고 추천 코드 받기 →
             </Link>
             <Link href="/#income" className="rounded-full border px-8 py-4 text-base font-medium text-white transition hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)" }}>
               다른 수익 구조 보기

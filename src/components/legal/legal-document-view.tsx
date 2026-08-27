@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { COMPANY, PRIVACY_CONTACT, PRIVACY_OFFICER, display, isPlaceholder } from "@/lib/legal/company";
+import { COMPANY_INFO_ENTRIES } from "@/lib/legal/company";
 import type { LegalBlock, LegalDocument } from "@/lib/legal/types";
-import { IconAlertCircle, IconChevronLeft, IconFileText, IconMail, IconShield } from "@/components/icons";
+import { IconChevronLeft, IconFileText, IconShield } from "@/components/icons";
 
 // ===========================================================================
 // 이용약관 / 개인정보처리방침 공용 렌더러 (서버 컴포넌트)
@@ -109,30 +109,10 @@ function Block({ block }: { block: LegalBlock }) {
   }
 }
 
-/** 아직 실제 값으로 교체되지 않은 사업자 정보 항목 (개발 환경에서만 노출) */
-function pendingCompanyFields(): string[] {
-  const entries: Array<[string, string]> = [
-    ["상호", COMPANY.legalName],
-    ["대표자", COMPANY.ceo],
-    ["사업자등록번호", COMPANY.businessNumber],
-    ["통신판매업 신고번호", COMPANY.mailOrderNumber],
-    ["주소", COMPANY.address],
-    ["대표전화", COMPANY.phone],
-    ["관할 법원", COMPANY.court],
-    ["개인정보 보호책임자", PRIVACY_OFFICER.name],
-    ["보호책임자 직위", PRIVACY_OFFICER.title],
-    ["보호책임자 연락처", PRIVACY_OFFICER.phone],
-    ["고충처리 담당자", PRIVACY_CONTACT.manager],
-  ];
-  return entries.filter(([, value]) => isPlaceholder(value)).map(([label]) => label);
-}
-
 export function LegalDocumentView({ doc }: { doc: LegalDocument }) {
   const isPrivacy = doc.slug === "privacy";
   const otherHref = isPrivacy ? "/terms" : "/privacy";
   const otherLabel = isPrivacy ? "이용약관" : "개인정보처리방침";
-  // 실제 사업자 정보로 교체되지 않은 항목은 개발 환경에서만 경고로 노출한다.
-  const pending = process.env.NODE_ENV === "production" ? [] : pendingCompanyFields();
 
   return (
     <main className="min-h-screen bg-gray-50 pb-24">
@@ -175,21 +155,6 @@ export function LegalDocumentView({ doc }: { doc: LegalDocument }) {
             </div>
           </dl>
         </div>
-
-        {/* 개발 환경 전용: 미기재 사업자 정보 경고 */}
-        {pending.length > 0 && (
-          <div className="mt-6 flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4">
-            <IconAlertCircle size={18} className="mt-0.5 shrink-0 text-red-500" />
-            <div>
-              <p className="text-sm font-bold text-red-800">공개 전 확인 필요 (개발 환경에서만 표시)</p>
-              <p className="mt-1 text-[13px] leading-6 text-red-700">
-                다음 항목이 아직 실제 사업자 정보로 교체되지 않았습니다 — {pending.join(", ")}.
-                <br />
-                <code className="rounded bg-red-100 px-1 py-0.5 text-[12px]">src/lib/legal/company.ts</code> 에서 값을 수정하세요.
-              </p>
-            </div>
-          </div>
-        )}
 
         {/* 핵심 요약 */}
         {doc.summary.length > 0 && (
@@ -255,28 +220,13 @@ export function LegalDocumentView({ doc }: { doc: LegalDocument }) {
         <section className="mt-6 rounded-2xl border border-gray-200 bg-white p-5">
           <h2 className="text-[15px] font-bold text-gray-900">사업자 정보</h2>
           <dl className="mt-3 grid gap-x-8 gap-y-2 text-[13.5px] sm:grid-cols-2">
-            {[
-              ["상호", display(COMPANY.legalName)],
-              ["대표자", display(COMPANY.ceo)],
-              ["사업자등록번호", display(COMPANY.businessNumber)],
-              ["통신판매업 신고번호", display(COMPANY.mailOrderNumber)],
-              ["주소", display(COMPANY.address)],
-              ["대표전화", display(COMPANY.phone)],
-            ].map(([label, value]) => (
+            {COMPANY_INFO_ENTRIES.map(([label, value]) => (
               <div key={label} className="flex gap-2">
                 <dt className="w-[112px] shrink-0 font-semibold text-gray-500">{label}</dt>
                 <dd className="text-gray-800">{value}</dd>
               </div>
             ))}
           </dl>
-          <a
-            href={`mailto:${COMPANY.email}`}
-            className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-purple transition hover:underline"
-          >
-            <IconMail size={14} />
-            {COMPANY.email}
-          </a>
-          <p className="mt-1.5 text-[12.5px] text-gray-500">고객센터 운영시간 · {COMPANY.supportHours}</p>
         </section>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-3">

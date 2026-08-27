@@ -1,4 +1,4 @@
-import { COMPANY, PRIVACY_CONTACT, PRIVACY_OFFICER, display } from "./company";
+import { COMPANY, PRIVACY_OFFICER } from "./company";
 import type { LegalDocument } from "./types";
 import { PRIVACY_EFFECTIVE_DATE, PRIVACY_VERSION } from "./versions";
 
@@ -6,13 +6,12 @@ import { PRIVACY_EFFECTIVE_DATE, PRIVACY_VERSION } from "./versions";
 // VIBETIME 개인정보처리방침
 // ---------------------------------------------------------------------------
 // 「개인정보 보호법」 제30조 제1항 각 호 및 같은 법 시행령 제31조의 기재사항을
-// 기준으로 작성했습니다. 실제 공개 전 반드시 다음을 확정하십시오.
-//  1) company.ts 의 사업자 정보·개인정보 보호책임자
-//  2) 제6조 처리위탁 현황(실제 사용하는 클라우드/PG/메일 발송 업체)
-//  3) 제7조 국외 이전 여부(해외 리전 사용 시 반드시 기재)
+// 기준으로 작성했습니다.
+// [운영 시 갱신] 외부 업체에 개인정보 처리를 맡기게 되면(클라우드·결제대행·
+// 메일 발송 등) 제5조 위탁 현황에 수탁자와 위탁 업무를 반드시 추가해야 합니다.
 // ===========================================================================
 
-const CO = display(COMPANY.legalName);
+const CO = COMPANY.legalName;
 const SERVICE = COMPANY.serviceName;
 
 export { PRIVACY_EFFECTIVE_DATE, PRIVACY_VERSION };
@@ -200,19 +199,11 @@ export const privacyDocument: LegalDocument = {
       blocks: [
         {
           kind: "paragraph",
-          text: "회사는 원활한 서비스 제공을 위하여 다음과 같이 개인정보 처리 업무를 위탁하고 있습니다.",
+          text: "회사는 원활한 서비스 제공을 위하여 개인정보 처리 업무의 일부를 외부에 위탁할 수 있습니다.",
         },
         {
-          kind: "table",
-          table: {
-            caption: "[TODO] 실제 사용 중인 업체명으로 확정한 뒤 공개하십시오.",
-            headers: ["수탁자", "위탁 업무", "보유·이용 기간"],
-            rows: [
-              ["● 클라우드 인프라 사업자", "서비스 서버 및 데이터베이스 운영, 파일 저장", "위탁계약 종료 시까지"],
-              ["● 결제대행(PG) 사업자", "포인트 충전·결제 처리 및 환불", "위탁계약 종료 시까지"],
-              ["● 이메일 발송 사업자", "인증 메일, 안내 메일 발송", "위탁계약 종료 시까지"],
-            ],
-          },
+          kind: "paragraph",
+          text: "현재 회사는 개인정보 처리 업무를 외부에 위탁하고 있지 않습니다. 위탁이 발생하는 경우 수탁자와 위탁 업무의 내용을 아래에 공개합니다.",
         },
         {
           kind: "clauses",
@@ -339,11 +330,10 @@ export const privacyDocument: LegalDocument = {
           table: {
             headers: ["구분", "내용"],
             rows: [
-              ["개인정보 보호책임자", `${display(PRIVACY_OFFICER.name)} (${display(PRIVACY_OFFICER.title)})`],
-              ["담당 부서", PRIVACY_OFFICER.department],
+              ["개인정보 보호책임자", `${PRIVACY_OFFICER.name} (${PRIVACY_OFFICER.title})`],
               ["이메일", PRIVACY_OFFICER.email],
-              ["연락처", display(PRIVACY_OFFICER.phone)],
-              ["열람청구 접수·처리 부서", `${PRIVACY_CONTACT.department} / ${PRIVACY_CONTACT.email}`],
+              ["연락처", PRIVACY_OFFICER.phone],
+              ["열람청구 접수·처리", `${PRIVACY_OFFICER.email} / ${PRIVACY_OFFICER.phone}`],
             ],
           },
         },

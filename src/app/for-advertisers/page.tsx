@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CompanyFooterInfo } from "@/components/legal/company-footer-info";
 import Link from "next/link";
 import {
   IconMegaphone, IconBuilding, IconBarChart, IconUsers, IconGlobe,
@@ -754,6 +755,7 @@ export default function ForAdvertisersPage() {
           </div>
         </div>
         <div className="mx-auto mt-10 max-w-6xl border-t pt-6" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+          <CompanyFooterInfo className="mb-4" />
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-xs text-gray-600">&#169; 2025 VIBETIME. All rights reserved.</p>
             <div className="flex flex-wrap items-center gap-4">
