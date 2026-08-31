@@ -8,6 +8,7 @@ import type { NavItem } from "@/lib/nav";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { NavIcon, IconHome, IconMenu, IconX, IconLogOut } from "@/components/icons";
 import { SupportWidget } from "@/components/support/support-widget";
+import { CompanyFooterInfo } from "@/components/legal/company-footer-info";
 
 export function AppShell({
   nav,
@@ -204,7 +205,12 @@ export function AppShell({
         )}
 
         {/* 메인 콘텐츠 */}
-        <main className="flex-1 overflow-y-auto p-4 pb-6 lg:p-7">{children}</main>
+        <main className="flex-1 overflow-y-auto">
+          <div className="p-4 pb-0 lg:p-7 lg:pb-0">{children}</div>
+          <footer className="border-t border-gray-100 px-4 py-5 lg:px-7">
+            <CompanyFooterInfo />
+          </footer>
+        </main>
 
         <SupportWidget isAuthenticated />
       </div>
